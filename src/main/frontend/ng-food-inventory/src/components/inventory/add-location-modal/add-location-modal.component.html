@@ -1,0 +1,20 @@
+<div class="modal" [ngClass]="{'modal-open': showModal}">
+  <form *ngIf="newLocationForm" [formGroup]="newLocationForm" (ngSubmit)="saveLocation(newLocationForm)">
+    <div class="modal-box">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="location">
+        New Location
+      </label>
+      <input
+        id="newLocation"
+        name="newLocation"
+        formControlName="newLocation"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="text"
+        placeholder="Location Name">
+      <div class="modal-action flex justify-center">
+        <button type="submit" class="btn btn-primary">Accept</button>
+        <button (click)="cancel()" class="btn">Close</button>
+      </div>
+    </div>
+  </form>
+</div>

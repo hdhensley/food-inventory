@@ -1,0 +1,42 @@
+<table class="table table-zebra w-full">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Quantity</th>
+    <th>Location</th>
+    <th>Date Added</th>
+    <td>Out Of Stock</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of inventoryService.activeItems">
+    <td>{{item.id}}</td>
+    <td>{{item.name}}</td>
+    <td>
+      <div class="btn-group">
+        <button class="btn btn-xs" (click)="inventoryService.incrementQuantity(item.id)">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <button class="btn btn-xs">{{item.quantity}}</button>
+        <button class="btn btn-xs" (click)="inventoryService.decrementQuantity(item.id)">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+    </td>
+    <td>{{item.location?.name}}</td>
+    <td>{{item.dateAdded | displayDate}}</td>
+    <td class="flex flex-col justify-center items-center">
+      <button (click)="inventoryService.setOutOfStock(item.id)" class="btn btn-outline btn-circle btn-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 stroke-current">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>

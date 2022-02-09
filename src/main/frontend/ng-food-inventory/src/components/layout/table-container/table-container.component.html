@@ -1,0 +1,12 @@
+<app-card>
+  <div>
+    <h2 class="card-title text-center text-3xl">{{title}}</h2>
+  </div>
+  <div class="divider"></div>
+  <div *ngIf="showTable">
+    <ng-content></ng-content>
+  </div>
+  <div class="flex justify-center alert alert-info font-bold text-xl" *ngIf="!showTable">
+    <ng-content select=".noTableData"></ng-content>
+  </div>
+</app-card>

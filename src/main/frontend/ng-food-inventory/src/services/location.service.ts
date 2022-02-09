@@ -1,0 +1,23 @@
+import {  Injectable} from '@angular/core';
+import {Location} from '../models/location.model';
+import {HttpClient} from "@angular/common/http";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LocationService {
+  constructor(
+    private http: HttpClient
+  ) {}
+
+  saveLocation(location: Location) {
+    return this.http.post('http://' + window.location.hostname + ':8080/api/location', this.generateRequest(location)).toPromise();
+  }
+
+  generateRequest(location: Location) {
+    return {
+      name: location.name,
+      inventoryId: location.inventory_id
+    };
+  }
+}

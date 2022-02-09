@@ -1,0 +1,23 @@
+<div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content">
+  <div class="flex-none px-2 mx-2">
+    <a [routerLink]="['']" class="text-lg font-bold">
+      Freezer Inventory
+    </a>
+  </div>
+  <div class="flex-1 px-2 mx-2">
+    <div class="items-stretch hidden lg:flex">
+      <a [routerLink]="['inventory']" routerLinkActive="bg-accent hover:bg-accent-focus hover:text-neutral-content" class="btn btn-ghost btn-sm rounded-btn hover:text-accent">
+        Inventory
+      </a>
+      <a [routerLink]="['out-of-stock']" routerLinkActive="bg-accent hover:bg-accent-focus hover:text-neutral-content" class="btn btn-ghost btn-sm rounded-btn hover:text-accent">
+        Out of Stock
+      </a>
+      <a [routerLink]="['add-items']" routerLinkActive="bg-accent hover:bg-accent-focus hover:text-neutral-content" class="btn btn-ghost btn-sm rounded-btn hover:text-accent">
+        Add Items
+      </a>
+    </div>
+  </div>
+  <div class="flex-none">
+    <app-download-items></app-download-items>
+  </div>
+</div>

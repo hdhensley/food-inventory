@@ -1,0 +1,66 @@
+<form *ngIf="itemForm" [formGroup]="itemForm" (ngSubmit)="onFormSubmit(itemForm)">
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="item">
+      Item
+    </label>
+    <input
+      id="item"
+      name="item"
+      formControlName="item"
+      #itemName
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      type="text"
+      placeholder="Item">
+    <div class="input-error" *ngIf="itemForm.get('item')?.invalid && (itemForm.get('item')?.dirty || itemForm.get('item')?.touched)">
+      Please provide an item.
+    </div>
+  </div>
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="quantity">
+      Quantity
+    </label>
+    <input
+      id="quantity"
+      name="quantity"
+      formControlName="quantity"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      type="text"
+      placeholder="Quantity">
+    <div class="input-error" *ngIf="!itemForm.get('quantity')?.valid && itemForm.get('quantity')?.touched">
+      Please provide a number quantity.
+    </div>
+  </div>
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="quantity">
+      Location
+    </label>
+    <div class="flex flex-row">
+      <select formControlName="location" class="select select-bordered w-full max-w-xs">
+        <option [ngValue]="null" disabled>Choose Location</option>
+        <option *ngFor="let location of inventoryService.inventory.locations" [ngValue]="location.id">
+          {{ location.name }}
+        </option>
+      </select>
+      <a class="mt-3 ml-3">
+        <svg (click)="addLocation()" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </a>
+    </div>
+    <div class="input-error" *ngIf="!itemForm.get('quantity')?.valid && itemForm.get('quantity')?.touched">
+      Please select a location.
+    </div>
+  </div>
+  <div class="flex items-center justify-between">
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      type="submit">
+      Add Item
+    </button>
+  </div>
+</form>
+
+<app-add-location-modal
+  [showModal]="showModal"
+  (closeModal)="showModal = false;">
+</app-add-location-modal>

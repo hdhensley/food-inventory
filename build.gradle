@@ -1,0 +1,68 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.0-SNAPSHOT'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.overzealouspelican'
+version = '1.1.0'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-test'
+	runtimeOnly 'mysql:mysql-connector-java'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// LOMBOK
+	compileOnly 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+	testCompileOnly 'org.projectlombok:lombok:1.18.22'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+task buildFrontend(type: Exec) {
+	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --prod && cp -r dist/ng-food-inventory/* ../../resources/static/'
+}
+
+task devFrontend(type: Exec) {
+	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm run start'
+}
+
+//build.dependsOn buildFrontend
+bootJar.dependsOn buildFrontend
+
+task dockerBuild(type: Exec) {
+	commandLine 'sh', '-c', 'docker build -t dhensley/food-inventory .'
+}
+
+dockerBuild.dependsOn bootJar
+
+task dockerTag(type: Exec) {
+	commandLine 'sh', '-c', 'docker tag dhensley/food-inventory:latest food-inventory:latest'
+}
+
+dockerTag.dependsOn dockerBuild
+
+task dockerDeploy(type: Exec) {
+	commandLine 'sh', '-c', 'docker push dhensley/food-inventory:latest';
+}
+
+dockerDeploy.dependsOn dockerTag
+
+task dockerRun(type: Exec) {
+	commandLine 'sh', '-c', 'docker run --name food-inventory -d -v inventory-volume:/opt/db -p 8080:8080 dhensley/food-inventory'
+}
