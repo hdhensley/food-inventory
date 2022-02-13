@@ -1,0 +1,24 @@
+<div class="navbar-wrapper rounded">
+  <div class="flex flex-grow flex-row">
+    <div
+      class="nav-link rounded-btn"
+      (click)="locationService.activeLocation = 0"
+      [ngClass]="{
+        'active-nav-link' : locationService.isActive(0)
+      }">
+      All
+    </div>
+    <div
+      class="nav-link rounded-btn"
+      *ngFor="let location of inventoryService.inventory.locations"
+      (click)="locationService.activeLocation = location.id"
+      [ngClass]="{
+        'active-nav-link' : locationService.isActive(location.id)
+      }">
+      {{location.name}}
+    </div>
+  </div>
+  <div *ngIf="!locationService.isActive(0)" class="">
+    <a [routerLink]="['/add-items']" class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2">Add Item</a>
+  </div>
+</div>

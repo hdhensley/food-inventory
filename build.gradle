@@ -14,18 +14,27 @@ repositories {
 	maven { url 'https://repo.spring.io/snapshot' }
 }
 
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation 'org.springframework.security:spring-security-test'
+
 	runtimeOnly 'mysql:mysql-connector-java'
 	runtimeOnly 'com.h2database:h2'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// LOMBOK
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testCompileOnly 'org.projectlombok:lombok:1.18.22'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
@@ -36,7 +45,8 @@ tasks.named('test') {
 
 // Build the angular application and copy the dist contents into the spring boot static directory
 task buildFrontend(type: Exec) {
-	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --prod && cp -r dist/ng-food-inventory/* ../../resources/static/'
+	commandLine 'sh', '-c', 'rm -rf ./src/main/resources/static'
+	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --aot && cp -r dist/ng-food-inventory/* ../../resources/static/'
 }
 
 // Run the frontend with hot reloading on http://localhost:4200

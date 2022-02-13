@@ -11,6 +11,9 @@ module.exports = {
     extend: {},
   },
   plugins: [
+    require('postcss-import'),
+    require('tailwindcss'),
+    require('autoprefixer'),
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('daisyui')

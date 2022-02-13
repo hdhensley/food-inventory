@@ -2,3 +2,22 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.navbar-wrapper {
+  @apply navbar bg-neutral text-neutral-content flex flex-row mb-4;
+}
+
+.nav-link {
+  @apply btn btn-ghost btn-sm hover:text-accent;
+}
+.active-nav-link {
+  @apply bg-accent hover:bg-accent-focus hover:text-neutral-content;
+}
+
+.responsive-nav-link {
+  @apply flex justify-center py-2;
+}
+
+.responsive-active-nav-link {
+  @apply bg-accent text-accent-content;
+}

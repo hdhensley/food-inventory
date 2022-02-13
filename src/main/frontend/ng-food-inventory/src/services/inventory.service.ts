@@ -26,8 +26,6 @@ export class InventoryService {
   }
 
   private loadInventory() {
-    console.log('Load the inventory');
-
     this.http.get('http://' + window.location.hostname + ':8080/api/inventory?key=' + environment.inventoryKey)
       .toPromise()
       .then((res: any) => {
@@ -49,10 +47,7 @@ export class InventoryService {
     let items: Item[] = [];
 
     this.inventory.locations.forEach((location: Location) => {
-      location.items.forEach(item => {
-        // @ts-ignore
-        item.location = location;
-      });
+      location.items.forEach(item => item.location = location);
       items = items.concat(location.items);
     });
 
@@ -60,7 +55,13 @@ export class InventoryService {
   }
 
   get activeItems(): Item[] {
-    return this.items?.filter(i => !i.removedDate).filter(i => !i.deletedDate);
+    const items = this.items?.filter(i => !i.removedDate).filter(i => !i.deletedDate);
+
+    if(this.locationService.activeLocation != 0){
+      return items.filter(i => i.location?.id === this.locationService.activeLocation);
+    }
+
+    return items;
   }
 
   get inactiveItems(): Item[] {

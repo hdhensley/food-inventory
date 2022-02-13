@@ -1,17 +1,15 @@
 <table class="table table-zebra w-full">
   <thead>
   <tr>
-    <th>ID</th>
     <th>Name</th>
     <th>Quantity</th>
-    <th>Location</th>
-    <th>Date Added</th>
+    <th *ngIf="locationService.isActive(0)">Location</th>
+    <th class="">Date Added</th>
     <td>Out Of Stock</td>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let item of inventoryService.activeItems">
-    <td>{{item.id}}</td>
     <td>{{item.name}}</td>
     <td>
       <div class="btn-group">
@@ -28,9 +26,9 @@
         </button>
       </div>
     </td>
-    <td>{{item.location?.name}}</td>
+    <td *ngIf="locationService.isActive(0)">{{item.location?.name}}</td>
     <td>{{item.dateAdded | displayDate}}</td>
-    <td class="flex flex-col justify-center items-center">
+    <td class="flex flex-col">
       <button (click)="inventoryService.setOutOfStock(item.id)" class="btn btn-outline btn-circle btn-sm">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 stroke-current">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>

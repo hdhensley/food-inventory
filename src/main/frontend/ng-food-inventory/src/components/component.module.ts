@@ -13,6 +13,7 @@ import {PipeModule} from "../pipes/pipe.module";
     Components.CardComponent,
     Components.DownloadItemsComponent,
     Components.NavigationComponent,
+    Components.InventoryFilterComponent,
     Components.ItemTableComponent,
     Components.OosTableComponent,
     Components.TableContainerComponent,
@@ -31,6 +32,7 @@ import {PipeModule} from "../pipes/pipe.module";
     Components.CardComponent,
     Components.DownloadItemsComponent,
     Components.NavigationComponent,
+    Components.InventoryFilterComponent,
     Components.ItemTableComponent,
     Components.OosTableComponent,
     Components.TableContainerComponent

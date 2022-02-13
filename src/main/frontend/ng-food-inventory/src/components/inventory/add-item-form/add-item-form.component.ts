@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {InventoryService} from "../../../services";
+import {InventoryService, LocationService} from "../../../services";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Item} from "../../../models/item.model";
 
@@ -16,10 +16,14 @@ export class AddItemFormComponent implements OnInit {
 
   constructor(
     public inventoryService: InventoryService,
+    public locationService: LocationService,
     private fb: FormBuilder
   ){}
 
   ngOnInit() {
+    const currentLocation =
+      this.locationService.activeLocation === 0 ? null : this.locationService.activeLocation;
+
     this.itemForm = this.fb.group({
       item: new FormControl('', {
         validators: [
@@ -32,7 +36,7 @@ export class AddItemFormComponent implements OnInit {
           Validators.pattern(/^[0-9]+$/)
         ]
       }),
-      location: new FormControl(null, {
+      location: new FormControl(currentLocation, {
         validators: [
           Validators.required
         ]
