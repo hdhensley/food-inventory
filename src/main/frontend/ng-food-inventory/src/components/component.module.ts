@@ -8,10 +8,14 @@ import {PipeModule} from "../pipes/pipe.module";
 
 @NgModule({
   declarations: [
+    Components.ActiveItemsPipe,
     Components.AddItemFormComponent,
     Components.AddLocationModalComponent,
     Components.CardComponent,
     Components.DownloadItemsComponent,
+    Components.FilterComponent,
+    Components.InactiveItemsPipe,
+    Components.SearchFilterPipe,
     Components.NavigationComponent,
     Components.InventoryFilterComponent,
     Components.ItemTableComponent,
@@ -24,13 +28,18 @@ import {PipeModule} from "../pipes/pipe.module";
     RouterModule,
     PipeModule
   ],
-  providers: [],
+  providers: [
+    Components.ActiveItemsPipe,
+    Components.InactiveItemsPipe
+  ],
   bootstrap: [],
   exports: [
     Components.AddItemFormComponent,
     Components.AddLocationModalComponent,
     Components.CardComponent,
     Components.DownloadItemsComponent,
+    Components.FilterComponent,
+    Components.InactiveItemsPipe,
     Components.NavigationComponent,
     Components.InventoryFilterComponent,
     Components.ItemTableComponent,

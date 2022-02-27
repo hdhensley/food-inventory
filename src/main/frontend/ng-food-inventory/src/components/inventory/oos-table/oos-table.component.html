@@ -9,7 +9,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let item of inventoryService.inactiveItems; let id = index;">
+  <tr *ngFor="let item of inventoryService.items | inactiveItems; let id = index;">
     <td>{{item.id}}</td>
     <td>{{item.name}}</td>
     <td>{{item.location?.name}}</td>

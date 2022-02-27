@@ -8,6 +8,10 @@
       <app-inventory-filter *ngIf="inventoryService.inventory.locations.length > 0"></app-inventory-filter>
     </div>
 
+    <div class="filter">
+      <app-filter (searchChanged)="inventoryService.search = $event"></app-filter>
+    </div>
+
     <div class="noTableData">
       There's nothing to show
       <a [routerLink]="['/','add-items']" class="btn btn-ghost btn-sm rounded-btn bg-secondary hover:bg-secondary-focus text-secondary-content ml-3">

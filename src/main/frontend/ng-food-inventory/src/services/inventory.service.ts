@@ -1,4 +1,4 @@
-import {Inject, Injectable} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {Inventory} from '../models/Inventory.model';
 import {Item} from "../models/item.model";
 import {Location} from '../models/location.model';
@@ -7,6 +7,7 @@ import {environment} from "../environments/environment";
 import {ItemService} from "./item.service";
 import {BehaviorSubject} from "rxjs";
 import {LocationService} from "./location.service";
+import {ActiveItemsPipe, InactiveItemsPipe} from "../components";
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,14 @@ import {LocationService} from "./location.service";
 export class InventoryService {
   private _loaded: boolean = false;
   private _inventorySub: BehaviorSubject<Inventory> = new BehaviorSubject<Inventory>(new Inventory());
+  private _search: string = '';
 
   constructor(
     private http: HttpClient,
     private itemService: ItemService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private activePipe: ActiveItemsPipe,
+    private inactivePipe: InactiveItemsPipe
   ) {
     if(!this._loaded){
       this.loadInventory();
@@ -54,30 +58,16 @@ export class InventoryService {
     return items;
   }
 
-  get activeItems(): Item[] {
-    const items = this.items?.filter(i => !i.removedDate).filter(i => !i.deletedDate);
-
-    if(this.locationService.activeLocation != 0){
-      return items.filter(i => i.location?.id === this.locationService.activeLocation);
-    }
-
-    return items;
-  }
-
-  get inactiveItems(): Item[] {
-    return this.items?.filter(i => i.removedDate).filter(i => !i.deletedDate);
-  }
-
   hasItems(): boolean {
     return !!this.items.length;
   }
 
   hasActiveItems(): boolean {
-    return !!this.activeItems.length;
+    return !!this.activePipe.transform(this.items).length;
   }
 
   hasInactiveItems(): boolean {
-    return !!this.inactiveItems.length;
+    return !!this.inactivePipe.transform(this.items).length;
   }
 
   getLocation(id: number): Location|undefined {
@@ -105,7 +95,6 @@ export class InventoryService {
 
     if(item){
       item = callback(item);
-      console.log(item);
       this.itemService.saveItem(item)
         .then(res => this.loadInventory())
         .catch(err => console.error(err));
@@ -148,5 +137,13 @@ export class InventoryService {
   private getDate(): string {
     const date = new Date();
     return date.toJSON();
+  }
+
+  get search(): string{
+    return this._search;
+  }
+
+  set search(query: string) {
+    this._search = query;
   }
 }
