@@ -6,6 +6,8 @@ import {Item} from "../../../models/item.model";
 })
 export class SearchFilterPipe implements PipeTransform {
   transform(items: Item[], query: string): Item[] {
-    return query == '' ? items : items.filter(i => i.name.indexOf(query) > -1);
+    return query == '' ?
+      items :
+      items.filter(i => i.name.toLowerCase().indexOf(query.toLowerCase()) > -1);
   }
 }
