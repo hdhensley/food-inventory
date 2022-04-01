@@ -12,6 +12,7 @@ import {PipeModule} from "../pipes/pipe.module";
     Components.AddItemFormComponent,
     Components.AddLocationModalComponent,
     Components.CardComponent,
+    Components.CountManagerComponent,
     Components.DownloadItemsComponent,
     Components.FilterComponent,
     Components.InactiveItemsPipe,
@@ -19,8 +20,10 @@ import {PipeModule} from "../pipes/pipe.module";
     Components.NavigationComponent,
     Components.InventoryFilterComponent,
     Components.ItemAddedAlertComponent,
+    Components.ItemCardsComponent,
     Components.ItemTableComponent,
     Components.OosTableComponent,
+    Components.OutOfStockButtonComponent,
     Components.TableContainerComponent,
   ],
   imports: [
@@ -38,14 +41,17 @@ import {PipeModule} from "../pipes/pipe.module";
     Components.AddItemFormComponent,
     Components.AddLocationModalComponent,
     Components.CardComponent,
+    Components.CountManagerComponent,
     Components.DownloadItemsComponent,
     Components.FilterComponent,
     Components.InactiveItemsPipe,
     Components.NavigationComponent,
     Components.InventoryFilterComponent,
     Components.ItemAddedAlertComponent,
+    Components.ItemCardsComponent,
     Components.ItemTableComponent,
     Components.OosTableComponent,
+    Components.OutOfStockButtonComponent,
     Components.TableContainerComponent
   ]
 })
