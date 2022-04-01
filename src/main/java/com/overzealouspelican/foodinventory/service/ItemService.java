@@ -11,7 +11,10 @@ public class ItemService {
     public final ItemRepository itemRepository;
 
     public Item findOrNew(Integer id) {
-        return itemRepository.findById(id).orElse(new Item());
+        if(id != null){
+            return itemRepository.findById(id).orElse(new Item());
+        }
+        return new Item();
     }
 
     public Item create(Item item) {
