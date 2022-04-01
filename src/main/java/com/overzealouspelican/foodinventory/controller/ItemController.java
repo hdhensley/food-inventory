@@ -5,38 +5,38 @@ import com.overzealouspelican.foodinventory.model.Location;
 import com.overzealouspelican.foodinventory.repo.ItemRepository;
 import com.overzealouspelican.foodinventory.repo.LocationRepository;
 import com.overzealouspelican.foodinventory.request.ItemRequest;
+import com.overzealouspelican.foodinventory.service.ItemService;
+import com.overzealouspelican.foodinventory.service.LocationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.Optional;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(path="api/item")
 public class ItemController {
-    private final LocationRepository locationRepository;
-    private final ItemRepository itemRepository;
-
-    public ItemController(LocationRepository locationRepository, ItemRepository itemRepository) {
-        this.locationRepository = locationRepository;
-        this.itemRepository = itemRepository;
-    }
+    private final LocationService locationService;
+    private final ItemService itemService;
 
     @PostMapping
     @ResponseBody
     public Item saveItem(@RequestBody ItemRequest request) {
         try {
-            Location location = getLocationFromRequest(request);
-            Item item = getItemFromRequest(request);
+            Item item = itemService.findOrNew(request.getId());
 
             item.setName(request.getName());
             item.setQuantity(request.getQuantity());
-            item.setLocation(location);
+            item.setLocation(locationService.findOrFail(request.getLocationId()));
             item.setRemovedDate(request.getRemovedDate());
             item.setDeletedDate(request.getDeletedDate());
 
@@ -44,36 +44,9 @@ public class ItemController {
                 item.setDateAdded(new Date());
             }
 
-            itemRepository.save(item);
-
-            return item;
+            return itemService.create(item);
         } catch (IllegalArgumentException e){
-            // throw a 422
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        return null;
-    }
-
-    public Item getItemFromRequest(ItemRequest request) {
-        Optional<Item> _item = null;
-
-        if(request.getId() != null){
-            _item = itemRepository.findById(request.getId());
-        } else {
-            _item = Optional.of(new Item());
-        }
-
-        return _item.get();
-    }
-
-    public Location getLocationFromRequest(ItemRequest request) throws IllegalArgumentException {
-        Optional<Location> _location;
-
-        _location = locationRepository.findById(request.getLocationId());
-
-        if(!_location.isPresent()) {
-            throw new IllegalArgumentException("Invalid data");
-        }
-
-        return _location.get();
     }
 }

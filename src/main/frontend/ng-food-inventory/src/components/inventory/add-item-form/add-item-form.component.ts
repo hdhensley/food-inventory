@@ -14,6 +14,8 @@ export class AddItemFormComponent implements OnInit {
 
   showModal: boolean = false;
 
+  lastItem: Item | undefined; //Should always be an Item object
+
   constructor(
     public inventoryService: InventoryService,
     public locationService: LocationService,
@@ -55,7 +57,7 @@ export class AddItemFormComponent implements OnInit {
     item.quantity = value.quantity;
     item.location = this.inventoryService.getLocation(value.location);
 
-    this.inventoryService.addItem(item);
+    this.inventoryService.addItem(item).then(i => this.lastItem = i);
 
     this.itemForm?.reset();
     this.itemNameRef?.nativeElement?.focus();

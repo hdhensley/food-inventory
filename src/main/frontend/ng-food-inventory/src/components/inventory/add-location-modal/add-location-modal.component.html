@@ -1,19 +1,30 @@
 <div class="modal" [ngClass]="{'modal-open': showModal}">
   <form *ngIf="newLocationForm" [formGroup]="newLocationForm" (ngSubmit)="saveLocation(newLocationForm)">
     <div class="modal-box">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="location">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="newLocation">
         New Location
       </label>
       <input
         id="newLocation"
         name="newLocation"
         formControlName="newLocation"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="input input-bordered w-full max-w-xs"
         type="text"
         placeholder="Location Name">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="parent">
+        Parent
+      </label>
+      <select id="parent" name="parent" formControlName="parent" class="form-control w-full select select-bordered">
+        <option [value]="null">None</option>
+        <option *ngFor="let location of locations()" [value]="location.id">{{location.name}}</option>
+      </select>
       <div class="modal-action flex justify-center">
-        <button type="submit" class="btn btn-primary">Accept</button>
-        <button (click)="cancel()" class="btn">Close</button>
+        <button
+          type="submit"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Accept</button>
+        <button
+          (click)="cancel()"
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Close</button>
       </div>
     </div>
   </form>

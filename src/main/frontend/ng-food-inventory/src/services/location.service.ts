@@ -24,7 +24,8 @@ export class LocationService {
   generateRequest(location: Location) {
     return {
       name: location.name,
-      inventoryId: location.inventory_id
+      inventoryId: location.inventory_id,
+      parent: location.parent
     };
   }
 }
