@@ -18,6 +18,7 @@ import {PipeModule} from "../pipes/pipe.module";
     Components.SearchFilterPipe,
     Components.NavigationComponent,
     Components.InventoryFilterComponent,
+    Components.ItemAddedAlertComponent,
     Components.ItemTableComponent,
     Components.OosTableComponent,
     Components.TableContainerComponent,
@@ -42,6 +43,7 @@ import {PipeModule} from "../pipes/pipe.module";
     Components.InactiveItemsPipe,
     Components.NavigationComponent,
     Components.InventoryFilterComponent,
+    Components.ItemAddedAlertComponent,
     Components.ItemTableComponent,
     Components.OosTableComponent,
     Components.TableContainerComponent

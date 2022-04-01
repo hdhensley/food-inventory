@@ -74,10 +74,17 @@ export class InventoryService {
     return this.inventory.locations.find(l => l.id === id);
   }
 
-  addItem(item: Item): void {
-    this.itemService.saveItem(item)
-      .then(res => this.loadInventory())
-      .catch(err => console.error(err));
+  getLocations(): Location[] {
+    return this.inventory.locations;
+  }
+
+  addItem(item: Item): Promise<Item | undefined> {
+    const save = this.itemService.saveItem(item);
+
+    save.then(res => this.loadInventory()).catch(err => console.error(err));
+
+    // @ts-ignore
+    return save;
   }
 
   addLocation(location: Location): Promise<Object | undefined> {

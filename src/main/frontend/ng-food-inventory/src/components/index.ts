@@ -9,5 +9,6 @@ export * from './inventory/filter/filter.component';
 export * from './inventory/filter/inactive-items.pipe';
 export * from './inventory/filter/search-filter.pipe';
 export * from './inventory/inventory-filter/inventory-filter.component';
+export * from './inventory/item-added-alert/item-added-alert.component';
 export * from './inventory/item-table/item-table.component';
 export * from './inventory/oos-table/oos-table.component';

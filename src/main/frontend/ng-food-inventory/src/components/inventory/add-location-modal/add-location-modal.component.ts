@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {LocationService} from "../../../services/location.service";
-import {Location} from "../../../models/location.model";
 import {InventoryService} from "../../../services";
+import {Location} from "../../../models/location.model";
 
 @Component({
   selector: 'app-add-location-modal',
@@ -17,8 +16,7 @@ export class AddLocationModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private inventoryService: InventoryService,
-    private locationService: LocationService
+    private inventoryService: InventoryService
   ){}
 
   ngOnInit(): void {
@@ -27,7 +25,8 @@ export class AddLocationModalComponent implements OnInit {
         validators: [
           Validators.required
         ]
-      })
+      }),
+      parent: new FormControl(null)
     });
   }
 
@@ -39,6 +38,7 @@ export class AddLocationModalComponent implements OnInit {
     const location = new Location();
     location.name = value.newLocation;
     location.inventory_id = this.inventoryService.inventory.id;
+    location.parent = value.parent;
 
     this.inventoryService.addLocation(location)
       .then((res) => {
@@ -51,5 +51,9 @@ export class AddLocationModalComponent implements OnInit {
   cancel() {
     this.newLocationForm?.reset();
     this.closeModal.emit(true);
+  }
+
+  locations() {
+    return this.inventoryService.getLocations();
   }
 }

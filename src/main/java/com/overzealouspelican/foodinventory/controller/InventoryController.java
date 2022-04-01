@@ -2,6 +2,8 @@ package com.overzealouspelican.foodinventory.controller;
 
 import com.overzealouspelican.foodinventory.model.Inventory;
 import com.overzealouspelican.foodinventory.repo.InventoryRepository;
+import com.overzealouspelican.foodinventory.service.InventoryService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,34 +12,27 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(path="api/inventory")
 public class InventoryController {
-    private final InventoryRepository inventoryRepository;
-
-    public InventoryController(InventoryRepository inventoryRepository) {
-        this.inventoryRepository = inventoryRepository;
-    }
+    private final InventoryService inventoryService;
 
     @PostMapping
     @ResponseBody
     public void saveInventory(@RequestBody Inventory inventory) {
+        // @TODO Allow inventory uploads in the same format as the download
         log.debug(inventory.toString());
     }
 
     @GetMapping
     @ResponseBody
     public Inventory getInventory(@RequestParam String key) {
-        Inventory inventory = inventoryRepository.findByInventoryKey(key);
+        Inventory inventory = inventoryService.findByInventoryKey(key);
 
         if(inventory != null){
             return inventory;
         }
 
-        Inventory newInventory = new Inventory();
-        newInventory.setInventoryKey(key);
-
-        inventoryRepository.save(newInventory);
-
-        return newInventory;
+        return inventoryService.createNewInventory(key);
     }
 }
