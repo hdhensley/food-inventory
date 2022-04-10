@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 
 import * as Pipes from '.';
 
+const pipes = [
+  Pipes.ActiveItemsPipe,
+  Pipes.DisplayDatePipe,
+  Pipes.InactiveItemsPipe,
+  Pipes.SearchFilterPipe
+];
+
 @NgModule({
-  declarations: [
-    Pipes.DisplayDatePipe
-  ],
-  imports: [],
-  providers: [],
-  bootstrap: [],
-  exports: [
-    Pipes.DisplayDatePipe
-  ]
+  declarations: pipes,
+  providers: pipes,
+  exports: pipes
 })
 export class PipeModule { }

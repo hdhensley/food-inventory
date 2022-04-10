@@ -7,7 +7,7 @@ import {environment} from "../environments/environment";
 import {ItemService} from "./item.service";
 import {BehaviorSubject} from "rxjs";
 import {LocationService} from "./location.service";
-import {ActiveItemsPipe, InactiveItemsPipe} from "../components";
+import {ActiveItemsPipe, InactiveItemsPipe} from "../pipes";
 
 @Injectable({
   providedIn: 'root'

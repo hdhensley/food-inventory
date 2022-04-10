@@ -2,8 +2,7 @@
 
   <app-table-container title="Inventory" [showTable]="inventoryService.hasActiveItems()">
 
-    <app-item-table class="hidden md:block"></app-item-table>
-    <app-item-cards class="md:hidden"></app-item-cards>
+    <app-item-cards></app-item-cards>
 
     <div class="tableFilter">
       <app-inventory-filter *ngIf="inventoryService.inventory.locations.length > 0"></app-inventory-filter>

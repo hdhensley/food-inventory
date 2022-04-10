@@ -4,8 +4,10 @@ module.exports = {
     './src/**/*.{html,ts}',
   ],
   darkMode: 'class', // or 'media' or 'class'
-  theme: {
-    extend: {},
+  daisyui: {
+    themes: [
+      'emerald',
+    ],
   },
   variants: {
     extend: {},
