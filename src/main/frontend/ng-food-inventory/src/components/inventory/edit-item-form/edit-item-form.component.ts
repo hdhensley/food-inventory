@@ -27,7 +27,7 @@ export class EditItemFormComponent implements OnInit {
         validators: [Validators.required]
       }),
       brand: new FormControl(this.item?.brand, {
-        validators: [Validators.required]
+        validators: []
       }),
       quantity: new FormControl(this.item?.quantity, {
         validators: [Validators.required, Validators.pattern(/^[0-9]+$/)]

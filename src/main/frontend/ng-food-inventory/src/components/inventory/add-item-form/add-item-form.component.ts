@@ -31,7 +31,7 @@ export class AddItemFormComponent implements OnInit {
         validators: [Validators.required]
       }),
       brand: new FormControl('', {
-        validators: [Validators.required]
+        validators: []
       }),
       quantity: new FormControl('', {
         validators: [Validators.required, Validators.pattern(/^[0-9]+$/)]
