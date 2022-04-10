@@ -8,6 +8,7 @@ import java.util.Date;
 public class ItemRequest {
     Integer locationId;
     Integer id;
+    String brand;
     String name;
     Float quantity;
     Date removedDate;

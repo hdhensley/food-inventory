@@ -19,6 +19,6 @@
     </div>
   </div>
   <div *ngIf="!locationService.isActive(0)" class="">
-    <a [routerLink]="['/add-items']" class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2">Add Item</a>
+    <a [routerLink]="['/', 'item', 'create']" class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2">Add Item</a>
   </div>
 </div>

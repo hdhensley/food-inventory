@@ -2,6 +2,7 @@ package com.overzealouspelican.foodinventory.service;
 
 import com.overzealouspelican.foodinventory.model.Item;
 import com.overzealouspelican.foodinventory.repo.ItemRepository;
+import com.overzealouspelican.foodinventory.request.ItemRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +11,14 @@ import org.springframework.stereotype.Service;
 public class ItemService {
     public final ItemRepository itemRepository;
 
-    public Item findOrNew(Integer id) {
-        if(id != null){
-            return itemRepository.findById(id).orElse(new Item());
+    public Item findOrNew(ItemRequest request) {
+        if(request.getId() != null){
+            return itemRepository.findById(request.getId()).orElse(new Item());
         }
         return new Item();
     }
 
-    public Item create(Item item) {
+    public Item save(Item item) {
         return itemRepository.save(item);
     }
 }

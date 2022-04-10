@@ -58,6 +58,7 @@ bootJar.dependsOn buildFrontend
 
 // Build a docker image for the full application
 task dockerBuild(type: Exec) {
+	clean
 	commandLine 'sh', '-c', 'docker build -t dhensley/food-inventory .'
 }
 
@@ -72,7 +73,7 @@ dockerTag.dependsOn dockerBuild
 
 // Deploy the docker image
 task dockerDeploy(type: Exec) {
-	commandLine 'sh', '-c', 'docker push dhensley/food-inventory:latest';
+	commandLine 'sh', '-c', 'docker push dhensley/food-inventory:latest'
 }
 
 dockerDeploy.dependsOn dockerTag

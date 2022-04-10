@@ -10,7 +10,7 @@ import {Item} from "../../../models/item.model";
 export class AddItemFormComponent implements OnInit {
   itemForm: FormGroup|undefined;
 
-  @ViewChild('itemName') itemNameRef: ElementRef|undefined;
+  @ViewChild('brandName') itemPrimaryRef: ElementRef|undefined;
 
   showModal: boolean = false;
 
@@ -28,20 +28,16 @@ export class AddItemFormComponent implements OnInit {
 
     this.itemForm = this.fb.group({
       item: new FormControl('', {
-        validators: [
-          Validators.required
-        ]
+        validators: [Validators.required]
+      }),
+      brand: new FormControl('', {
+        validators: []
       }),
       quantity: new FormControl('', {
-        validators: [
-          Validators.required,
-          Validators.pattern(/^[0-9]+$/)
-        ]
+        validators: [Validators.required, Validators.pattern(/^[0-9]+$/)]
       }),
       location: new FormControl(currentLocation, {
-        validators: [
-          Validators.required
-        ]
+        validators: [Validators.required]
       })
     });
   }
@@ -54,13 +50,14 @@ export class AddItemFormComponent implements OnInit {
     //save the item and quantity to the inventory
     const item = new Item();
     item.name = value.item;
+    item.brand = value.brand;
     item.quantity = value.quantity;
     item.location = this.inventoryService.getLocation(value.location);
 
-    this.inventoryService.addItem(item).then(i => this.lastItem = i);
+    this.inventoryService.saveItem(item).then(i => this.lastItem = i);
 
     this.itemForm?.reset();
-    this.itemNameRef?.nativeElement?.focus();
+    this.itemPrimaryRef?.nativeElement?.focus();
   }
 
   addLocation() {

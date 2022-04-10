@@ -1,9 +1,6 @@
 package com.overzealouspelican.foodinventory.controller;
 
 import com.overzealouspelican.foodinventory.model.Item;
-import com.overzealouspelican.foodinventory.model.Location;
-import com.overzealouspelican.foodinventory.repo.ItemRepository;
-import com.overzealouspelican.foodinventory.repo.LocationRepository;
 import com.overzealouspelican.foodinventory.request.ItemRequest;
 import com.overzealouspelican.foodinventory.service.ItemService;
 import com.overzealouspelican.foodinventory.service.LocationService;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -32,8 +28,9 @@ public class ItemController {
     @ResponseBody
     public Item saveItem(@RequestBody ItemRequest request) {
         try {
-            Item item = itemService.findOrNew(request.getId());
+            Item item = itemService.findOrNew(request);
 
+            item.setBrand(request.getBrand());
             item.setName(request.getName());
             item.setQuantity(request.getQuantity());
             item.setLocation(locationService.findOrFail(request.getLocationId()));
@@ -44,7 +41,7 @@ public class ItemController {
                 item.setDateAdded(new Date());
             }
 
-            return itemService.create(item);
+            return itemService.save(item);
         } catch (IllegalArgumentException e){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }

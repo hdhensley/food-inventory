@@ -1,19 +1,29 @@
-<div *ngFor="let item of inventoryService.items | activeItems: locationService.activeLocation | searchFilter: inventoryService.search" class="card w-full mb-3 bg-base-300 text-base-content">
-  <div class="card-body">
-    <h2 class="card-title">{{item.name}}</h2>
-    <div class="flex justify-between mt-3">
-      <p *ngIf="item.location">
-        <strong>Location</strong><br />
-        {{item.location.name}}
-      </p>
-      <p *ngIf="item.dateAdded">
-        <strong>Added</strong><br />
-        {{item.dateAdded  | displayDate}}
-      </p>
-    </div>
-    <div class="card-actions justify-between">
-      <app-out-of-stock-button [item]="item"></app-out-of-stock-button>
-      <app-count-manager [item]="item"></app-count-manager>
+<div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+  <div *ngFor="let item of inventoryService.items | activeItems: locationService.activeLocation | searchFilter: inventoryService.search" class="card w-full mb-3 bg-base-300 text-base-content">
+    <div class="card-body">
+      <div class="flex flex-row justify-between">
+        <div class="flex flex-col">
+          <span class="italic">{{item.brand ? item.brand : ''}}</span>
+          <span class="card-title">{{item.name}}</span>
+        </div>
+        <div class="flex pr-2">
+          <app-edit-item-button [item]="item"></app-edit-item-button>
+        </div>
+      </div>
+      <div class="flex flex-row justify-between mt-3">
+        <p *ngIf="item.location">
+          <strong>Location</strong><br />
+          {{item.location.name}}
+        </p>
+        <p *ngIf="item.dateAdded">
+          <strong>Added</strong><br />
+          {{item.dateAdded  | displayDate}}
+        </p>
+      </div>
+      <div class="card-actions justify-between">
+        <app-out-of-stock-button [item]="item"></app-out-of-stock-button>
+        <app-count-manager [item]="item"></app-count-manager>
+      </div>
     </div>
   </div>
 </div>
