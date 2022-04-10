@@ -9,7 +9,7 @@ import {InventoryService, LocationService} from "../../../services";
 })
 export class EditItemFormComponent implements OnInit {
   @Input() item: Item | undefined;
-  @ViewChild('itemName') itemNameRef: ElementRef|undefined;
+  @ViewChild('brandName') itemPrimaryRef: ElementRef|undefined;
 
   itemForm: FormGroup|undefined;
   showModal: boolean = false;
@@ -49,15 +49,10 @@ export class EditItemFormComponent implements OnInit {
     this.item.quantity = value.quantity;
     this.item.location = this.inventoryService.getLocation(value.location);
 
-    console.log(this.item);
-
     this.inventoryService.saveItem(this.item).then(i => this.lastItem = i);
-
-    this.itemNameRef?.nativeElement?.focus();
   }
 
   addLocation() {
-    console.log('show the add location modal');
     this.showModal = true;
   }
 }
