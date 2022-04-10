@@ -1,19 +1,18 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {InventoryService, LocationService} from "../../../services";
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Item} from "../../../models/item.model";
+import {InventoryService, LocationService} from "../../../services";
 
 @Component({
-  selector: 'app-add-item-form',
-  templateUrl: './add-item-form.component.html'
+  selector: 'app-edit-item-form',
+  templateUrl: './edit-item-form.component.html',
 })
-export class AddItemFormComponent implements OnInit {
-  itemForm: FormGroup|undefined;
-
+export class EditItemFormComponent implements OnInit {
+  @Input() item: Item | undefined;
   @ViewChild('itemName') itemNameRef: ElementRef|undefined;
 
+  itemForm: FormGroup|undefined;
   showModal: boolean = false;
-
   lastItem: Item | undefined; //Should always be an Item object
 
   constructor(
@@ -23,42 +22,37 @@ export class AddItemFormComponent implements OnInit {
   ){}
 
   ngOnInit() {
-    const currentLocation =
-      this.locationService.activeLocation === 0 ? null : this.locationService.activeLocation;
-
     this.itemForm = this.fb.group({
-      item: new FormControl('', {
+      item: new FormControl(this.item?.name, {
         validators: [Validators.required]
       }),
-      brand: new FormControl('', {
+      brand: new FormControl(this.item?.brand, {
         validators: [Validators.required]
       }),
-      quantity: new FormControl('', {
+      quantity: new FormControl(this.item?.quantity, {
         validators: [Validators.required, Validators.pattern(/^[0-9]+$/)]
       }),
-      location: new FormControl(currentLocation, {
+      location: new FormControl(this.item?.location?.id, {
         validators: [Validators.required]
       })
     });
   }
 
   onFormSubmit({ value, valid }: { value: any, valid: boolean }): void {
-    if(!valid) {
+    if(!valid || !this.item) {
       return;
     }
 
     //save the item and quantity to the inventory
-    const item = new Item();
-    item.name = value.item;
-    item.brand = value.brand;
-    item.quantity = value.quantity;
-    item.location = this.inventoryService.getLocation(value.location);
+    this.item.name = value.item;
+    this.item.brand = value.brand;
+    this.item.quantity = value.quantity;
+    this.item.location = this.inventoryService.getLocation(value.location);
 
-    console.log(item);
+    console.log(this.item);
 
-    this.inventoryService.saveItem(item).then(i => this.lastItem = i);
+    this.inventoryService.saveItem(this.item).then(i => this.lastItem = i);
 
-    this.itemForm?.reset();
     this.itemNameRef?.nativeElement?.focus();
   }
 

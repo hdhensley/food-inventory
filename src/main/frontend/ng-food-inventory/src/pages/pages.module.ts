@@ -8,6 +8,7 @@ import {ComponentModule} from "../components/component.module";
 @NgModule({
   declarations: [
     Pages.AddItemsComponent,
+    Pages.EditItemComponent,
     Pages.InventoryComponent,
     Pages.OutOfStockComponent
   ],
@@ -20,6 +21,7 @@ import {ComponentModule} from "../components/component.module";
   bootstrap: [],
   exports: [
     Pages.AddItemsComponent,
+    Pages.EditItemComponent,
     Pages.InventoryComponent,
     Pages.OutOfStockComponent
   ]

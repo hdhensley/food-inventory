@@ -18,6 +18,7 @@ export class ItemService {
     return {
       id: item.id,
       locationId: item.location?.id,
+      brand: item.brand,
       name: item.name,
       quantity: item.quantity,
       removedDate: item.removedDate,

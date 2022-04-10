@@ -58,6 +58,10 @@ export class InventoryService {
     return items;
   }
 
+  getItem(itemId: string | null): Item | undefined {
+    return this.items.find(i => i.id == itemId);
+  }
+
   hasItems(): boolean {
     return !!this.items.length;
   }
@@ -78,7 +82,7 @@ export class InventoryService {
     return this.inventory.locations;
   }
 
-  addItem(item: Item): Promise<Item | undefined> {
+  saveItem(item: Item): Promise<Item | undefined> {
     const save = this.itemService.saveItem(item);
 
     save.then(res => this.loadInventory()).catch(err => console.error(err));

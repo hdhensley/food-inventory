@@ -18,6 +18,8 @@ public class Item {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
+    private String brand;
+
     private String name;
 
     private Float quantity;
