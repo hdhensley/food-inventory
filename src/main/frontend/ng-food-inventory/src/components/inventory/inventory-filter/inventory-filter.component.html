@@ -13,8 +13,8 @@
       *ngFor="let location of inventoryService.inventory.locations"
       (click)="locationService.activeLocation = location.id"
       [ngClass]="{
-        'active-nav-link' : locationService.isActive(location.id)
-      }">
+      'active-nav-link' : locationService.isActive(location.id)
+    }">
       {{location.name}}
     </div>
   </div>

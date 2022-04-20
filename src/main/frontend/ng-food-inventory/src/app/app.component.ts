@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {InventoryService} from "../services";
+import {ThemeService} from "../services/theme.service";
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,8 @@ import {InventoryService} from "../services";
 export class AppComponent {
   title = 'Food Inventory';
 
-  constructor(public inventoryService: InventoryService) {}
+  constructor(
+    public inventoryService: InventoryService,
+    public themeService: ThemeService
+  ){}
 }

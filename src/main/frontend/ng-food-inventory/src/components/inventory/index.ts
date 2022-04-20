@@ -11,3 +11,4 @@ export * from './item-cards/item-cards.component';
 export * from './item-table/item-table.component';
 export * from './oos-table/oos-table.component';
 export * from './out-of-stock-button/out-of-stock-button.component';
+export * from './theme-chooser/theme-chooser.component';

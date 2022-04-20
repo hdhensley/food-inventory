@@ -74,6 +74,13 @@ export class InventoryService {
     return !!this.inactivePipe.transform(this.items).length;
   }
 
+  getCurrentLocation(): Location|undefined {
+    if(this.locationService.activeLocation !== undefined) {
+      return this.getLocation(this.locationService.activeLocation);
+    }
+    return undefined;
+  }
+
   getLocation(id: number): Location|undefined {
     return this.inventory.locations.find(l => l.id === id);
   }
