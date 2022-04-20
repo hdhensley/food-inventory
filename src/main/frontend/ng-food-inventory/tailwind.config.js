@@ -4,11 +4,6 @@ module.exports = {
     './src/**/*.{html,ts}',
   ],
   darkMode: 'class', // or 'media' or 'class'
-  daisyui: {
-    themes: [
-      'emerald',
-    ],
-  },
   variants: {
     extend: {},
   },

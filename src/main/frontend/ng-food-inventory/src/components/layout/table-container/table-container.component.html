@@ -11,7 +11,7 @@
   <div *ngIf="showTable">
     <ng-content></ng-content>
   </div>
-  <div class="flex justify-center alert alert-info font-bold text-xl" *ngIf="!showTable">
+  <div class="flex justify-center bg-secondary text-secondary-content p-6 rounded font-bold text-xl" *ngIf="!showTable">
     <ng-content select=".noTableData"></ng-content>
   </div>
 </app-card>

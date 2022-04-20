@@ -4,8 +4,32 @@
 
     <app-item-cards></app-item-cards>
 
-    <div class="tableFilter">
-      <app-inventory-filter *ngIf="inventoryService.inventory.locations.length > 0"></app-inventory-filter>
+    <div class="tableFilter" *ngIf="inventoryService.inventory.locations.length > 0">
+      <div class="navbar-wrapper rounded w-full md:hidden">
+
+        <div class="w-full flex flex-row md:justify-between justify-end">
+
+          <div *ngIf="!locationService.isActive(0)" class="">
+            <a [routerLink]="['/', 'item', 'create']" class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2">Add Item</a>
+          </div>
+
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="nav-link rounded-btn active-nav-link">
+              {{inventoryService.getCurrentLocation()?.name || "All"}}
+            </label>
+            <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-neutral text-neutral-content rounded-box w-52 max-h-screen">
+              <li>
+                <a (click)="locationService.activeLocation = 0">All</a>
+              </li>
+              <li *ngFor="let location of inventoryService.getLocations()">
+                <a (click)="locationService.activeLocation = location.id">{{location.name}}</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <app-inventory-filter class="hidden md:block"></app-inventory-filter>
     </div>
 
     <div class="filter">
@@ -14,7 +38,7 @@
 
     <div class="noTableData">
       There's nothing to show
-      <a [routerLink]="['/','item','create']" class="btn btn-ghost btn-sm rounded-btn bg-secondary hover:bg-secondary-focus text-secondary-content ml-3">
+      <a [routerLink]="['/','item','create']" class="btn btn-ghost btn-sm rounded-btn bg-neutral hover:bg-neutral-focus text-neutral-content ml-3">
         Add Items
       </a>
     </div>

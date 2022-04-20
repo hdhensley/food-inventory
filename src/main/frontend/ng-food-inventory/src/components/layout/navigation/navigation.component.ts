@@ -6,4 +6,9 @@ import {Component} from "@angular/core";
 })
 export class NavigationComponent {
   menuOpen: boolean = false;
+  themeChooserOpen: boolean = false;
+
+  setTheme(themeName: string): void {
+    console.log(themeName);
+  }
 }

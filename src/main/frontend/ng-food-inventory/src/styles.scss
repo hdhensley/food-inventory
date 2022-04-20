@@ -11,7 +11,7 @@
   @apply btn btn-ghost btn-sm hover:text-accent;
 }
 .active-nav-link {
-  @apply bg-accent hover:bg-accent-focus hover:text-neutral-content;
+  @apply bg-accent text-accent-content hover:bg-accent-focus hover:text-accent-content;
 }
 
 .responsive-nav-link {

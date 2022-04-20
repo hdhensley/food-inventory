@@ -19,7 +19,8 @@ const items = [
   I.ItemCardsComponent,
   I.ItemTableComponent,
   I.OosTableComponent,
-  I.OutOfStockButtonComponent
+  I.OutOfStockButtonComponent,
+  I.ThemeChooserComponent
 ];
 
 @NgModule({
