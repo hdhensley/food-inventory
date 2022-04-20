@@ -28,6 +28,7 @@
   </div>
   <div class="flex-none">
     <app-download-items></app-download-items>
+    <app-theme-chooser></app-theme-chooser>
     <button
       (click)="menuOpen = !menuOpen"
       class="btn btn-square btn-ghost hover:text-accent flex md:hidden">
@@ -35,7 +36,6 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
-    <app-theme-chooser></app-theme-chooser>
   </div>
 </div>
 
@@ -56,7 +56,7 @@
       Out of Stock
     </a>
     <a
-      [routerLink]="['add-items']"
+      [routerLink]="['item','create']"
       (click)="menuOpen = false"
       routerLinkActive="responsive-active-nav-link"
       class="responsive-nav-link">

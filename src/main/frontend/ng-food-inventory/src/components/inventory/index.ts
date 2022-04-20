@@ -6,6 +6,7 @@ export * from './edit-item-button/edit-item-button.component';
 export * from './edit-item-form/edit-item-form.component';
 export * from './filter/filter.component';
 export * from './inventory-filter/inventory-filter.component';
+export * from './inventory-location-selector/inventory-location-selector.component';
 export * from './item-added-alert/item-added-alert.component';
 export * from './item-cards/item-cards.component';
 export * from './item-table/item-table.component';
