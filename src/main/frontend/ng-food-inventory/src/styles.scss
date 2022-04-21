@@ -4,20 +4,12 @@
 @import 'tailwindcss/utilities';
 
 .navbar-wrapper {
-  @apply navbar bg-neutral text-neutral-content flex flex-row mb-4;
+  @apply navbar bg-neutral text-neutral-content mb-4;
 }
 
 .nav-link {
-  @apply btn btn-ghost btn-sm hover:text-accent;
+  @apply btn btn-ghost btn-sm hover:text-accent py-2;
 }
 .active-nav-link {
   @apply bg-accent text-accent-content hover:bg-accent-focus hover:text-accent-content;
-}
-
-.responsive-nav-link {
-  @apply flex justify-center py-2;
-}
-
-.responsive-active-nav-link {
-  @apply bg-accent text-accent-content;
 }

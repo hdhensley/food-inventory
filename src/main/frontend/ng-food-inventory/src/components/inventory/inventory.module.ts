@@ -15,6 +15,7 @@ const items = [
   I.EditItemFormComponent,
   I.FilterComponent,
   I.InventoryFilterComponent,
+  I.InventoryLocationSelectorComponent,
   I.ItemAddedAlertComponent,
   I.ItemCardsComponent,
   I.ItemTableComponent,

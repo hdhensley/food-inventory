@@ -1,66 +1,27 @@
 <div class="navbar-wrapper">
   <div class="flex-none px-2 mx-2">
     <a [routerLink]="['']" class="text-lg font-bold">
-      Freezer Inventory
+      Inventory
     </a>
   </div>
   <div class="flex-1 px-2 mx-2">
     <div class="items-stretch hidden md:flex">
-      <a
-        [routerLink]="['inventory']"
-        routerLinkActive="active-nav-link"
-        class="nav-link">
-        Inventory
-      </a>
-      <a
-        [routerLink]="['out-of-stock']"
-        routerLinkActive="active-nav-link"
-        class="nav-link">
-        Out of Stock
-      </a>
-      <a
-        [routerLink]="['item','create']"
-        routerLinkActive="active-nav-link"
-        class="nav-link">
-        Add Items
-      </a>
+      <app-nav-items></app-nav-items>
     </div>
   </div>
   <div class="flex-none">
     <app-download-items></app-download-items>
-    <button
-      (click)="menuOpen = !menuOpen"
-      class="btn btn-square btn-ghost hover:text-accent flex md:hidden">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
     <app-theme-chooser></app-theme-chooser>
-  </div>
-</div>
 
-<div *ngIf="menuOpen">
-  <div class="items-stretch flex flex-col pb-4">
-    <a
-      [routerLink]="['inventory']"
-      (click)="menuOpen = false"
-      routerLinkActive="responsive-active-nav-link"
-      class="responsive-nav-link">
-      Inventory
-    </a>
-    <a
-      [routerLink]="['out-of-stock']"
-      (click)="menuOpen = false"
-      routerLinkActive="responsive-active-nav-link"
-      class="responsive-nav-link">
-      Out of Stock
-    </a>
-    <a
-      [routerLink]="['add-items']"
-      (click)="menuOpen = false"
-      routerLinkActive="responsive-active-nav-link"
-      class="responsive-nav-link">
-      Add Items
-    </a>
+    <div class="dropdown dropdown-end md:hidden">
+      <label tabindex="0" class="btn m-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </label>
+      <div tabindex="0" class="dropdown-content w-44 menu p-2 shadow bg-neutral text-neutral-content rounded-box">
+        <app-nav-items class="flex flex-col justify-end p-2"></app-nav-items>
+      </div>
+    </div>
   </div>
 </div>
