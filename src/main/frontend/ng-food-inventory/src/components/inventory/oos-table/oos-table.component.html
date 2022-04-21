@@ -1,4 +1,4 @@
-<table class="table table-zebra w-full">
+<table class="table table-zebra w-full bg-base-300 text-base-content">
   <thead>
   <tr>
     <th>ID</th>
@@ -10,7 +10,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let item of inventoryService.items | inactiveItems; let id = index;">
+  <tr class="hover" *ngFor="let item of inventoryService.items | inactiveItems; let id = index;">
     <td>{{item.id}}</td>
     <td>{{item.brand ? item.brand : '-'}}</td>
     <td>{{item.name}}</td>

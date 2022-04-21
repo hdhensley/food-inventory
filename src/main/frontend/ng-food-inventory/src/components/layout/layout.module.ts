@@ -11,6 +11,7 @@ const items = [
   L.CardComponent,
   L.FormWrapperComponent,
   L.NavigationComponent,
+  L.NavItemsComponent,
   L.TableContainerComponent,
 ];
 

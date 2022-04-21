@@ -17,6 +17,10 @@ export class LocationService {
     return this.activeLocation == locationId;
   }
 
+  clearActive() {
+    this.activeLocation = 0;
+  }
+
   saveLocation(location: Location) {
     return this.http.post('http://' + window.location.hostname + ':8080/api/location', this.generateRequest(location)).toPromise();
   }
