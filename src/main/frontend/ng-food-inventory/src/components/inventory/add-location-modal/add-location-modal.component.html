@@ -1,20 +1,23 @@
 <div class="modal" [ngClass]="{'modal-open': showModal}">
   <form *ngIf="newLocationForm" [formGroup]="newLocationForm" (ngSubmit)="saveLocation(newLocationForm)">
-    <div class="modal-box">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="newLocation">
+    <div class="modal-box bg-primary text-primary-content">
+      <label class="block text-sm font-bold mb-2" for="newLocation">
         New Location
       </label>
       <input
         id="newLocation"
         name="newLocation"
         formControlName="newLocation"
-        class="input input-bordered w-full max-w-xs"
+        class="input input-bordered w-full max-w-xs bg-neutral text-neutral-content"
         type="text"
         placeholder="Location Name">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="parent">
+      <label class="block text-sm font-bold my-2" for="parent">
         Parent
       </label>
-      <select id="parent" name="parent" formControlName="parent" class="form-control w-full select select-bordered">
+      <select id="parent" 
+              name="parent" 
+              formControlName="parent" 
+              class="form-control w-full select select-bordered bg-neutral text-neutral-content">
         <option [value]="null">None</option>
         <option *ngFor="let location of locations()" [value]="location.id">{{location.name}}</option>
       </select>

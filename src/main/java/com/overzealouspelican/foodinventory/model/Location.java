@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@JsonNaming(value = PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties({"hibernate_lazy_initializer", "handler"})
 @RequiredArgsConstructor
