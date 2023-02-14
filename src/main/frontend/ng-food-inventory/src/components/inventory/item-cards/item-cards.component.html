@@ -12,11 +12,9 @@
       </div>
       <div class="flex flex-row justify-between mt-3">
         <p *ngIf="item.location">
-          <strong>Location</strong><br />
           {{item.location.name}}
         </p>
         <p *ngIf="item.dateAdded">
-          <strong>Added</strong><br />
           {{item.dateAdded  | displayDate}}
         </p>
       </div>
