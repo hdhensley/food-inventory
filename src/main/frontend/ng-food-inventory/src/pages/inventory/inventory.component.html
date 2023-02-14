@@ -1,6 +1,6 @@
 <div class="xl:container xl:mx-auto h-max">
 
-  <app-table-container title="Inventory" [showTable]="inventoryService.hasActiveItems()">
+  <app-table-container [showTable]="inventoryService.hasActiveItems()">
 
     <app-inventory-location-selector></app-inventory-location-selector>
 

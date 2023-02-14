@@ -3,11 +3,14 @@
     <div class="card-body">
       <div class="flex flex-row justify-between">
         <div class="flex flex-col">
-          <span class="italic">{{item.brand ? item.brand : ''}}</span>
-          <span class="card-title">{{item.name}}</span>
+          <a [routerLink]="['/','item', item.id, 'edit']">
+            <span class="italic">{{item.brand ? item.brand : ' '}}</span>
+            <br />
+            <span class="card-title">{{item.name}}</span>
+          </a>
         </div>
         <div class="flex pr-2">
-          <app-edit-item-button [item]="item"></app-edit-item-button>
+          <app-out-of-stock-button [item]="item"></app-out-of-stock-button>
         </div>
       </div>
       <div class="flex flex-row justify-between mt-3">
@@ -18,8 +21,7 @@
           {{item.dateAdded  | displayDate}}
         </p>
       </div>
-      <div class="card-actions justify-between">
-        <app-out-of-stock-button [item]="item"></app-out-of-stock-button>
+      <div class="card-actions justify-end">
         <app-count-manager [item]="item"></app-count-manager>
       </div>
     </div>
