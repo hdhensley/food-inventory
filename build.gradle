@@ -43,15 +43,20 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+// Run the frontend with hot reloading on http://localhost:4200
+task devFrontend(type: Exec) {
+	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm run start'
+}
+
+// Run the docker image, available at localhost:8080
+task dockerRun(type: Exec) {
+	commandLine 'sh', '-c', 'docker run --name food-inventory -d -v inventory-volume:/opt/db -p 8080:8080 dhensley/food-inventory'
+}
+
 // Build the angular application and copy the dist contents into the spring boot static directory
 task buildFrontend(type: Exec) {
 	commandLine 'sh', '-c', 'rm -rf ./src/main/resources/static'
 	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --aot && cp -r dist/ng-food-inventory/* ../../resources/static/'
-}
-
-// Run the frontend with hot reloading on http://localhost:4200
-task devFrontend(type: Exec) {
-	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm run start'
 }
 
 bootJar.dependsOn buildFrontend
@@ -77,8 +82,3 @@ task dockerDeploy(type: Exec) {
 }
 
 dockerDeploy.dependsOn dockerTag
-
-// Run the docker image, available at localhost:8080
-task dockerRun(type: Exec) {
-	commandLine 'sh', '-c', 'docker run --name food-inventory -d -v inventory-volume:/opt/db -p 8080:8080 dhensley/food-inventory'
-}
