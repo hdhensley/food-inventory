@@ -3,6 +3,12 @@ package com.overzealouspelican.foodinventory.service;
 import com.overzealouspelican.foodinventory.model.Inventory;
 import com.overzealouspelican.foodinventory.repo.InventoryRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,17 +16,35 @@ import org.springframework.stereotype.Service;
 public class InventoryService {
     private final InventoryRepository inventoryRepository;
 
-    public Inventory findOrFail(Integer id) throws IllegalArgumentException {
+    public Inventory findOrFail(int id) throws EntityNotFoundException {
         return inventoryRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Data"));
     }
 
     public Inventory findByInventoryKey(String key) {
-        return inventoryRepository.findByInventoryKey(key);
+        return inventoryRepository.findByInventoryKey(key).orElseThrow(EntityNotFoundException::new);
     }
 
-    public Inventory createNewInventory(String key) {
+    public Set<String> getInventoryKeys() {
+        Set<String> keys = new HashSet<>();
+        
+        inventoryRepository.findAll().forEach((i) -> keys.add(i.getInventoryKey()));
+
+        return keys;
+    }
+
+    public Inventory findOrCreate(String key) {
+        Optional<Inventory> inventory = inventoryRepository.findByInventoryKey(key);
+
+        if(inventory.isPresent()){
+            return inventory.get();
+        }
+
+        return createNew(key);
+    }
+
+    public Inventory createNew(String key) {
         Inventory newInventory = new Inventory();
         newInventory.setInventoryKey(key);
 

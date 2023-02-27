@@ -7,6 +7,7 @@ import {RouterModule} from "@angular/router";
 import {PipeModule} from "../../pipes/pipe.module";
 
 const items = [
+  I.AddInventoryModalComponent,
   I.AddItemFormComponent,
   I.AddLocationModalComponent,
   I.CountManagerComponent,
@@ -16,6 +17,7 @@ const items = [
   I.FilterComponent,
   I.InventoryFilterComponent,
   I.InventoryLocationSelectorComponent,
+  I.InventorySelectorComponent,
   I.ItemAddedAlertComponent,
   I.ItemCardsComponent,
   I.ItemTableComponent,

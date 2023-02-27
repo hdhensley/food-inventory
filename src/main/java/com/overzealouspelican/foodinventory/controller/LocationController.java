@@ -1,14 +1,10 @@
 package com.overzealouspelican.foodinventory.controller;
 
-import com.overzealouspelican.foodinventory.model.Inventory;
 import com.overzealouspelican.foodinventory.model.Location;
-import com.overzealouspelican.foodinventory.repo.InventoryRepository;
-import com.overzealouspelican.foodinventory.repo.LocationRepository;
 import com.overzealouspelican.foodinventory.request.LocationRequest;
 import com.overzealouspelican.foodinventory.service.InventoryService;
 import com.overzealouspelican.foodinventory.service.LocationService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(path="api/location")

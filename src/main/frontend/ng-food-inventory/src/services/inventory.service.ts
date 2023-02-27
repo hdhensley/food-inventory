@@ -3,11 +3,11 @@ import {Inventory} from '../models/Inventory.model';
 import {Item} from "../models/item.model";
 import {Location} from '../models/location.model';
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../environments/environment";
 import {ItemService} from "./item.service";
 import {BehaviorSubject} from "rxjs";
 import {LocationService} from "./location.service";
 import {ActiveItemsPipe, InactiveItemsPipe} from "../pipes";
+import { InventoryKeyService } from "./inventoryKey.service";
 
 @Injectable({
   providedIn: 'root'
@@ -22,21 +22,22 @@ export class InventoryService {
     private itemService: ItemService,
     private locationService: LocationService,
     private activePipe: ActiveItemsPipe,
-    private inactivePipe: InactiveItemsPipe
+    private inactivePipe: InactiveItemsPipe,
+    private inventoryKeyService: InventoryKeyService
   ) {
-    if(!this._loaded){
-      this.loadInventory();
-    }
+    this.inventoryKeyService.keySub.subscribe(key => this.loadInventory());
   }
 
   private loadInventory() {
-    this.http.get('http://' + window.location.hostname + ':8080/api/inventory?key=' + environment.inventoryKey)
-      .toPromise()
-      .then((res: any) => {
-        this._loaded = true;
-        this._inventorySub.next(res);
-      })
-      .catch(err => console.log(err));
+    console.log("Loading inventory " + this.inventoryKeyService.key);
+    this.http.get<Inventory>('http://' + window.location.hostname + ':8080/api/inventory?key=' + this.inventoryKeyService.key)
+      .subscribe({
+        next: (res) => {
+          this._loaded = true;
+          this._inventorySub.next(res);
+        },
+        error: err => console.log(err)
+      });
   }
 
   get loaded(): boolean {
