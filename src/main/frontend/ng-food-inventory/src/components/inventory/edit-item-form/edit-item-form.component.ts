@@ -49,7 +49,10 @@ export class EditItemFormComponent implements OnInit {
     this.item.quantity = value.quantity;
     this.item.location = this.inventoryService.getLocation(value.location);
 
-    this.inventoryService.saveItem(this.item).then(i => this.lastItem = i);
+    this.inventoryService.saveItem(this.item).subscribe({
+      next: i => this.lastItem = i,
+      error: console.error
+    });
   }
 
   addLocation() {

@@ -1,24 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { InventoryKeyService } from 'src/services/inventoryKey.service';
 
 @Component({
   selector: 'app-inventory-selector',
   templateUrl: './inventory-selector.component.html',
 })
-export class InventorySelectorComponent implements OnInit {
+export class InventorySelectorComponent {
     modalOpen: boolean = false;
-    allKeys: Set<string> = new Set<string>();
 
     constructor(public inventoryKeyService: InventoryKeyService) {}
 
-    ngOnInit(): void {
-        this.inventoryKeyService.allKeySub.subscribe({
-            next: (allKeys: Set<string>) => this.allKeys = allKeys
-        })
-    }
-
     setKey(key: string): void {
-        this.inventoryKeyService.key = key;
+        this.inventoryKeyService.key.set(key);
     }
 
     openModal(): void {

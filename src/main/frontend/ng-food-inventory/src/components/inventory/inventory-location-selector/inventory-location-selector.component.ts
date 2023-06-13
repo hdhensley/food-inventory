@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {InventoryService, LocationService} from "../../../services";
+import {Component} from '@angular/core';
+import {InventoryService} from "../../../services";
 
 @Component({
   selector: 'app-inventory-location-selector',

@@ -58,7 +58,7 @@
     <div class="flex flex-row">
       <select formControlName="location" class="select select-bordered w-full bg-neutral text-neutral-content">
         <option [ngValue]="null" disabled>Choose Location</option>
-        <option *ngFor="let location of inventoryService.inventory.locations" [ngValue]="location.id">
+        <option *ngFor="let location of inventoryService.inventory().locations" [ngValue]="location.id">
           {{ location.name }}
         </option>
       </select>

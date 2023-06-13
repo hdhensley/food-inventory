@@ -37,15 +37,13 @@ export class AddLocationModalComponent implements OnInit {
 
     const location = new Location();
     location.name = value.newLocation;
-    location.inventory_id = this.inventoryService.inventory.id;
+    location.inventory_id = this.inventoryService.inventory().id;
     location.parent = value.parent;
 
-    this.inventoryService.addLocation(location)
-      .then((res) => {
-        this.newLocationForm?.reset();
-        this.closeModal.emit(true);
-      })
-      .catch(err => console.error(err));
+    this.inventoryService.addLocation(location);
+
+    this.newLocationForm?.reset();
+    this.closeModal.emit(true);
   }
 
   cancel() {

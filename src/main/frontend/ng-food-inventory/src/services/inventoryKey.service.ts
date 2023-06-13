@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import {effect, Injectable, Signal, signal, WritableSignal} from "@angular/core";
 import { environment } from "src/environments/environment";
 import { Inventory } from "src/models/Inventory.model";
 
@@ -8,67 +7,41 @@ import { Inventory } from "src/models/Inventory.model";
     providedIn: 'root'
 })
 export class InventoryKeyService {
-    private $key: BehaviorSubject<string> = new BehaviorSubject<string>(environment.inventoryKey);
-    private $allKeys: BehaviorSubject<Set<string>> = new BehaviorSubject<Set<string>>(new Set<string>());
-    private _allKeys: Set<string> = new Set<string>();
+  public key: WritableSignal<string> = signal(environment.inventoryKey);
+  public allKeys: WritableSignal<Set<string>> = signal(new Set<string>());
 
     constructor(private http: HttpClient) {
         this.loadKey();
         this.getAllInventoryKeys();
+
+        effect(() => localStorage.setItem("inventoryKey", this.key()));
     }
 
     public loadKey(): void {
         const savedKey = localStorage.getItem("inventoryKey") || environment.inventoryKey;
-        this.$key.next(savedKey);
-        this._allKeys.add(savedKey);
-        this.$allKeys.next(this._allKeys);
-    }
-
-    public saveKey(): void {
-        localStorage.setItem("inventoryKey", this.key);
+        this.key.set(savedKey);
+        this.allKeys.mutate(curKeys => curKeys.add(savedKey));
     }
 
     public createInventory(inventoryKey: string): void {
-        const sub = this.http.get<Inventory>('http://' + window.location.hostname + ':8080/api/inventory?key=' + inventoryKey);
-
-        sub.subscribe({
+        this.http.get<Inventory>('http://' + window.location.hostname + ':8080/api/inventory?key=' + inventoryKey)
+          .subscribe({
             next: (inventory: Inventory) => {
-                if(inventory.inventoryKey != undefined) {
-                    this._allKeys.add(inventory.inventoryKey);
-                }
+              if (inventory.inventoryKey != null) {
+                // @ts-ignore
+                this.allKeys.mutate(curKeys => curKeys.add(inventory.inventoryKey));
+              }
             },
-            error: (err) => console.error(err)
+            error: console.error
         });
     }
 
     public getAllInventoryKeys(): void {
         this.http.get<string[]>('http://' + window.location.hostname + ':8080/api/inventoryKey').subscribe({
             next: (keys: string[]) => {
-                keys.forEach(key => this._allKeys.add(key));
-                this.$allKeys.next(this._allKeys);
+                keys.forEach(key => this.allKeys.mutate(curKeys => curKeys.add(key)))
             },
-            error: (err) => console.error(err)
+            error: console.error
         })
-    }
-
-    set key(_key: string) {
-        this.$key.next(_key);
-        this.saveKey();
-    }
-
-    get key(): string {
-        return this.$key.value;
-    }
-
-    get allKeys(): Set<string> {
-        return this._allKeys;
-    }
-
-    get keySub(): Observable<string> {
-        return this.$key.asObservable();
-    }
-
-    get allKeySub(): Observable<Set<string>> {
-        return this.$allKeys.asObservable();
     }
 }

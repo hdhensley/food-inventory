@@ -9,7 +9,7 @@
       </div>
       <div
         class="nav-link rounded-btn ml-2"
-        *ngFor="let location of inventoryService.inventory.locations"
+        *ngFor="let location of inventoryService.inventory().locations"
         (click)="locationService.activeLocation = location.id"
         [ngClass]="{ 'active-nav-link' : locationService.isActive(location.id) }">
         {{location.name}}
