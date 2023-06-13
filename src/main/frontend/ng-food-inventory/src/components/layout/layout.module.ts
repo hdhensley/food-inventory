@@ -16,14 +16,14 @@ const items = [
 ];
 
 @NgModule({
-  declarations: items,
-  imports: [
-    CommonModule,
-    InventoryModule,
-    ReactiveFormsModule,
-    RouterModule,
-    PipeModule
-  ],
-  exports: items
+    imports: [
+        CommonModule,
+        InventoryModule,
+        ReactiveFormsModule,
+        RouterModule,
+        PipeModule,
+        ...items
+    ],
+    exports: items
 })
 export class LayoutModule { }

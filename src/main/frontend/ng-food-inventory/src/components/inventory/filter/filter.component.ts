@@ -1,9 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 
 @Component({
-  selector: 'app-filter',
-  templateUrl: './filter.component.html',
+    selector: 'app-filter',
+    templateUrl: './filter.component.html',
+    standalone: true,
+    imports: [ReactiveFormsModule],
 })
 export class FilterComponent implements OnInit {
   // @ts-ignore

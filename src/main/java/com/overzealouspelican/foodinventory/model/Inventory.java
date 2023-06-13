@@ -12,8 +12,6 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
 @ToString
 @RequiredArgsConstructor
 public class Inventory {
@@ -41,5 +39,29 @@ public class Inventory {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getInventoryKey() {
+        return inventoryKey;
+    }
+
+    public void setInventoryKey(String inventoryKey) {
+        this.inventoryKey = inventoryKey;
+    }
+
+    public Collection<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Collection<Location> locations) {
+        this.locations = locations;
     }
 }

@@ -1,4 +1,4 @@
-FROM openjdk:8-alpine
+FROM openjdk:17-alpine
 
 COPY ./build/libs/*.jar /app.jar
 

@@ -7,14 +7,18 @@ import lombok.RequiredArgsConstructor;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class InventoryService {
     private final InventoryRepository inventoryRepository;
+
+    public InventoryService(InventoryRepository inventoryRepository) {
+        this.inventoryRepository = inventoryRepository;
+    }
 
     public Inventory findOrFail(int id) throws EntityNotFoundException {
         return inventoryRepository
@@ -37,11 +41,8 @@ public class InventoryService {
     public Inventory findOrCreate(String key) {
         Optional<Inventory> inventory = inventoryRepository.findByInventoryKey(key);
 
-        if(inventory.isPresent()){
-            return inventory.get();
-        }
+        return inventory.orElseGet(() -> createNew(key));
 
-        return createNew(key);
     }
 
     public Inventory createNew(String key) {
