@@ -27,7 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation 'org.springframework.security:spring-security-test'
-	implementation 'org.springframework.boot:spring-boot-starter-validation:2.3.1.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.4.13.RELEASE'
 
 	runtimeOnly 'mysql:mysql-connector-java'
 	runtimeOnly 'com.h2database:h2'
@@ -45,17 +45,17 @@ tasks.named('test') {
 }
 
 // Run the frontend with hot reloading on http://localhost:4200
-task devFrontend(type: Exec) {
+tasks.register('devFrontend', Exec) {
 	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm run start'
 }
 
 // Run the docker image, available at localhost:8080
-task dockerRun(type: Exec) {
+tasks.register('dockerRun', Exec) {
 	commandLine 'sh', '-c', 'docker run --name food-inventory -d -v inventory-volume:/opt/db -p 8080:8080 dhensley/food-inventory'
 }
 
 // Build the angular application and copy the dist contents into the spring boot static directory
-task buildFrontend(type: Exec) {
+tasks.register('buildFrontend', Exec) {
 	commandLine 'sh', '-c', 'rm -rf ./src/main/resources/static'
 	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --aot && cp -r dist/ng-food-inventory/* ../../resources/static/'
 }
@@ -63,7 +63,7 @@ task buildFrontend(type: Exec) {
 bootJar.dependsOn buildFrontend
 
 // Build a docker image for the full application
-task dockerBuild(type: Exec) {
+tasks.register('dockerBuild', Exec) {
 	clean
 	commandLine 'sh', '-c', 'docker build -t dhensley/food-inventory .'
 }
@@ -71,14 +71,14 @@ task dockerBuild(type: Exec) {
 dockerBuild.dependsOn bootJar
 
 // Tag the docker image with :latest
-task dockerTag(type: Exec) {
+tasks.register('dockerTag', Exec) {
 	commandLine 'sh', '-c', 'docker tag dhensley/food-inventory:latest food-inventory:latest'
 }
 
 dockerTag.dependsOn dockerBuild
 
 // Deploy the docker image
-task dockerDeploy(type: Exec) {
+tasks.register('dockerDeploy', Exec) {
 	commandLine 'sh', '-c', 'docker push dhensley/food-inventory:latest'
 }
 
