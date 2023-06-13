@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {Item} from "../../models/item.model";
 
 @Pipe({
-  name: 'searchFilter'
+    name: 'searchFilter',
+    standalone: true
 })
 export class SearchFilterPipe implements PipeTransform {
   transform(items: Item[], query: string): Item[] {

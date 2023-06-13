@@ -9,27 +9,25 @@ import {LayoutModule} from "../components/layout/layout.module";
 import {InventoryModule} from "../components/inventory/inventory.module";
 
 @NgModule({
-  declarations: [
-    Pages.AddItemsComponent,
-    Pages.EditItemComponent,
-    Pages.InventoryComponent,
-    Pages.OutOfStockComponent
-  ],
-  imports: [
-    ComponentModule,
-    CommonModule,
-    PipeModule,
-    RouterModule,
-    LayoutModule,
-    InventoryModule
-  ],
-  providers: [],
-  bootstrap: [],
-  exports: [
-    Pages.AddItemsComponent,
-    Pages.EditItemComponent,
-    Pages.InventoryComponent,
-    Pages.OutOfStockComponent
-  ]
+    imports: [
+        ComponentModule,
+        CommonModule,
+        PipeModule,
+        RouterModule,
+        LayoutModule,
+        InventoryModule,
+        Pages.AddItemsComponent,
+        Pages.EditItemComponent,
+        Pages.InventoryComponent,
+        Pages.OutOfStockComponent
+    ],
+    providers: [],
+    bootstrap: [],
+    exports: [
+        Pages.AddItemsComponent,
+        Pages.EditItemComponent,
+        Pages.InventoryComponent,
+        Pages.OutOfStockComponent
+    ]
 })
 export class PagesModule { }

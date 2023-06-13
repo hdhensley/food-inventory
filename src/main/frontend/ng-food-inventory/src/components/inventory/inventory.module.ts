@@ -27,14 +27,14 @@ const items = [
 ];
 
 @NgModule({
-  declarations: items,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    PipeModule
-  ],
-  bootstrap: [],
-  exports: items
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule,
+        PipeModule,
+        ...items
+    ],
+    bootstrap: [],
+    exports: items
 })
 export class InventoryModule { }

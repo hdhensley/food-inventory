@@ -1,10 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import {InventoryKeyService} from 'src/services/inventoryKey.service';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-add-inventory-modal',
-  templateUrl: './add-inventory-modal.component.html'
+    selector: 'app-add-inventory-modal',
+    templateUrl: './add-inventory-modal.component.html',
+    standalone: true,
+    imports: [NgClass, NgIf, ReactiveFormsModule]
 })
 export class AddInventoryModalComponent implements OnInit {
   @Input() showModal: boolean = false;

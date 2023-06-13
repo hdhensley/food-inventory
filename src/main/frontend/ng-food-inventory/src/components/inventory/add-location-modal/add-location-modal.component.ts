@@ -1,11 +1,14 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import {InventoryService} from "../../../services";
 import {Location} from "../../../models/location.model";
+import { NgClass, NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-add-location-modal',
-  templateUrl: './add-location-modal.component.html'
+    selector: 'app-add-location-modal',
+    templateUrl: './add-location-modal.component.html',
+    standalone: true,
+    imports: [NgClass, NgIf, ReactiveFormsModule, NgFor]
 })
 export class AddLocationModalComponent implements OnInit {
   @Input() showModal: boolean = false;

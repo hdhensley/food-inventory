@@ -1,11 +1,22 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import {Item} from "../../../models/item.model";
 import {InventoryService, LocationService} from "../../../services";
+import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
+import { ItemAddedAlertComponent } from '../item-added-alert/item-added-alert.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-item-form',
-  templateUrl: './edit-item-form.component.html',
+    selector: 'app-edit-item-form',
+    templateUrl: './edit-item-form.component.html',
+    standalone: true,
+    imports: [
+        NgIf,
+        ReactiveFormsModule,
+        ItemAddedAlertComponent,
+        NgFor,
+        AddLocationModalComponent,
+    ],
 })
 export class EditItemFormComponent implements OnInit {
   @Input() item: Item | undefined;

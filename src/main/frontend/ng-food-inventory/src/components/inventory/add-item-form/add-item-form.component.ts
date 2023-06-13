@@ -1,11 +1,16 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {InventoryService, LocationService} from "../../../services";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import {Item} from "../../../models/item.model";
+import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
+import { ItemAddedAlertComponent } from '../item-added-alert/item-added-alert.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-add-item-form',
-  templateUrl: './add-item-form.component.html'
+    selector: 'app-add-item-form',
+    templateUrl: './add-item-form.component.html',
+    standalone: true,
+    imports: [NgIf, ReactiveFormsModule, ItemAddedAlertComponent, NgFor, AddLocationModalComponent]
 })
 export class AddItemFormComponent implements OnInit {
   itemForm: FormGroup|undefined;

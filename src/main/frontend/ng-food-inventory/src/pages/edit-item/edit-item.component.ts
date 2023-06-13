@@ -2,10 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {InventoryService} from "../../services";
 import {Item} from "../../models/item.model";
+import { EditItemFormComponent } from '../../components/inventory/edit-item-form/edit-item-form.component';
+import { FormWrapperComponent } from '../../components/layout/form-wrapper/form-wrapper.component';
 
 @Component({
-  selector: 'app-edit-item',
-  templateUrl: './edit-item.component.html',
+    selector: 'app-edit-item',
+    templateUrl: './edit-item.component.html',
+    standalone: true,
+    imports: [FormWrapperComponent, EditItemFormComponent],
 })
 export class EditItemComponent implements OnInit {
   item: Item | undefined;
