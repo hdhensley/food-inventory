@@ -64,7 +64,7 @@ tasks.register('buildFrontend', Exec) {
 	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --aot && cp -r dist/ng-food-inventory/* ../../resources/static/'
 }
 
-bootJar.dependsOn buildFrontend
+//bootJar.dependsOn buildFrontend
 
 // Build a docker image for the full application
 tasks.register('dockerBuild', Exec) {
