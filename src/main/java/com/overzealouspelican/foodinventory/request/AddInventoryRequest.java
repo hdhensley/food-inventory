@@ -1,8 +1,5 @@
 package com.overzealouspelican.foodinventory.request;
 
-import lombok.Data;
-
-@Data
-public class AddInventoryRequest {
-    String inventoryKey;
+public record AddInventoryRequest(
+        String inventoryKey) {
 }

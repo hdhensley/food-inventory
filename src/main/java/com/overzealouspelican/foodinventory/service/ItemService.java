@@ -12,14 +12,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-@RequiredArgsConstructor
 public class ItemService {
     public final ItemRepository itemRepository;
     public final LocationService locationService;
 
+    public ItemService(ItemRepository itemRepo, LocationService locationService) {
+        this.itemRepository = itemRepo;
+        this.locationService = locationService;
+    }
+
     public Item findOrNew(ItemRequest request) {
-        if(request.getId() != null){
-            return itemRepository.findById(request.getId()).orElse(new Item());
+        if (request.id() != null) {
+            return itemRepository.findById(request.id()).orElse(new Item());
         }
         return new Item();
     }
@@ -32,19 +36,19 @@ public class ItemService {
         try {
             Item item = findOrNew(request);
 
-            item.setBrand(request.getBrand());
-            item.setName(request.getName());
-            item.setQuantity(request.getQuantity());
-            item.setLocation(locationService.findOrFail(request.getLocationId()));
-            item.setRemovedDate(request.getRemovedDate());
-            item.setDeletedDate(request.getDeletedDate());
+            item.setBrand(request.brand());
+            item.setName(request.name());
+            item.setQuantity(request.quantity());
+            item.setLocation(locationService.findOrFail(request.locationId()));
+            item.setRemovedDate(request.removedDate());
+            item.setDeletedDate(request.deletedDate());
 
-            if(item.getDateAdded() == null) {
+            if (item.getDateAdded() == null) {
                 item.setDateAdded(new Date());
             }
 
             return save(item);
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }

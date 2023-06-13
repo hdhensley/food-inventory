@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class LocationService {
     private final LocationRepository locationRepository;
 
+    public LocationService(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
+    }
+
     public Location findOrNew(Integer id) {
-        if(id == null){
+        if (id == null) {
             return new Location();
         }
 
@@ -22,7 +25,7 @@ public class LocationService {
                 .orElseGet(Location::new);
     }
 
-    public Location findOrFail(Integer id) {
+    public Location findOrFail(int id) {
         return locationRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid data"));
@@ -32,7 +35,7 @@ public class LocationService {
         return locationRepository.save(location);
     }
 
-    public Optional<Location> findById(Integer parentId) {
+    public Optional<Location> findById(int parentId) {
         return locationRepository.findById(parentId);
     }
 }

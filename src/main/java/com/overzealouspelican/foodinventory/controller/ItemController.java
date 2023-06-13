@@ -11,10 +11,13 @@ import com.overzealouspelican.foodinventory.request.ItemRequest;
 import com.overzealouspelican.foodinventory.service.ItemService;
 
 @Controller
-@RequiredArgsConstructor
-@RequestMapping(path="api/item")
+@RequestMapping(path = "api/item")
 public class ItemController {
     private final ItemService itemService;
+
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
     @PostMapping
     @ResponseBody
