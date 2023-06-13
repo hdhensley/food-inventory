@@ -21,13 +21,17 @@ configurations {
 	}
 }
 
+jar {
+	archiveName 'app.jar'
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation 'org.springframework.security:spring-security-test'
-	implementation 'org.springframework.boot:spring-boot-starter-validation:2.4.13.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.4.13'
 
 	runtimeOnly 'mysql:mysql-connector-java'
 	runtimeOnly 'com.h2database:h2'
@@ -60,7 +64,7 @@ tasks.register('buildFrontend', Exec) {
 	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --aot && cp -r dist/ng-food-inventory/* ../../resources/static/'
 }
 
-bootJar.dependsOn buildFrontend
+//bootJar.dependsOn buildFrontend
 
 // Build a docker image for the full application
 tasks.register('dockerBuild', Exec) {

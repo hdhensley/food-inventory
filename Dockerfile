@@ -1,6 +1,14 @@
+FROM gradle:7.6.1-jdk17-alpine AS build
+WORKDIR /usr/app/
+COPY . .
+RUN gradle build
+
 FROM openjdk:17-alpine
 
-COPY ./build/libs/*.jar /app.jar
+ENV JAR_NAME=app.jar
+ENV APP_HOME=/usr/app/
+WORKDIR $APP_HOME
+COPY --from=build $APP_HOME .
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT exec java -jar $APP_HOME/build/libs/$JAR_NAME
