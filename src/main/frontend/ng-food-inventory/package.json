@@ -1,16 +1,13 @@
 {
   "name": "ng-food-inventory",
-  "version": "2.0.0",
+  "version": "2.0.17",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prebuild": "npm --no-git-tag-version version patch",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "docker-build": "docker build -t dhensley/food-inventory .",
-    "docker-run": "docker run --name food-inventory -d -p 8080:8080 dhensley/food-inventory",
-    "docker-tag": "docker tag dhensley/food-inventory:latest food-inventory:latest",
-    "docker-deploy": "npm run docker-build && npm run docker-tag && docker push dhensley/food-inventory:latest"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
