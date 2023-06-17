@@ -1,21 +1,33 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {InventoryService, LocationService} from "../../../services";
-import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
-import {Item} from "../../../models/item.model";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { InventoryService, LocationService } from '../../../services';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { Item } from '../../../models/item.model';
 import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
 import { ItemAddedAlertComponent } from '../item-added-alert/item-added-alert.component';
 import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-    selector: 'app-add-item-form',
-    templateUrl: './add-item-form.component.html',
-    standalone: true,
-    imports: [NgIf, ReactiveFormsModule, ItemAddedAlertComponent, NgFor, AddLocationModalComponent]
+  selector: 'app-add-item-form',
+  templateUrl: './add-item-form.component.html',
+  standalone: true,
+  imports: [
+    NgIf,
+    ReactiveFormsModule,
+    ItemAddedAlertComponent,
+    NgFor,
+    AddLocationModalComponent,
+  ],
 })
 export class AddItemFormComponent implements OnInit {
-  itemForm: FormGroup|undefined;
+  itemForm: FormGroup | undefined;
 
-  @ViewChild('brandName') itemPrimaryRef: ElementRef|undefined;
+  @ViewChild('brandName') itemPrimaryRef: ElementRef | undefined;
 
   showModal: boolean = false;
 
@@ -25,30 +37,32 @@ export class AddItemFormComponent implements OnInit {
     public inventoryService: InventoryService,
     public locationService: LocationService,
     private fb: FormBuilder
-  ){}
+  ) { }
 
   ngOnInit() {
     const currentLocation =
-      this.locationService.activeLocation === 0 ? null : this.locationService.activeLocation;
+      this.locationService.activeLocation() === 0
+        ? null
+        : this.locationService.activeLocation();
 
     this.itemForm = this.fb.group({
       item: new FormControl('', {
-        validators: [Validators.required]
+        validators: [Validators.required],
       }),
       brand: new FormControl('', {
-        validators: []
+        validators: [],
       }),
       quantity: new FormControl('', {
-        validators: [Validators.required, Validators.pattern(/^[0-9]+$/)]
+        validators: [Validators.required, Validators.pattern(/^[0-9]+$/)],
       }),
       location: new FormControl(currentLocation, {
-        validators: [Validators.required]
-      })
+        validators: [Validators.required],
+      }),
     });
   }
 
-  onFormSubmit({ value, valid }: { value: any, valid: boolean }): void {
-    if(!valid) {
+  onFormSubmit({ value, valid }: { value: any; valid: boolean }): void {
+    if (!valid) {
       return;
     }
 
