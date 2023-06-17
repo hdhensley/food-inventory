@@ -1,4 +1,4 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Location } from '../models/location.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,8 +7,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LocationService {
   activeLocation: WritableSignal<number | undefined> = signal(0);
-
-  constructor(private http: HttpClient) { }
 
   isActive(locationId: number | undefined) {
     return this.activeLocation() == locationId;
@@ -19,7 +17,7 @@ export class LocationService {
   }
 
   saveLocation(location: Location) {
-    return this.http.post(
+    return inject(HttpClient).post(
       'http://' + window.location.hostname + ':8080/api/location',
       this.generateRequest(location)
     );
