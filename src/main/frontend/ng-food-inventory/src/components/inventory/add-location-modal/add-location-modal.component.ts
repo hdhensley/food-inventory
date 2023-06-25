@@ -1,26 +1,26 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
-import {InventoryService} from "../../../services";
-import {Location} from "../../../models/location.model";
+import { InventoryService } from "../../../services";
+import { Location } from "../../../models/location.model";
 import { NgClass, NgIf, NgFor } from '@angular/common';
 
 @Component({
-    selector: 'app-add-location-modal',
-    templateUrl: './add-location-modal.component.html',
-    standalone: true,
-    imports: [NgClass, NgIf, ReactiveFormsModule, NgFor]
+  selector: 'app-add-location-modal',
+  templateUrl: './add-location-modal.component.html',
+  standalone: true,
+  imports: [NgClass, NgIf, ReactiveFormsModule, NgFor]
 })
 export class AddLocationModalComponent implements OnInit {
-  @Input() showModal: boolean = false;
+  @Input() showModal = false;
 
-  newLocationForm: FormGroup|undefined;
+  newLocationForm: FormGroup | undefined;
 
   @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private fb: FormBuilder,
     private inventoryService: InventoryService
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.newLocationForm = this.fb.group({
@@ -34,7 +34,7 @@ export class AddLocationModalComponent implements OnInit {
   }
 
   saveLocation({ value, valid }: { value: any, valid: boolean }) {
-    if(!valid) {
+    if (!valid) {
       return;
     }
 

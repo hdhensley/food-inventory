@@ -9,6 +9,6 @@ import { CardComponent } from '../card/card.component';
     imports: [CardComponent, NgIf],
 })
 export class TableContainerComponent {
-  @Input() showTable: boolean = false;
-  @Input() title: string = 'TITLE';
+  @Input() showTable = false;
+  @Input() title = 'TITLE';
 }

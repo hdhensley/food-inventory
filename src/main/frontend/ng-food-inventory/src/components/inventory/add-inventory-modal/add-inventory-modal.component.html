@@ -1,7 +1,7 @@
 <div class="modal" [ngClass]="{'modal-open': showModal}">
   <form *ngIf="newInventoryForm" [formGroup]="newInventoryForm" (ngSubmit)="saveInventoryKey(newInventoryForm)">
     <div class="modal-box bg-primary text-primary-content">
-      <div *ngIf="error != ''" class="bg-error text-error-content rounded p-3 text-center">
+      <div *ngIf="error !== ''" class="bg-error text-error-content rounded p-3 text-center">
         {{error}}
       </div>
       <label class="block text-sm font-bold mb-2" for="newLocation">

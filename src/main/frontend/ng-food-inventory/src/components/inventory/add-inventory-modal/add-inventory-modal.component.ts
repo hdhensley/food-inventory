@@ -16,10 +16,10 @@ import { NgClass, NgIf } from '@angular/common';
   imports: [NgClass, NgIf, ReactiveFormsModule],
 })
 export class AddInventoryModalComponent implements OnInit {
-  @Input() showModal: boolean = false;
+  @Input() showModal = false;
 
   newInventoryForm: FormGroup | undefined;
-  error: string = '';
+  error = '';
 
   @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
 

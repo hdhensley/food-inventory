@@ -23,7 +23,7 @@ export class EditItemFormComponent implements OnInit {
   @ViewChild('brandName') itemPrimaryRef: ElementRef|undefined;
 
   itemForm: FormGroup|undefined;
-  showModal: boolean = false;
+  showModal = false;
   lastItem: Item | undefined; //Should always be an Item object
 
   constructor(

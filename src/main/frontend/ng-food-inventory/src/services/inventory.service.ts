@@ -13,7 +13,7 @@ import { InventoryKeyService } from './inventoryKey.service';
   providedIn: 'root',
 })
 export class InventoryService {
-  private _loaded: boolean = false;
+  private _loaded = false;
   public inventory: WritableSignal<Inventory> = signal(new Inventory());
   public search: WritableSignal<string> = signal('');
 

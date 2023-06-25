@@ -29,7 +29,7 @@ export class AddItemFormComponent implements OnInit {
 
   @ViewChild('brandName') itemPrimaryRef: ElementRef | undefined;
 
-  showModal: boolean = false;
+  showModal = false;
 
   lastItem: Item | undefined; //Should always be an Item object
 

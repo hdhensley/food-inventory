@@ -1,10 +1,10 @@
 import {Location} from './location.model';
 
 export class Item {
-  id: string = '';
-  name: string = '';
-  brand: string = '';
-  quantity: number = 0;
+  id = '';
+  name = '';
+  brand = '';
+  quantity = 0;
   location: Location | undefined;
   dateAdded: Date = new Date();
   removedDate: string|null = null;
