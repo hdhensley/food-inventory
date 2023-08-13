@@ -1,23 +1,26 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {InventoryService} from "../../../services";
-import {Location} from "../../../models/location.model";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
+import { InventoryService } from "../../../services";
+import { Location } from "../../../models/location.model";
+import { NgClass, NgIf, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-add-location-modal',
-  templateUrl: './add-location-modal.component.html'
+  templateUrl: './add-location-modal.component.html',
+  standalone: true,
+  imports: [NgClass, NgIf, ReactiveFormsModule, NgFor]
 })
 export class AddLocationModalComponent implements OnInit {
-  @Input() showModal: boolean = false;
+  @Input() showModal = false;
 
-  newLocationForm: FormGroup|undefined;
+  newLocationForm: FormGroup | undefined;
 
   @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private fb: FormBuilder,
     private inventoryService: InventoryService
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.newLocationForm = this.fb.group({
@@ -31,21 +34,19 @@ export class AddLocationModalComponent implements OnInit {
   }
 
   saveLocation({ value, valid }: { value: any, valid: boolean }) {
-    if(!valid) {
+    if (!valid) {
       return;
     }
 
     const location = new Location();
     location.name = value.newLocation;
-    location.inventory_id = this.inventoryService.inventory.id;
+    location.inventory_id = this.inventoryService.inventory().id;
     location.parent = value.parent;
 
-    this.inventoryService.addLocation(location)
-      .then((res) => {
-        this.newLocationForm?.reset();
-        this.closeModal.emit(true);
-      })
-      .catch(err => console.error(err));
+    this.inventoryService.addLocation(location);
+
+    this.newLocationForm?.reset();
+    this.closeModal.emit(true);
   }
 
   cancel() {

@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 
-import * as I from './inventory';
-import {CommonModule} from "@angular/common";
-import {ReactiveFormsModule} from "@angular/forms";
-import {RouterModule} from "@angular/router";
-import {PipeModule} from "../pipes/pipe.module";
-import {LayoutModule} from "./layout/layout.module";
-import {InventoryModule} from "./inventory/inventory.module";
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { PipeModule } from '../pipes/pipe.module';
+import { LayoutModule } from './layout/layout.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 @NgModule({
   declarations: [],
@@ -16,9 +15,9 @@ import {InventoryModule} from "./inventory/inventory.module";
     LayoutModule,
     ReactiveFormsModule,
     RouterModule,
-    PipeModule
+    PipeModule,
   ],
   bootstrap: [],
-  exports: []
+  exports: [],
 })
 export class ComponentModule { }

@@ -1,3 +1,4 @@
+export * from './add-inventory-modal/add-inventory-modal.component';
 export * from './add-item-form/add-item-form.component';
 export * from './add-location-modal/add-location-modal.component';
 export * from './count-manager/count-manager.component';
@@ -7,6 +8,7 @@ export * from './edit-item-form/edit-item-form.component';
 export * from './filter/filter.component';
 export * from './inventory-filter/inventory-filter.component';
 export * from './inventory-location-selector/inventory-location-selector.component';
+export * from './inventory-selector/inventory-selector.component';
 export * from './item-added-alert/item-added-alert.component';
 export * from './item-cards/item-cards.component';
 export * from './item-table/item-table.component';

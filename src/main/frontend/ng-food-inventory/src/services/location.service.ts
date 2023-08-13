@@ -1,35 +1,40 @@
-import {Injectable} from '@angular/core';
-import {Location} from '../models/location.model';
-import {HttpClient} from "@angular/common/http";
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { Location } from '../models/location.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocationService {
+  activeLocation: WritableSignal<number | undefined> = signal(0);
+  httpClient: HttpClient;
 
-  activeLocation: number|undefined = 0;
+  constructor() {
+    this.httpClient = inject(HttpClient);
+  }
 
-  constructor(
-    private http: HttpClient
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
-  isActive(locationId: number|undefined) {
-    return this.activeLocation == locationId;
+  isActive(locationId: number | undefined) {
+    return this.activeLocation() == locationId;
   }
 
   clearActive() {
-    this.activeLocation = 0;
+    this.activeLocation.set(0);
   }
 
   saveLocation(location: Location) {
-    return this.http.post('http://' + window.location.hostname + ':8080/api/location', this.generateRequest(location)).toPromise();
+    return this.httpClient.post(
+      'http://' + window.location.hostname + ':8080/api/location',
+      this.generateRequest(location)
+    );
   }
 
   generateRequest(location: Location) {
     return {
       name: location.name,
       inventoryId: location.inventory_id,
-      parent: location.parent
+      parent: location.parent,
     };
   }
 }

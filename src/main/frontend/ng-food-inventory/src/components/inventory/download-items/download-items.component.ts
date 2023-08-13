@@ -3,8 +3,9 @@ import {InventoryService} from "../../../services";
 import {Item} from "../../../models/item.model";
 
 @Component({
-  selector: 'app-download-items',
-  templateUrl: './download-items.component.html',
+    selector: 'app-download-items',
+    templateUrl: './download-items.component.html',
+    standalone: true,
 })
 export class DownloadItemsComponent {
 

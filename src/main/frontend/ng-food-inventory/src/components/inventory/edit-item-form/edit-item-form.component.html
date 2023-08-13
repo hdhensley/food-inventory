@@ -1,7 +1,7 @@
 <form *ngIf="itemForm" [formGroup]="itemForm" (ngSubmit)="onFormSubmit(itemForm)">
   <div class="mb-4">
     <app-item-added-alert [item]="lastItem"></app-item-added-alert>
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="brand">
+    <label class="block text-neutral text-sm font-bold mb-2" for="brand">
       Brand
     </label>
     <input
@@ -9,7 +9,7 @@
       name="brand"
       formControlName="brand"
       #brandName
-      class="input input-bordered w-full"
+      class="input input-bordered w-full bg-neutral text-neutral-content"
       type="text"
       placeholder="Brand">
     <div class="input-error" *ngIf="itemForm.get('brand')?.invalid && (itemForm.get('brand')?.dirty || itemForm.get('brand')?.touched)">
@@ -17,14 +17,14 @@
     </div>
   </div>
   <div class="mb-4">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="item">
+    <label class="block text-neutral text-sm font-bold mb-2" for="item">
       Item
     </label>
     <input
       id="item"
       name="item"
       formControlName="item"
-      class="input input-bordered w-full"
+      class="input input-bordered w-full bg-neutral text-neutral-content"
       type="text"
       placeholder="Item">
     <div class="input-error" *ngIf="itemForm.get('item')?.invalid && (itemForm.get('item')?.dirty || itemForm.get('item')?.touched)">
@@ -32,14 +32,14 @@
     </div>
   </div>
   <div class="mb-4">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="quantity">
+    <label class="block text-neutral text-sm font-bold mb-2" for="quantity">
       Quantity
     </label>
     <input
       id="quantity"
       name="quantity"
       formControlName="quantity"
-      class="input input-bordered w-full"
+      class="input input-bordered w-full bg-neutral text-neutral-content"
       type="text"
       placeholder="Quantity">
     <div class="input-error" *ngIf="!itemForm.get('quantity')?.valid && itemForm.get('quantity')?.touched">
@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class="mb-4">
-    <label class="flex text-gray-700 text-sm font-bold mb-2" for="quantity">
+    <label class="flex text-neutral text-sm font-bold mb-2" for="quantity">
       <span style="margin-top:2px;">
         Location
       </span>
@@ -58,9 +58,9 @@
       </a>
     </label>
     <div class="flex flex-row">
-      <select formControlName="location" class="select select-bordered w-full">
+      <select formControlName="location" class="select select-bordered w-full bg-neutral text-neutral-content">
         <option [ngValue]="null" disabled>Choose Location</option>
-        <option *ngFor="let location of inventoryService.inventory.locations" [ngValue]="location.id">
+        <option *ngFor="let location of inventoryService.inventory().locations" [ngValue]="location.id">
           {{ location.name }}
         </option>
       </select>
@@ -72,7 +72,7 @@
   <app-item-added-alert [item]="lastItem"></app-item-added-alert>
   <div class="flex items-center justify-between">
     <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      class="bg-neutral-content hover:bg-neutral text-neutral hover:text-neutral-content font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       type="submit">
       Save Item
     </button>

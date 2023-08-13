@@ -1,11 +1,8 @@
 package com.overzealouspelican.foodinventory.request;
 
-import lombok.Data;
-
-@Data
-public class LocationRequest {
-    Integer id;
-    String name;
-    Integer inventoryId;
-    Integer parent;
+public record LocationRequest(
+        int id,
+        String name,
+        int inventoryId,
+        Integer parent) {
 }

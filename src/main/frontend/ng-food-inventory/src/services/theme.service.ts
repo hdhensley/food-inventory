@@ -1,37 +1,57 @@
-import {Injectable, OnInit} from "@angular/core";
+import { Injectable, WritableSignal, signal, effect } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
   private _themes: string[] = [
-    "light", "dark", "cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro",
-    "cyberpunk", "valentine", "halloween", "garden", "forest", "aqua", "lofi", "pastel",
-    "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business",
-    "acid", "lemonade", "night", "coffee", "winter"
+    'light',
+    'dark',
+    'cupcake',
+    'bumblebee',
+    'emerald',
+    'corporate',
+    'synthwave',
+    'retro',
+    'cyberpunk',
+    'valentine',
+    'halloween',
+    'garden',
+    'forest',
+    'aqua',
+    'lofi',
+    'pastel',
+    'fantasy',
+    'wireframe',
+    'black',
+    'luxury',
+    'dracula',
+    'cmyk',
+    'autumn',
+    'business',
+    'acid',
+    'lemonade',
+    'night',
+    'coffee',
+    'winter',
   ].sort();
 
-  private _curTheme: string = "emerald";
+  public curTheme: WritableSignal<string> = signal('');
 
-  themeKey: string = "CHOSEN_THEME";
+  themeUpdater = effect(() => {
+    if (this.curTheme() != '') {
+      localStorage.setItem(this.themeKey, this.curTheme());
+    }
+  });
+
+  themeKey = 'CHOSEN_THEME';
 
   constructor() {
     const currentTheme = localStorage.getItem(this.themeKey);
 
-    if(currentTheme !== null) {
-      this.curTheme = currentTheme;
+    if (currentTheme !== null) {
+      this.curTheme.set(currentTheme);
     }
-
-    console.log(this.curTheme);
-  }
-
-  get curTheme(): string {
-    return this._curTheme;
-  }
-
-  set curTheme(theme: string) {
-    this._curTheme = theme;
-    localStorage.setItem(this.themeKey, theme);
   }
 
   get themes(): string[] {

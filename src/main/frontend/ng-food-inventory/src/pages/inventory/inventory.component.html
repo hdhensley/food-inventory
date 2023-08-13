@@ -1,19 +1,17 @@
 <div class="xl:container xl:mx-auto h-max">
-
-  <app-table-container title="Inventory" [showTable]="inventoryService.hasActiveItems()">
-
+  <app-table-container [showTable]="inventoryService.hasActiveItems()">
     <app-inventory-location-selector></app-inventory-location-selector>
 
-    <app-filter (searchChanged)="inventoryService.search = $event"></app-filter>
+    <app-filter (searchChanged)="inventoryService.search.set($event)"></app-filter>
 
     <app-item-cards></app-item-cards>
 
     <div class="noTableData">
       There's nothing to show
-      <a [routerLink]="['/','item','create']" class="btn btn-ghost btn-sm rounded-btn bg-neutral hover:bg-neutral-focus text-neutral-content ml-3">
+      <a [routerLink]="['/', 'item', 'create']"
+        class="btn btn-ghost btn-sm rounded-btn bg-neutral hover:bg-neutral-focus text-neutral-content ml-3">
         Add Items
       </a>
     </div>
-
   </app-table-container>
 </div>

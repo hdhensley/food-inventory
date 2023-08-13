@@ -4,13 +4,14 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
 @ToString
 @RequiredArgsConstructor
 public class Inventory {
@@ -18,6 +19,9 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotBlank(message = "Name is required.")
+    @NotNull(message = "Name cannot be null.")
+    @Column(unique = true)
     private String inventoryKey;
 
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -35,5 +39,29 @@ public class Inventory {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getInventoryKey() {
+        return inventoryKey;
+    }
+
+    public void setInventoryKey(String inventoryKey) {
+        this.inventoryKey = inventoryKey;
+    }
+
+    public Collection<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Collection<Location> locations) {
+        this.locations = locations;
     }
 }

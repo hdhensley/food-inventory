@@ -2,11 +2,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {Item} from "../../models/item.model";
 
 @Pipe({
-  name: 'activeItems'
+    name: 'activeItems',
+    standalone: true
 })
 export class ActiveItemsPipe implements PipeTransform {
 
-  transform(items: Item[], activeLocation: number = 0): Item[] {
+  transform(items: Item[], activeLocation = 0): Item[] {
     items = items.filter(i => !i.removedDate && !i.deletedDate);
 
     if(activeLocation != 0){

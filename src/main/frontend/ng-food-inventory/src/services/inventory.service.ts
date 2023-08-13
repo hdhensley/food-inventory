@@ -1,57 +1,65 @@
-import {Injectable} from "@angular/core";
-import {Inventory} from '../models/Inventory.model';
-import {Item} from "../models/item.model";
-import {Location} from '../models/location.model';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../environments/environment";
-import {ItemService} from "./item.service";
-import {BehaviorSubject} from "rxjs";
-import {LocationService} from "./location.service";
-import {ActiveItemsPipe, InactiveItemsPipe} from "../pipes";
+import { effect, Injectable, signal, WritableSignal } from '@angular/core';
+import { Inventory } from '../models/Inventory.model';
+import { Item } from '../models/item.model';
+import { Location } from '../models/location.model';
+import { HttpClient } from '@angular/common/http';
+import { ItemService } from './item.service';
+import { Observable } from 'rxjs';
+import { LocationService } from './location.service';
+import { ActiveItemsPipe, InactiveItemsPipe } from '../pipes';
+import { InventoryKeyService } from './inventoryKey.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InventoryService {
-  private _loaded: boolean = false;
-  private _inventorySub: BehaviorSubject<Inventory> = new BehaviorSubject<Inventory>(new Inventory());
-  private _search: string = '';
+  private _loaded = false;
+  public inventory: WritableSignal<Inventory> = signal(new Inventory());
+  public search: WritableSignal<string> = signal('');
 
   constructor(
     private http: HttpClient,
     private itemService: ItemService,
     private locationService: LocationService,
     private activePipe: ActiveItemsPipe,
-    private inactivePipe: InactiveItemsPipe
+    private inactivePipe: InactiveItemsPipe,
+    private inventoryKeyService: InventoryKeyService
   ) {
-    if(!this._loaded){
+    effect(() => {
+      console.log('Key changed');
+      console.log(this.inventoryKeyService.key());
+
       this.loadInventory();
-    }
+    });
   }
 
   private loadInventory() {
-    this.http.get('http://' + window.location.hostname + ':8080/api/inventory?key=' + environment.inventoryKey)
-      .toPromise()
-      .then((res: any) => {
-        this._loaded = true;
-        this._inventorySub.next(res);
-      })
-      .catch(err => console.log(err));
+    console.log('Loading inventory ' + this.inventoryKeyService.key());
+    this.http
+      .get<Inventory>(
+        'http://' +
+        window.location.hostname +
+        ':8080/api/inventory?key=' +
+        this.inventoryKeyService.key()
+      )
+      .subscribe({
+        next: (res) => {
+          this._loaded = true;
+          this.inventory.set(res);
+        },
+        error: (err) => console.log(err),
+      });
   }
 
   get loaded(): boolean {
     return this._loaded;
   }
 
-  get inventory(): Inventory {
-    return this._inventorySub.value;
-  }
-
   get items(): Item[] {
     let items: Item[] = [];
 
-    this.inventory.locations.forEach((location: Location) => {
-      location.items.forEach(item => item.location = location);
+    this.inventory().locations.forEach((location: Location) => {
+      location.items.forEach((item) => (item.location = location));
       items = items.concat(location.items);
     });
 
@@ -59,7 +67,7 @@ export class InventoryService {
   }
 
   getItem(itemId: string | null): Item | undefined {
-    return this.items.find(i => i.id == itemId);
+    return this.items.find((i) => i.id == itemId);
   }
 
   hasItems(): boolean {
@@ -74,48 +82,52 @@ export class InventoryService {
     return !!this.inactivePipe.transform(this.items).length;
   }
 
-  getCurrentLocation(): Location|undefined {
-    if(this.locationService.activeLocation !== undefined) {
-      return this.getLocation(this.locationService.activeLocation);
+  getCurrentLocation(): Location | undefined {
+    if (this.locationService.activeLocation() !== undefined) {
+      return this.getLocation(this.locationService.activeLocation());
     }
     return undefined;
   }
 
-  getLocation(id: number): Location|undefined {
-    return this.inventory.locations.find(l => l.id === id);
+  getLocation(id: number | undefined): Location | undefined {
+    return this.inventory().locations.find((l) => l.id === id);
   }
 
   getLocations(): Location[] {
-    return this.inventory.locations;
+    return this.inventory().locations;
   }
 
-  saveItem(item: Item): Promise<Item | undefined> {
-    const save = this.itemService.saveItem(item);
+  saveItem(item: Item): Observable<Item> {
+    const sub = this.itemService.saveItem(item);
 
-    save.then(res => this.loadInventory()).catch(err => console.error(err));
+    sub.subscribe({
+      next: (res) => this.loadInventory(),
+      error: console.error,
+    });
 
-    // @ts-ignore
-    return save;
+    return sub;
   }
 
-  addLocation(location: Location): Promise<Object | undefined> {
-    const promise = this.locationService.saveLocation(location)
+  addLocation(location: Location): Observable<object> {
+    const sub = this.locationService.saveLocation(location);
 
-    promise
-      .then(res => this.loadInventory())
-      .catch(err => console.error(err));
+    sub.subscribe({
+      next: (res) => this.loadInventory(),
+      error: console.error,
+    });
 
-    return promise;
+    return sub;
   }
 
-  updateItem(id: string, callback: (i: Item) => Item){
-    let item = this.items.find(i => i.id === id);
+  updateItem(id: string, callback: (i: Item) => Item): void {
+    let item = this.items.find((i) => i.id === id);
 
-    if(item){
+    if (item) {
       item = callback(item);
-      this.itemService.saveItem(item)
-        .then(res => this.loadInventory())
-        .catch(err => console.error(err));
+      this.itemService.saveItem(item).subscribe({
+        next: (res) => this.loadInventory(),
+        error: console.error,
+      });
     }
   }
 
@@ -130,7 +142,7 @@ export class InventoryService {
     this.updateItem(id, (i: Item) => {
       i.quantity > 0 ? i.quantity-- : 0;
 
-      if(i.quantity === 0){
+      if (i.quantity === 0) {
         i.removedDate = this.getDate();
       }
 
@@ -155,13 +167,5 @@ export class InventoryService {
   private getDate(): string {
     const date = new Date();
     return date.toJSON();
-  }
-
-  get search(): string{
-    return this._search;
-  }
-
-  set search(query: string) {
-    this._search = query;
   }
 }

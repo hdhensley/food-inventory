@@ -1,0 +1,28 @@
+<div class="modal" [ngClass]="{'modal-open': showModal}">
+  <form *ngIf="newInventoryForm" [formGroup]="newInventoryForm" (ngSubmit)="saveInventoryKey(newInventoryForm)">
+    <div class="modal-box bg-primary text-primary-content">
+      <div *ngIf="error !== ''" class="bg-error text-error-content rounded p-3 text-center">
+        {{error}}
+      </div>
+      <label class="block text-sm font-bold mb-2" for="newLocation">
+        New Location
+      </label>
+      <input
+        id="newInventory"
+        name="newInventory"
+        formControlName="newInventory"
+        class="input input-bordered w-full max-w-xs bg-neutral text-neutral-content"
+        type="text"
+        placeholder="Inventory Name">
+      <div class="modal-action flex justify-center">
+        <button
+          type="submit"
+          class="bg-neutral-content text-success font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Accept</button>
+        <button
+          (click)="cancel()"
+          class="bg-neutral-content text-error font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Close</button>
+      </div>
+    </div>
+  </form>
+</div>
+  

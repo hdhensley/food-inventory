@@ -2,11 +2,11 @@
 
   <app-card>
     <div *ngIf="header">
-      <h2 class="card-title text-center">{{header}}</h2>
+      <h2 class="card-title text-center text-neutral">{{header}}</h2>
     </div>
     <div *ngIf="header" class="divider"></div>
     <div *ngIf="title">
-      <h2 class="card-title">{{title}}</h2>
+      <h2 class="card-title text-neutral">{{title}}</h2>
     </div>
     <div>
       <ng-content></ng-content>
