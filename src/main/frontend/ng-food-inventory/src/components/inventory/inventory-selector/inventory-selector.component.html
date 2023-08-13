@@ -11,7 +11,7 @@
     <li>
       <a (click)="modalOpen.set(true)">Add New Inventory</a>
     </li>
-    <li *ngFor="let key of inventoryKeyService.allKeys()">
+    <li *ngFor="let key of sortedKeys()">
       <a (click)="setKey(key)">{{ key }}</a>
     </li>
   </ul>

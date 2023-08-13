@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { InventoryKeyService } from 'src/services/inventoryKey.service';
 import { AddInventoryModalComponent } from '../add-inventory-modal/add-inventory-modal.component';
 import { NgFor } from '@angular/common';
@@ -12,6 +12,7 @@ import { LocationService } from 'src/services';
 })
 export class InventorySelectorComponent {
   modalOpen = signal(false);
+  sortedKeys = computed(() => Array.from(this.inventoryKeyService.allKeys()).sort((a: string, b) => a.localeCompare(b)));
 
   constructor(
     public inventoryKeyService: InventoryKeyService,
