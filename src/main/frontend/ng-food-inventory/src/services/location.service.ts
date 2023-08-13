@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 export class LocationService {
   activeLocation: WritableSignal<number | undefined> = signal(0);
 
+  constructor(private httpClient: HttpClient) {}
+
   isActive(locationId: number | undefined) {
     return this.activeLocation() == locationId;
   }
@@ -17,7 +19,7 @@ export class LocationService {
   }
 
   saveLocation(location: Location) {
-    return inject(HttpClient).post(
+    return this.httpClient.post(
       'http://' + window.location.hostname + ':8080/api/location',
       this.generateRequest(location)
     );

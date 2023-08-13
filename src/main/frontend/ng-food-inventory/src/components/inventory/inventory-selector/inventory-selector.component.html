@@ -1,4 +1,4 @@
-<div class="dropdown dropdown-end">
+<div class="dropdown dropdown-end z-[1]">
   <label tabindex="0" class="btn m-1">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
       class="w-6 h-6">
@@ -7,11 +7,11 @@
     </svg>
   </label>
   <ul tabindex="0"
-    class="dropdown-content menu p-2 shadow bg-neutral text-neutral-content rounded-box w-52 h-auto overflow-y-scroll">
+    class="dropdown-content menu p-2 mt-4 shadow bg-neutral text-neutral-content rounded-box w-52 h-auto overflow-y-scroll">
     <li>
       <a (click)="modalOpen.set(true)">Add New Inventory</a>
     </li>
-    <li *ngFor="let key of sortedKeys()">
+    <li *ngFor="let key of inventoryKeyService.allKeys()">
       <a (click)="setKey(key)">{{ key }}</a>
     </li>
   </ul>
