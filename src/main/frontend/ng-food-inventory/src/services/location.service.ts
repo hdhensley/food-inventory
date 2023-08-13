@@ -13,6 +13,8 @@ export class LocationService {
     this.httpClient = inject(HttpClient);
   }
 
+  constructor(private httpClient: HttpClient) {}
+
   isActive(locationId: number | undefined) {
     return this.activeLocation() == locationId;
   }
