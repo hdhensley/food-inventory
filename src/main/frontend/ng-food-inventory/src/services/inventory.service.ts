@@ -4,10 +4,11 @@ import { Item } from '../models/item.model';
 import { Location } from '../models/location.model';
 import { HttpClient } from '@angular/common/http';
 import { ItemService } from './item.service';
-import { Observable } from 'rxjs';
+import {catchError, Observable, of, tap} from 'rxjs';
 import { LocationService } from './location.service';
 import { ActiveItemsPipe, InactiveItemsPipe } from '../pipes';
 import { InventoryKeyService } from './inventoryKey.service';
+import {ToastService} from "./toast.service";
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,8 @@ export class InventoryService {
     private locationService: LocationService,
     private activePipe: ActiveItemsPipe,
     private inactivePipe: InactiveItemsPipe,
-    private inventoryKeyService: InventoryKeyService
+    private inventoryKeyService: InventoryKeyService,
+    private toastService: ToastService
   ) {
     effect(() => {
       console.log('Key changed');
@@ -36,19 +38,12 @@ export class InventoryService {
   private loadInventory() {
     console.log('Loading inventory ' + this.inventoryKeyService.key());
     this.http
-      .get<Inventory>(
-        'http://' +
-        window.location.hostname +
-        ':8080/api/inventory?key=' +
-        this.inventoryKeyService.key()
-      )
-      .subscribe({
-        next: (res) => {
-          this._loaded = true;
-          this.inventory.set(res);
-        },
-        error: (err) => console.log(err),
-      });
+      .get<Inventory>(`http://${window.location.hostname}:8080/api/inventory?key=${this.inventoryKeyService.key()}`)
+      .pipe(
+        tap((res) => this._loaded = true),
+        tap((res) => this.inventory.set(res)),
+        catchError((err) => of(this.toastService.error('Inventory could not be loaded')))
+      ).subscribe();
   }
 
   get loaded(): boolean {
@@ -98,25 +93,24 @@ export class InventoryService {
   }
 
   saveItem(item: Item): Observable<Item> {
-    const sub = this.itemService.saveItem(item);
-
-    sub.subscribe({
-      next: (res) => this.loadInventory(),
-      error: console.error,
-    });
-
-    return sub;
+    return this.itemService.saveItem(item)
+      .pipe(
+        tap((res) => this.loadInventory()),
+        tap((res) => this.toastService.success("Item saved")),
+        catchError((err) => {
+          this.toastService.error("Error saving item");
+          return of(item);
+        })
+      );
   }
 
-  addLocation(location: Location): Observable<object> {
-    const sub = this.locationService.saveLocation(location);
-
-    sub.subscribe({
-      next: (res) => this.loadInventory(),
-      error: console.error,
-    });
-
-    return sub;
+  addLocation(location: Location): void {
+    this.locationService.saveLocation(location)
+      .pipe(
+        tap((res) => this.toastService.success("Location added")),
+        tap((res) => this.loadInventory()),
+        catchError((err) => of(this.toastService.error("Error adding location")))
+      ).subscribe();
   }
 
   updateItem(id: string, callback: (i: Item) => Item): void {
@@ -124,10 +118,12 @@ export class InventoryService {
 
     if (item) {
       item = callback(item);
-      this.itemService.saveItem(item).subscribe({
-        next: (res) => this.loadInventory(),
-        error: console.error,
-      });
+      this.itemService.saveItem(item)
+        .pipe(
+          tap((res) => this.loadInventory()),
+          catchError((err) => of(this.toastService.error("Error updating item")))
+        )
+        .subscribe();
     }
   }
 
@@ -165,7 +161,6 @@ export class InventoryService {
   }
 
   private getDate(): string {
-    const date = new Date();
-    return date.toJSON();
+    return new Date().toJSON();
   }
 }

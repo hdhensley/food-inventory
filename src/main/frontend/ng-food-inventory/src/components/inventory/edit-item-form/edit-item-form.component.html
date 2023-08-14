@@ -1,6 +1,5 @@
 <form *ngIf="itemForm" [formGroup]="itemForm" (ngSubmit)="onFormSubmit(itemForm)">
   <div class="mb-4">
-    <app-item-added-alert [item]="lastItem"></app-item-added-alert>
     <label class="block text-neutral text-sm font-bold mb-2" for="brand">
       Brand
     </label>
@@ -69,7 +68,6 @@
       Please select a location.
     </div>
   </div>
-  <app-item-added-alert [item]="lastItem"></app-item-added-alert>
   <div class="flex items-center justify-between">
     <button
       class="bg-neutral-content hover:bg-neutral text-neutral hover:text-neutral-content font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

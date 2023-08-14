@@ -24,7 +24,7 @@ export class InventoryKeyService {
     }
 
     public createInventory(inventoryKey: string): void {
-        this.http.get<Inventory>('http://' + window.location.hostname + ':8080/api/inventory?key=' + inventoryKey)
+        this.http.get<Inventory>(`http://${window.location.hostname}:8080/api/inventory?key=${inventoryKey}`)
           .subscribe({
             next: (inventory: Inventory) => {
               if (inventory.inventoryKey != null) {
@@ -37,7 +37,7 @@ export class InventoryKeyService {
     }
 
     public getAllInventoryKeys(): void {
-        this.http.get<string[]>('http://' + window.location.hostname + ':8080/api/inventoryKey').subscribe({
+        this.http.get<string[]>(`http://${window.location.hostname}:8080/api/inventoryKey`).subscribe({
             next: (keys: string[]) => {
                 keys.forEach(key => this.allKeys.mutate(curKeys => curKeys.add(key)))
             },

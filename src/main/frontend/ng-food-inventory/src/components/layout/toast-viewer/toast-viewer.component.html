@@ -1,0 +1,6 @@
+<div class="toast toast-top toast-end mt-14">
+  <div *ngFor="let messageID of toastService.messages.keys()"
+       class="alert alert-{{toastService.messages.get(messageID)?.type}}">
+    {{toastService.messages.get(messageID)?.body}}
+  </div>
+</div>
