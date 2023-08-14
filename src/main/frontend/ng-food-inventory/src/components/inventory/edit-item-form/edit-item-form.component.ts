@@ -24,7 +24,6 @@ export class EditItemFormComponent implements OnInit {
 
   itemForm: FormGroup|undefined;
   showModal = false;
-  lastItem: Item | undefined; //Should always be an Item object
 
   constructor(
     public inventoryService: InventoryService,
@@ -61,7 +60,6 @@ export class EditItemFormComponent implements OnInit {
     this.item.location = this.inventoryService.getLocation(value.location);
 
     this.inventoryService.saveItem(this.item).subscribe({
-      next: i => this.lastItem = i,
       error: console.error
     });
   }

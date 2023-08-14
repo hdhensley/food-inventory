@@ -73,7 +73,7 @@ export class AddItemFormComponent implements OnInit {
     item.quantity = value.quantity;
     item.location = this.inventoryService.getLocation(value.location);
 
-    this.inventoryService.saveItem(item);
+    this.inventoryService.saveItem(item).subscribe();
 
     this.itemForm?.reset();
     this.itemPrimaryRef?.nativeElement?.focus();

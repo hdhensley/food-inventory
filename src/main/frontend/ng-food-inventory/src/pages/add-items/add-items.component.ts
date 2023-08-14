@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import { AddItemFormComponent } from '../../components/inventory/add-item-form/add-item-form.component';
-import { FormWrapperComponent } from '../../components/layout/form-wrapper/form-wrapper.component';
+import { AddItemFormComponent } from '../../components/inventory';
+import { FormWrapperComponent } from '../../components/layout';
 
 @Component({
     selector: 'app-add-items',
@@ -8,6 +8,4 @@ import { FormWrapperComponent } from '../../components/layout/form-wrapper/form-
     standalone: true,
     imports: [FormWrapperComponent, AddItemFormComponent],
 })
-export class AddItemsComponent {
-  constructor(){}
-}
+export class AddItemsComponent {}
