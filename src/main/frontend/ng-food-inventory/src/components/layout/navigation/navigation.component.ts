@@ -1,7 +1,5 @@
 import {Component} from "@angular/core";
-import { ThemeChooserComponent } from "../../inventory/theme-chooser/theme-chooser.component";
-import { DownloadItemsComponent } from "../../inventory/download-items/download-items.component";
-import { InventorySelectorComponent } from "../../inventory/inventory-selector/inventory-selector.component";
+import { ThemeChooserComponent, DownloadItemsComponent, InventorySelectorComponent } from "../../inventory";
 import { NavItemsComponent } from "./nav-items/nav-items.component";
 import { RouterLink } from "@angular/router";
 

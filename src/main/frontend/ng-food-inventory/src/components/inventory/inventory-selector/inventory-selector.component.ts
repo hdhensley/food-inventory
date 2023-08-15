@@ -22,5 +22,8 @@ export class InventorySelectorComponent {
   setKey(key: string): void {
     this.inventoryKeyService.key.set(key);
     this.locationService.clearActive();
+
+    // @ts-ignore
+    document.activeElement?.blur();
   }
 }
