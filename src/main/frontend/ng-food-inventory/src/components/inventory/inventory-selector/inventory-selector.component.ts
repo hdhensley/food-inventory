@@ -12,12 +12,15 @@ import { LocationService } from 'src/services';
 })
 export class InventorySelectorComponent {
   modalOpen = signal(false);
-  sortedKeys = computed(() => Array.from(this.inventoryKeyService.allKeys()).sort((a: string, b) => a.localeCompare(b)));
+  sortedKeys = computed(() =>
+    Array.from(this.inventoryKeyService.allKeys())
+    .sort((a: string, b) => a.localeCompare(b))
+  );
 
   constructor(
     public inventoryKeyService: InventoryKeyService,
     private locationService: LocationService
-  ) { }
+  ){}
 
   setKey(key: string): void {
     this.inventoryKeyService.key.set(key);

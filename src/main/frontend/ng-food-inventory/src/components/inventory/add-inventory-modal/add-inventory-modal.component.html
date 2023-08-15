@@ -4,9 +4,6 @@
       <div *ngIf="error !== ''" class="bg-error text-error-content rounded p-3 text-center">
         {{error}}
       </div>
-      <label class="block text-sm font-bold mb-2" for="newLocation">
-        New Location
-      </label>
       <input
         id="newInventory"
         name="newInventory"
@@ -17,7 +14,7 @@
       <div class="modal-action flex justify-center">
         <button
           type="submit"
-          class="bg-neutral-content text-success font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Accept</button>
+          class="bg-neutral-content text-success font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save</button>
         <button
           (click)="cancel()"
           class="bg-neutral-content text-error font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Close</button>
@@ -25,4 +22,3 @@
     </div>
   </form>
 </div>
-  
