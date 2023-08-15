@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 import {InventoryService} from "../../../services";
 import {InactiveItemsPipe} from "../../../pipes";
-import { InactiveItemsPipe as InactiveItemsPipe_1 } from '../../../pipes/filter/inactive-items.pipe';
-import { DisplayDatePipe } from '../../../pipes/display-date.pipe';
+import { DisplayDatePipe } from '../../../pipes';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -10,8 +9,17 @@ import { NgFor } from '@angular/common';
     templateUrl: './oos-table.component.html',
     providers: [InactiveItemsPipe],
     standalone: true,
-    imports: [NgFor, DisplayDatePipe, InactiveItemsPipe_1]
+    imports: [NgFor, DisplayDatePipe, InactiveItemsPipe]
 })
 export class OosTableComponent {
-  constructor(public inventoryService: InventoryService) {}
+  constructor(
+    public inventoryService: InventoryService,
+    private inactiveItemsPipe: InactiveItemsPipe
+  ){}
+
+  clearAll() {
+    this.inactiveItemsPipe
+      .transform(this.inventoryService.items)
+      .forEach(item => this.inventoryService.delete(item.id));
+  }
 }
