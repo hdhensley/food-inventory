@@ -1,5 +1,5 @@
 # Build the angular frontend
-FROM node:16-alpine as frontend-build
+FROM node:18-alpine as frontend-build
 WORKDIR /usr/frontend
 COPY src/main/frontend/ng-food-inventory/ .
 RUN npm install -g @angular/cli@16
@@ -23,7 +23,7 @@ RUN ls build
 RUN ls build/libs
 
 #Set up to run the application
-FROM openjdk:17-alpine
+FROM amazoncorretto:17-alpine
 
 WORKDIR /usr/run
 COPY --from=build /usr/app/build/libs/*.jar ./app.jar
