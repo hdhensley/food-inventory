@@ -7,11 +7,12 @@ import {Item} from "../../models/item.model";
 })
 export class SearchFilterPipe implements PipeTransform {
   transform(items: Item[], query: string): Item[] {
+    const searchterm = query.toLowerCase();
     return query == '' ?
       items :
       items.filter(i =>
-        i.name.toLowerCase().indexOf(query.toLowerCase()) > -1
-        || i.brand.toLowerCase().indexOf(query.toLowerCase()) > -1
+        i.name.toLowerCase().indexOf(searchterm) > -1
+        || i.brand?.toLowerCase().indexOf(searchterm) > -1
       );
   }
 }
