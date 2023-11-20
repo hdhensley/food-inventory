@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ToastService} from "../../../services/toast.service";
 
@@ -6,8 +6,15 @@ import {ToastService} from "../../../services/toast.service";
   selector: 'app-toast-viewer',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './toast-viewer.component.html'
+  template: `
+    <div class="toast toast-top toast-end mt-14">
+      <div *ngFor="let messageID of toastService.messages.keys()"
+          class="alert alert-{{toastService.messages.get(messageID)?.type}}">
+        {{toastService.messages.get(messageID)?.body}}
+      </div>
+    </div>
+  `
 })
 export class ToastViewerComponent {
-  constructor(public toastService: ToastService) {}
+  toastService = inject(ToastService);
 }

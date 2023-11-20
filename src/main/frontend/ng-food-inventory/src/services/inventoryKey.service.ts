@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import {effect, Injectable, Signal, signal, WritableSignal} from "@angular/core";
+import {effect, inject, Injectable, signal, WritableSignal} from "@angular/core";
 import { environment } from "src/environments/environment";
 import { Inventory } from "src/models/Inventory.model";
 
@@ -10,7 +10,9 @@ export class InventoryKeyService {
   public key: WritableSignal<string> = signal(environment.inventoryKey);
   public allKeys: WritableSignal<Set<string>> = signal(new Set<string>());
 
-    constructor(private http: HttpClient) {
+  private http = inject(HttpClient);
+
+    constructor() {
         this.loadKey();
         this.getAllInventoryKeys();
 

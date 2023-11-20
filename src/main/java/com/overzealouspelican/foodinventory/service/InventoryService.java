@@ -2,12 +2,10 @@ package com.overzealouspelican.foodinventory.service;
 
 import com.overzealouspelican.foodinventory.model.Inventory;
 import com.overzealouspelican.foodinventory.repo.InventoryRepository;
-import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-import { effect, Injectable, signal, WritableSignal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Inventory } from '../models/Inventory.model';
 import { Item } from '../models/item.model';
 import { Location } from '../models/location.model';
@@ -14,19 +14,19 @@ import {ToastService} from "./toast.service";
   providedIn: 'root',
 })
 export class InventoryService {
-  private _loaded = false;
+  public loaded = signal(false);
   public inventory: WritableSignal<Inventory> = signal(new Inventory());
   public search: WritableSignal<string> = signal('');
 
-  constructor(
-    private http: HttpClient,
-    private itemService: ItemService,
-    private locationService: LocationService,
-    private activePipe: ActiveItemsPipe,
-    private inactivePipe: InactiveItemsPipe,
-    private inventoryKeyService: InventoryKeyService,
-    private toastService: ToastService
-  ) {
+  private http = inject(HttpClient);
+  private itemService = inject(ItemService);
+  private locationService = inject(LocationService);
+  private activePipe = inject(ActiveItemsPipe);
+  private inactivePipe = inject(InactiveItemsPipe);
+  private inventoryKeyService = inject(InventoryKeyService);
+  private toastService = inject(ToastService);
+
+  constructor() {
     effect(() => {
       console.log('Key changed');
       console.log(this.inventoryKeyService.key());
@@ -40,17 +40,13 @@ export class InventoryService {
     this.http
       .get<Inventory>(`http://${window.location.hostname}:8080/api/inventory?key=${this.inventoryKeyService.key()}`)
       .pipe(
-        tap((res) => this._loaded = true),
         tap((res) => this.inventory.set(res)),
-        catchError((err) => of(this.toastService.error('Inventory could not be loaded')))
+        tap(() => this.loaded.set(true)),
+        catchError(() => of(this.toastService.error('Inventory could not be loaded')))
       ).subscribe();
   }
 
-  get loaded(): boolean {
-    return this._loaded;
-  }
-
-  get items(): Item[] {
+  items = computed(() => {
     let items: Item[] = [];
 
     this.inventory().locations.forEach((location: Location) => {
@@ -59,45 +55,43 @@ export class InventoryService {
     });
 
     return items;
-  }
+  });
+
+  hasActiveItems = computed(() => {
+    return this.activePipe.transform(this.items()).length > 0;
+  });
+
+  hasInactiveItems = computed(() => {
+    return this.inactivePipe.transform(this.items()).length > 0;
+  });
+
+  hasItems = computed(() => {
+    return this.items().length > 0;
+  });
+
+  currentLocation = computed(() => {
+    return this.getLocation(this.locationService.activeLocation());
+  });
+
+  locations = computed(() => {
+    return this.inventory().locations;
+  });
 
   getItem(itemId: string | null): Item | undefined {
-    return this.items.find((i) => i.id == itemId);
-  }
-
-  hasItems(): boolean {
-    return !!this.items.length;
-  }
-
-  hasActiveItems(): boolean {
-    return !!this.activePipe.transform(this.items).length;
-  }
-
-  hasInactiveItems(): boolean {
-    return !!this.inactivePipe.transform(this.items).length;
-  }
-
-  getCurrentLocation(): Location | undefined {
-    if (this.locationService.activeLocation() !== undefined) {
-      return this.getLocation(this.locationService.activeLocation());
-    }
-    return undefined;
+    return this.items().find((i) => i.id == itemId);
   }
 
   getLocation(id: number | undefined): Location | undefined {
     return this.inventory().locations.find((l) => l.id === id);
   }
 
-  getLocations(): Location[] {
-    return this.inventory().locations;
-  }
-
   saveItem(item: Item): Observable<Item> {
     return this.itemService.saveItem(item)
       .pipe(
-        tap((res) => this.loadInventory()),
-        tap((res) => this.toastService.success("Item saved")),
+        tap(() => this.loadInventory()),
+        tap(() => this.toastService.success("Item saved")),
         catchError((err) => {
+          console.error(err);
           this.toastService.error("Error saving item");
           return of(item);
         })
@@ -107,21 +101,21 @@ export class InventoryService {
   addLocation(location: Location): void {
     this.locationService.saveLocation(location)
       .pipe(
-        tap((res) => this.toastService.success("Location added")),
-        tap((res) => this.loadInventory()),
-        catchError((err) => of(this.toastService.error("Error adding location")))
+        tap(() => this.toastService.success("Location added")),
+        tap(() => this.loadInventory()),
+        catchError(() => of(this.toastService.error("Error adding location")))
       ).subscribe();
   }
 
   updateItem(id: string, callback: (i: Item) => Item): void {
-    let item = this.items.find((i) => i.id === id);
+    let item = this.items().find((i) => i.id === id);
 
     if (item) {
       item = callback(item);
       this.itemService.saveItem(item)
         .pipe(
-          tap((res) => this.loadInventory()),
-          catchError((err) => of(this.toastService.error("Error updating item")))
+          tap(() => this.loadInventory()),
+          catchError(() => of(this.toastService.error("Error updating item")))
         )
         .subscribe();
     }

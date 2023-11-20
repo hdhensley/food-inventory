@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, inject} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import {Item} from "../../../models/item.model";
 import {InventoryService, LocationService} from "../../../services";
@@ -25,11 +25,9 @@ export class EditItemFormComponent implements OnInit {
   itemForm: FormGroup|undefined;
   showModal = false;
 
-  constructor(
-    public inventoryService: InventoryService,
-    public locationService: LocationService,
-    private fb: FormBuilder
-  ){}
+  inventoryService = inject(InventoryService);
+  locationService = inject(LocationService);
+  fb = inject(FormBuilder);
 
   ngOnInit() {
     this.itemForm = this.fb.group({

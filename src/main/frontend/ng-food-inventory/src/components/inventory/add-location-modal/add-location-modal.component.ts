@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import { InventoryService } from "../../../services";
 import { Location } from "../../../models/location.model";
@@ -17,10 +17,8 @@ export class AddLocationModalComponent implements OnInit {
 
   @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(
-    private fb: FormBuilder,
-    private inventoryService: InventoryService
-  ) { }
+  fb = inject(FormBuilder);
+  inventoryService = inject(InventoryService);
 
   ngOnInit(): void {
     this.newLocationForm = this.fb.group({
@@ -55,6 +53,6 @@ export class AddLocationModalComponent implements OnInit {
   }
 
   locations() {
-    return this.inventoryService.getLocations();
+    return this.inventoryService.locations();
   }
 }

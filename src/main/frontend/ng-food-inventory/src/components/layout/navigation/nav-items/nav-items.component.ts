@@ -3,7 +3,26 @@ import { RouterLinkActive, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-nav-items',
-    templateUrl: './nav-items.component.html',
+    template: `
+      <a
+        [routerLink]="['inventory']"
+        routerLinkActive="active-nav-link"
+        class="nav-link">
+        Inventory
+      </a>
+      <a
+        [routerLink]="['out-of-stock']"
+        routerLinkActive="active-nav-link"
+        class="nav-link">
+        Out of Stock
+      </a>
+      <a
+        [routerLink]="['item','create']"
+        routerLinkActive="active-nav-link"
+        class="nav-link">
+        Add Items
+      </a>
+    `,
     standalone: true,
     imports: [RouterLinkActive, RouterLink]
 })

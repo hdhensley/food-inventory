@@ -1,15 +1,18 @@
 <div class="bg-neutral text-neutral-content mb-4 py-4 px-2 rounded hidden md:block">
   <div class="flex flex-grow flex-row">
     <div>
-      <div class="nav-link rounded-btn" (click)="locationService.activeLocation.set(0)"
+      <button class="nav-link rounded-btn"
+        (click)="locationService.activeLocation.set(0)"
+        (keydown)="locationService.activeLocation.set(0)"
         [ngClass]="{ 'active-nav-link': locationService.isActive(0) }">
         All
-      </div>
-      <div class="nav-link rounded-btn ml-2" *ngFor="let location of inventoryService.inventory().locations"
+      </button>
+      <button class="nav-link rounded-btn ml-2" *ngFor="let location of inventoryService.inventory().locations"
         (click)="locationService.activeLocation.set(location.id)"
+        (keydown)="locationService.activeLocation.set(location.id)"
         [ngClass]="{ 'active-nav-link': locationService.isActive(location.id) }">
         {{ location.name }}
-      </div>
+      </button>
     </div>
     <div class="flex flex-1 justify-end">
       <div *ngIf="!locationService.isActive(0)">
@@ -33,20 +36,28 @@
 
     <div>
       <div class="dropdown dropdown-end">
-        <label tabindex="0" class="nav-link rounded-btn active-nav-link">
-          {{ inventoryService.getCurrentLocation()?.name || "All" }}
-        </label>
-        <label *ngIf="!locationService.isActive(0)" (click)="locationService.clearActive()" tabindex="0"
+        <span tabindex="0" class="nav-link rounded-btn active-nav-link">
+          {{ inventoryService.currentLocation()?.name || "All" }}
+        </span>
+        <button
+          *ngIf="!locationService.isActive(0)"
+          (click)="locationService.clearActive()"
+          tabindex="0"
           class="nav-link rounded-btn active-nav-link ml-1">
           X
-        </label>
+        </button>
         <ul tabindex="0"
           class="dropdown-content menu p-2 shadow bg-neutral text-neutral-content rounded-box w-52 max-h-screen">
           <li>
-            <a (click)="locationService.clearActive()">All</a>
+            <a tabindex="0"
+               (keydown)="locationService.clearActive()"
+               (click)="locationService.clearActive()">All
+            </a>
           </li>
-          <li *ngFor="let location of inventoryService.getLocations()">
-            <a (click)="locationService.activeLocation.set(location.id)">{{
+          <li *ngFor="let location of inventoryService.locations()">
+            <a tabindex="0"
+               (click)="locationService.activeLocation.set(location.id)"
+               (keydown)="locationService.activeLocation.set(location.id)">{{
               location.name
               }}</a>
           </li>

@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { InventoryKeyService } from 'src/services/inventoryKey.service';
 import { AddInventoryModalComponent } from '../add-inventory-modal/add-inventory-modal.component';
 import { NgFor } from '@angular/common';
@@ -17,10 +17,8 @@ export class InventorySelectorComponent {
     .sort((a: string, b) => a.localeCompare(b))
   );
 
-  constructor(
-    public inventoryKeyService: InventoryKeyService,
-    private locationService: LocationService
-  ){}
+  inventoryKeyService = inject(InventoryKeyService);
+  locationService = inject(LocationService);
 
   setKey(key: string): void {
     this.inventoryKeyService.key.set(key);

@@ -10,19 +10,19 @@ export class ToastService {
     return this._messages;
   }
 
-  public success(message: string, durationMS: number = 5000): number {
+  public success(message: string, durationMS = 5000): number {
     return this.addMessage(new Message(message, MessageType.SUCCESS, durationMS));
   }
 
-  public info(message: string, durationMS: number = 5000): number {
+  public info(message: string, durationMS = 5000): number {
     return this.addMessage(new Message(message, MessageType.INFO, durationMS));
   }
 
-  public warning(message: string, durationMS: number = 5000): number {
+  public warning(message: string, durationMS = 5000): number {
     return this.addMessage(new Message(message, MessageType.WARNING, durationMS));
   }
 
-  public error(message: string, durationMS: number = 5000): number {
+  public error(message: string, durationMS = 5000): number {
     return this.addMessage(new Message(message, MessageType.DANGER, durationMS));
   }
 

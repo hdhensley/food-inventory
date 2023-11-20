@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {InventoryService} from "../../services";
 import {Item} from "../../models/item.model";
@@ -7,17 +7,19 @@ import { FormWrapperComponent } from '../../components/layout/form-wrapper/form-
 
 @Component({
     selector: 'app-edit-item',
-    templateUrl: './edit-item.component.html',
+    template: `
+      <app-form-wrapper header="Manage Items" title="Edit Item">
+        <app-edit-item-form [item]="item"></app-edit-item-form>
+      </app-form-wrapper>
+    `,
     standalone: true,
     imports: [FormWrapperComponent, EditItemFormComponent],
 })
 export class EditItemComponent implements OnInit {
   item: Item | undefined;
 
-  constructor(
-    private route: ActivatedRoute,
-    private inventoryService: InventoryService
-  ){}
+  route = inject(ActivatedRoute);
+  inventoryService = inject(InventoryService);
 
   ngOnInit(): void {
     this.item = this.inventoryService.getItem(this.route.snapshot.paramMap.get('itemId'));

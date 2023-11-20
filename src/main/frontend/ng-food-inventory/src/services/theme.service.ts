@@ -4,7 +4,7 @@ import { Injectable, WritableSignal, signal, effect } from '@angular/core';
   providedIn: 'root',
 })
 export class ThemeService {
-  private _themes: string[] = [
+  readonly themes: string[] = [
     'light',
     'dark',
     'cupcake',
@@ -52,9 +52,5 @@ export class ThemeService {
     if (currentTheme !== null) {
       this.curTheme.set(currentTheme);
     }
-  }
-
-  get themes(): string[] {
-    return this._themes;
   }
 }

@@ -5,14 +5,13 @@ import com.overzealouspelican.foodinventory.request.LocationRequest;
 import com.overzealouspelican.foodinventory.service.InventoryService;
 import com.overzealouspelican.foodinventory.service.LocationService;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-@Controller
+@RestController
 @RequestMapping(path = "api/location")
 public class LocationController {
     private final LocationService locationService;
@@ -24,7 +23,6 @@ public class LocationController {
     }
 
     @PostMapping
-    @ResponseBody
     public Location saveLocation(@RequestBody LocationRequest request) {
         try {
             // @TODO validate request

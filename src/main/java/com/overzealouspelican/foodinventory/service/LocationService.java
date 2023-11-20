@@ -2,7 +2,6 @@ package com.overzealouspelican.foodinventory.service;
 
 import com.overzealouspelican.foodinventory.model.Location;
 import com.overzealouspelican.foodinventory.repo.LocationRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

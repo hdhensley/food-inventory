@@ -4,7 +4,11 @@ import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-item-added-alert',
-    templateUrl: './item-added-alert.component.html',
+    template: `
+      <div *ngIf="item" class="bg-green-500 text-white rounded p-3 mb-4 mt-2">
+        Item added successfully! {{ item.name }}
+      </div>
+    `,
     standalone: true,
     imports: [NgIf],
 })

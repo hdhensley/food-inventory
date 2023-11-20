@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {InventoryService} from "../services";
 import {ThemeService} from "../services/theme.service";
 import { RouterOutlet } from '@angular/router';
@@ -8,16 +8,21 @@ import {ToastViewerComponent} from "../components/layout/toast-viewer/toast-view
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  template: `
+    <div [attr.data-theme]="themeService.curTheme()" *ngIf="inventoryService.loaded">
+      <app-navigation></app-navigation>
+
+      <router-outlet></router-outlet>
+
+      <app-toast-viewer></app-toast-viewer>
+    </div>
+  `,
   standalone: true,
   imports: [NgIf, NavigationComponent, RouterOutlet, ToastViewerComponent]
 })
 export class AppComponent {
   title = 'Food Inventory';
 
-  constructor(
-    public inventoryService: InventoryService,
-    public themeService: ThemeService
-  ){}
+  inventoryService = inject(InventoryService);
+  themeService = inject(ThemeService);
 }

@@ -5,7 +5,21 @@ import { TableContainerComponent } from '../../components/layout/table-container
 
 @Component({
     selector: 'app-out-of-stock',
-    templateUrl: './out-of-stock.component.html',
+    template: `
+      <div class="xl:container xl:mx-auto">
+        <app-table-container
+          title="Out Of Stock Inventory"
+          [showTable]="inventoryService.hasInactiveItems()">
+
+          <app-oos-table></app-oos-table>
+
+          <div class="noTableData">
+            There's nothing to show
+          </div>
+
+        </app-table-container>
+      </div>
+    `,
     standalone: true,
     imports: [TableContainerComponent, OosTableComponent],
 })

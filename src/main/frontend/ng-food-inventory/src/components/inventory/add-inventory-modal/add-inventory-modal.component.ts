@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -23,10 +23,8 @@ export class AddInventoryModalComponent implements OnInit {
 
   @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(
-    private fb: FormBuilder,
-    private inventoryKeyService: InventoryKeyService
-  ) { }
+  fb = inject(FormBuilder);
+  inventoryKeyService = inject(InventoryKeyService);
 
   ngOnInit(): void {
     this.newInventoryForm = this.fb.group({

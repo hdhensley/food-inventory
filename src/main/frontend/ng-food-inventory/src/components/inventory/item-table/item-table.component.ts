@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {InventoryService, LocationService} from "../../../services";
 import { SearchFilterPipe } from '../../../pipes/filter/search-filter.pipe';
 import { DisplayDatePipe } from '../../../pipes/display-date.pipe';
@@ -15,8 +15,6 @@ import { NgIf, NgFor } from '@angular/common';
     imports: [NgIf, NgFor, RouterLink, CountManagerComponent, OutOfStockButtonComponent, ActiveItemsPipe, DisplayDatePipe, SearchFilterPipe]
 })
 export class ItemTableComponent {
-  constructor(
-    public inventoryService: InventoryService,
-    public locationService: LocationService
-  ){}
+  inventoryService = inject(InventoryService);
+  locationService = inject(LocationService);
 }
