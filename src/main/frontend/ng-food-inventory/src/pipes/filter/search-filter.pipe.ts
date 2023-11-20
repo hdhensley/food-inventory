@@ -9,6 +9,9 @@ export class SearchFilterPipe implements PipeTransform {
   transform(items: Item[], query: string): Item[] {
     return query == '' ?
       items :
-      items.filter(i => i.name.toLowerCase().indexOf(query.toLowerCase()) > -1);
+      items.filter(i =>
+        i.name.toLowerCase().indexOf(query.toLowerCase()) > -1
+        || i.brand.toLowerCase().indexOf(query.toLowerCase()) > -1
+      );
   }
 }
