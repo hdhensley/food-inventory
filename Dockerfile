@@ -2,7 +2,7 @@
 FROM node:18-alpine as frontend-build
 WORKDIR /usr/frontend
 COPY src/main/frontend/ng-food-inventory/ .
-RUN npm install -g @angular/cli@16
+RUN npm install -g @angular/cli@17
 RUN npm install
 RUN npm run build --aot
 RUN ls

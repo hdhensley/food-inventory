@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ng-food-inventory:build:production"
+              "buildTarget": "ng-food-inventory:build:production"
             },
             "development": {
-              "browserTarget": "ng-food-inventory:build:development"
+              "buildTarget": "ng-food-inventory:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-food-inventory:build"
+            "buildTarget": "ng-food-inventory:build"
           }
         },
         "test": {
