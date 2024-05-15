@@ -1,6 +1,7 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
 import { Location } from '../models/location.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class LocationService extends HttpClient {
 
   saveLocation(location: Location) {
     return this.post(
-      `http://${window.location.hostname}:8080/api/location`,
+      `${environment.apiUrl}/location`,
       this.generateRequest(location)
     );
   }

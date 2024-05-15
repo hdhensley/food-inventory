@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {Item} from "../models/item.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService extends HttpClient {
   saveItem(item: Item): Observable<Item> {
-    return this.post<Item>(`http://${window.location.hostname}:8080/api/item`, this.generateRequest(item));
+    return this.post<Item>(`${environment.apiUrl}/item`, this.generateRequest(item));
   }
 
   generateRequest(item: Item) {

@@ -9,6 +9,7 @@ import { LocationService } from './location.service';
 import { ActiveItemsPipe, InactiveItemsPipe } from '../pipes';
 import { InventoryKeyService } from './inventoryKey.service';
 import {ToastService} from "./toast.service";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,7 @@ export class InventoryService {
   private loadInventory() {
     console.log('Loading inventory ' + this.inventoryKeyService.key());
     this.http
-      .get<Inventory>(`http://${window.location.hostname}:8080/api/inventory?key=${this.inventoryKeyService.key()}`)
+      .get<Inventory>(`${environment.apiUrl}/inventory?key=${this.inventoryKeyService.key()}`)
       .pipe(
         tap((res) => this.inventory.set(res)),
         tap(() => this.loaded.set(true)),
