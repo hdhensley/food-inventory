@@ -6,7 +6,8 @@ plugins {
 
 group = 'com.overzealouspelican'
 version = '2.2.0'
-sourceCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 repositories {
 	mavenLocal()
@@ -23,7 +24,7 @@ configurations {
 }
 
 jar {
-	archiveName 'app.jar'
+	archiveFileName='app.jar'
 }
 
 dependencies {
@@ -37,12 +38,13 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j:8.0.33'
 	runtimeOnly 'com.h2database:h2'
 	// LOMBOK
-	compileOnly 'org.projectlombok:lombok:1.18.22'
-	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testCompileOnly 'org.projectlombok:lombok:1.18.22'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+	testCompileOnly 'org.projectlombok:lombok:1.18.30'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 tasks.named('test') {
