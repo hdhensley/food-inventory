@@ -16,29 +16,29 @@ import { NgFor, NgIf } from '@angular/common';
           let item of inventoryService.items()
             | activeItems : locationService.activeLocation()
             | searchFilter : inventoryService.search()
-        " class="card w-full mb-3 bg-secondary text-secondary-content">
-        <div class="card-body">
-          <div class="flex flex-row justify-between">
+        ">
+        <div class="w-full mb-4 rounded-lg bg-secondary text-secondary-content shadow-md p-4">
+          <!-- Top Section: Item Info + Out of Stock Button -->
+          <div class="flex justify-between items-start">
             <div class="flex flex-col">
-              <a [routerLink]="['/', 'item', item.id, 'edit']">
-                <span class="italic">{{ item.brand ? item.brand : " " }}</span>
-                <br />
-                <span class="card-title">{{ item.name }}</span>
+              <a [routerLink]="['/', 'item', item.id, 'edit']" class="hover:underline">
+                <span class="italic block">{{ item.brand }}</span>
+                <span class="text-xl font-bold">{{ item.name }}</span>
               </a>
             </div>
-            <div class="flex pr-2">
+            <div>
               <app-out-of-stock-button [item]="item"></app-out-of-stock-button>
             </div>
           </div>
-          <div class="flex flex-row justify-between mt-3">
-            <p *ngIf="item.location">
-              {{ item.location.name }}
-            </p>
-            <p *ngIf="item.dateAdded">
-              {{ item.dateAdded | displayDate }}
-            </p>
+
+          <!-- Middle Section: Location & Date -->
+          <div class="flex justify-between text-sm mt-4">
+            <p>{{ item.location?.name }}</p>
+            <p>{{ item.dateAdded | displayDate }}</p>
           </div>
-          <div class="card-actions justify-end">
+
+          <!-- Bottom Section: Count Manager -->
+          <div class="flex justify-end mt-4">
             <app-count-manager [item]="item"></app-count-manager>
           </div>
         </div>
@@ -61,3 +61,30 @@ export class ItemCardsComponent {
   inventoryService = inject(InventoryService);
   locationService = inject(LocationService);
 }
+
+
+// <div class="card-body">
+//           <div class="flex flex-row justify-between">
+//             <div class="flex flex-col">
+//               <a [routerLink]="['/', 'item', item.id, 'edit']">
+//                 <span class="italic">{{ item.brand ? item.brand : " " }}</span>
+//                 <br />
+//                 <span class="card-title">{{ item.name }}</span>
+//               </a>
+//             </div>
+//             <div class="flex pr-2">
+//               <app-out-of-stock-button [item]="item"></app-out-of-stock-button>
+//             </div>
+//           </div>
+//           <div class="flex flex-row justify-between mt-3">
+//             <p *ngIf="item.location">
+//               {{ item.location.name }}
+//             </p>
+//             <p *ngIf="item.dateAdded">
+//               {{ item.dateAdded | displayDate }}
+//             </p>
+//           </div>
+//           <div class="card-actions justify-end">
+//             <app-count-manager [item]="item"></app-count-manager>
+//           </div>
+//         </div>
