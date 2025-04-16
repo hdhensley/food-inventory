@@ -5,10 +5,9 @@ import { NgFor } from '@angular/common';
 import { LocationService } from 'src/services';
 
 @Component({
-  selector: 'app-inventory-selector',
-  templateUrl: './inventory-selector.component.html',
-  standalone: true,
-  imports: [NgFor, AddInventoryModalComponent],
+    selector: 'app-inventory-selector',
+    templateUrl: './inventory-selector.component.html',
+    imports: [NgFor, AddInventoryModalComponent]
 })
 export class InventorySelectorComponent {
   modalOpen = signal(false);

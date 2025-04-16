@@ -20,8 +20,7 @@ import { CardComponent } from '../card/card.component';
         </app-card>
       </div>
     `,
-    standalone: true,
-    imports: [CardComponent, NgIf],
+    imports: [CardComponent, NgIf]
 })
 export class FormWrapperComponent {
   @Input() header: string|false = false;

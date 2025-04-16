@@ -3,8 +3,8 @@ import { ThemeService } from '../../../services/theme.service';
 import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-theme-chooser',
-  template: `
+    selector: 'app-theme-chooser',
+    template: `
     <div class="z-50 dropdown dropdown-end">
       <span tabindex="0" class="btn m-1">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -21,8 +21,7 @@ import { NgFor } from '@angular/common';
       </ul>
     </div>
   `,
-  standalone: true,
-  imports: [NgFor],
+    imports: [NgFor]
 })
 export class ThemeChooserComponent {
   constructor(public themeService: ThemeService) { }

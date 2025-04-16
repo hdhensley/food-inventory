@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import {ToastService} from "../../../services/toast.service";
 
 @Component({
-  selector: 'app-toast-viewer',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-toast-viewer',
+    imports: [CommonModule],
+    template: `
     <div class="toast toast-top toast-end mt-14">
       <div *ngFor="let messageID of toastService.messages.keys()"
           class="alert alert-{{toastService.messages.get(messageID)?.type}}">

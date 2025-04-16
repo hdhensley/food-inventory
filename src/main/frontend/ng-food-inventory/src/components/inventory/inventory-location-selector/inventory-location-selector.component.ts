@@ -10,7 +10,6 @@ import { NgIf } from '@angular/common';
         <app-inventory-filter></app-inventory-filter>
       </div>
     `,
-    standalone: true,
     imports: [NgIf, InventoryFilterComponent]
 })
 export class InventoryLocationSelectorComponent {

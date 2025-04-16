@@ -23,7 +23,6 @@ import { RouterLinkActive, RouterLink } from '@angular/router';
         Add Items
       </a>
     `,
-    standalone: true,
     imports: [RouterLinkActive, RouterLink]
 })
 export class NavItemsComponent {}

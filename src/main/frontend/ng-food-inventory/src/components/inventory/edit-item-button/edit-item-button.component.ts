@@ -12,8 +12,7 @@ import { NgIf } from '@angular/common';
         </svg>
       </a>
     `,
-    standalone: true,
-    imports: [NgIf, RouterLink],
+    imports: [NgIf, RouterLink]
 })
 export class EditItemButtonComponent {
   @Input() item: Item | undefined;

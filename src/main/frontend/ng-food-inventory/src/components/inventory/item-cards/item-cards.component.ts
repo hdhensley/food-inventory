@@ -9,8 +9,8 @@ import { RouterLink } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-item-cards',
-  template: `
+    selector: 'app-item-cards',
+    template: `
     <div style="z-index: 1" class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
       <div *ngFor="
           let item of inventoryService.items()
@@ -47,15 +47,15 @@ import { NgFor, NgIf } from '@angular/common';
   `,
   standalone: true,
   imports: [
-    NgFor,
-    RouterLink,
-    OutOfStockButtonComponent,
-    NgIf,
-    CountManagerComponent,
-    ActiveItemsPipe,
-    DisplayDatePipe,
-    SearchFilterPipe,
-  ],
+      NgFor,
+      RouterLink,
+      OutOfStockButtonComponent,
+      NgIf,
+      CountManagerComponent,
+      ActiveItemsPipe,
+      DisplayDatePipe,
+      SearchFilterPipe,
+  ]
 })
 export class ItemCardsComponent {
   inventoryService = inject(InventoryService);

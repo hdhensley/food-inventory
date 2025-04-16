@@ -33,13 +33,12 @@ import { RouterLink } from "@angular/router";
         </div>
       </div>
     `,
-    standalone: true,
     imports: [
         RouterLink,
         NavItemsComponent,
         InventorySelectorComponent,
         DownloadItemsComponent,
         ThemeChooserComponent,
-    ],
+    ]
 })
 export class NavigationComponent {}
