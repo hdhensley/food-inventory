@@ -79,7 +79,7 @@ tasks.register('dockerRun', Exec) {
 // Build the angular application and copy the dist contents into the spring boot static directory
 tasks.register('buildFrontend', Exec) {
 	commandLine 'sh', '-c', 'rm ./src/main/resources/static/*'
-	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --aot && cp -r dist/ng-food-inventory/* ../../resources/static/'
+	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --aot && cp -r dist/ng-food-inventory/browser/* ../../resources/static/'
 }
 
 // bootJar.dependsOn buildFrontend
