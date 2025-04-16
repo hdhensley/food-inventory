@@ -3,8 +3,6 @@ package com.overzealouspelican.foodinventory.service;
 import com.overzealouspelican.foodinventory.model.Inventory;
 import com.overzealouspelican.foodinventory.repo.InventoryRepository;
 
-import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,26 +18,24 @@ public class InventoryService {
 
     public Inventory findOrFail(int id) throws EntityNotFoundException {
         return inventoryRepository
-                .findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid Data"));
+            .findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid Data"));
     }
 
     public Inventory findByInventoryKey(String key) {
-        return inventoryRepository.findByInventoryKey(key).orElseThrow(EntityNotFoundException::new);
+        return inventoryRepository
+            .findByInventoryKey(key)
+            .orElseThrow(EntityNotFoundException::new);
     }
 
     public Set<String> getInventoryKeys() {
-        Set<String> keys = new HashSet<>();
-        
-        inventoryRepository.findAll().forEach((i) -> keys.add(i.getInventoryKey()));
-
-        return keys;
+        return inventoryRepository.findDistinctInventoryKeys();
     }
 
     public Inventory findOrCreate(String key) {
-        Optional<Inventory> inventory = inventoryRepository.findByInventoryKey(key);
-
-        return inventory.orElseGet(() -> createNew(key));
+        return inventoryRepository
+            .findByInventoryKey(key)
+            .orElseGet(() -> createNew(key));
 
     }
 

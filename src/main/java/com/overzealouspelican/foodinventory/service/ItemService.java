@@ -21,10 +21,9 @@ public class ItemService {
     }
 
     public Item findOrNew(ItemRequest request) {
-        if (request.id() != null) {
-            return itemRepository.findById(request.id()).orElse(new Item());
-        }
-        return new Item();
+        return request.id() != null ?
+            itemRepository.findById(request.id()).orElse(new Item()) :
+            new Item();
     }
 
     public Item save(Item item) {

@@ -15,19 +15,17 @@ public class LocationService {
     }
 
     public Location findOrNew(Integer id) {
-        if (id == null) {
-            return new Location();
-        }
-
-        return locationRepository
+        return id == null ? 
+            new Location() :
+            locationRepository
                 .findById(id)
                 .orElseGet(Location::new);
     }
 
     public Location findOrFail(int id) {
         return locationRepository
-                .findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid data"));
+            .findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid data"));
     }
 
     public Location create(Location location) {
