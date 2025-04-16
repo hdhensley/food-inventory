@@ -9,14 +9,13 @@ import { NgIf, NgFor } from '@angular/common';
 @Component({
     selector: 'app-edit-item-form',
     templateUrl: './edit-item-form.component.html',
-    standalone: true,
     imports: [
         NgIf,
         ReactiveFormsModule,
         ItemAddedAlertComponent,
         NgFor,
         AddLocationModalComponent,
-    ],
+    ]
 })
 export class EditItemFormComponent implements OnInit {
   @Input() item: Item | undefined;

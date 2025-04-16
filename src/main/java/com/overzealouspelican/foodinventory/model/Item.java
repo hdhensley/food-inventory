@@ -20,6 +20,10 @@ public class Item {
         return this.id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     private String brand;
 
     public String getBrand() {

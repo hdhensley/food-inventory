@@ -7,8 +7,8 @@ import { NgIf } from '@angular/common';
 import {ToastViewerComponent} from "../components/layout/toast-viewer/toast-viewer.component";
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <div [attr.data-theme]="themeService.curTheme()" *ngIf="inventoryService.loaded">
       <app-navigation></app-navigation>
 
@@ -17,8 +17,7 @@ import {ToastViewerComponent} from "../components/layout/toast-viewer/toast-view
       <app-toast-viewer></app-toast-viewer>
     </div>
   `,
-  standalone: true,
-  imports: [NgIf, NavigationComponent, RouterOutlet, ToastViewerComponent]
+    imports: [NgIf, NavigationComponent, RouterOutlet, ToastViewerComponent]
 })
 export class AppComponent {
   title = 'Food Inventory';

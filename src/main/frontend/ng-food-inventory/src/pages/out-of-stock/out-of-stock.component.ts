@@ -20,8 +20,7 @@ import { TableContainerComponent } from '../../components/layout/table-container
         </app-table-container>
       </div>
     `,
-    standalone: true,
-    imports: [TableContainerComponent, OosTableComponent],
+    imports: [TableContainerComponent, OosTableComponent]
 })
 export class OutOfStockComponent {
   constructor(public inventoryService: InventoryService) {}

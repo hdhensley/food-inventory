@@ -13,16 +13,15 @@ import { ItemAddedAlertComponent } from '../item-added-alert/item-added-alert.co
 import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-add-item-form',
-  templateUrl: './add-item-form.component.html',
-  standalone: true,
-  imports: [
-    NgIf,
-    ReactiveFormsModule,
-    ItemAddedAlertComponent,
-    NgFor,
-    AddLocationModalComponent,
-  ],
+    selector: 'app-add-item-form',
+    templateUrl: './add-item-form.component.html',
+    imports: [
+        NgIf,
+        ReactiveFormsModule,
+        ItemAddedAlertComponent,
+        NgFor,
+        AddLocationModalComponent,
+    ]
 })
 export class AddItemFormComponent implements OnInit {
   itemForm: FormGroup | undefined;

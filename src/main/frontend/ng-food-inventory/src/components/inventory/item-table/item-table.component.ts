@@ -11,7 +11,6 @@ import { NgIf, NgFor } from '@angular/common';
 @Component({
     selector: 'app-item-table',
     templateUrl: './item-table.component.html',
-    standalone: true,
     imports: [NgIf, NgFor, RouterLink, CountManagerComponent, OutOfStockButtonComponent, ActiveItemsPipe, DisplayDatePipe, SearchFilterPipe]
 })
 export class ItemTableComponent {

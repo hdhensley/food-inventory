@@ -1,2 +1,2 @@
-java openjdk-17
-gradle 7.3
+java corretto-21.0.7.6.1
+gradle 8.7

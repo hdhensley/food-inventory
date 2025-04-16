@@ -13,8 +13,7 @@ import { NgIf } from '@angular/common';
       </svg>
     </button>
     `,
-    standalone: true,
-    imports: [NgIf],
+    imports: [NgIf]
 })
 export class OutOfStockButtonComponent{
   @Input() item: Item | undefined;
