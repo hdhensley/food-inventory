@@ -6,7 +6,7 @@ import { ActiveItemsPipe } from '../../../pipes/filter/active-items.pipe';
 import { CountManagerComponent } from '../count-manager/count-manager.component';
 import { OutOfStockButtonComponent } from '../out-of-stock-button/out-of-stock-button.component';
 import { RouterLink } from '@angular/router';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'app-item-cards',
@@ -19,37 +19,40 @@ import { NgFor, NgIf } from '@angular/common';
             | searchFilter : inventoryService.search()
         "
       >
-        <div class="bg-secondary text-secondary-content rounded-xl shadow-lg p-6 flex flex-col justify-between h-full transition hover:shadow-xl">
-          
-          <!-- Top: Item Info -->
-          <div class="flex justify-between items-start">
-            <div>
-              <a
-                [routerLink]="['/', 'item', item.id, 'edit']"
-                class="hover:underline"
-              >
-                <p class="text-sm text-secondary-content italic">
-                  {{ item.brand }}
-                </p>
-                <h2 class="text-xl font-semibold truncate">
-                  {{ item.name }}
-                </h2>
-              </a>
-            </div>
+      <div class="bg-secondary text-secondary-content rounded-xl shadow-lg p-6 flex flex-col justify-between h-full transition hover:shadow-xl">
+        <!-- Top: Item Info + Out-of-stock -->
+        <div class="flex justify-between items-start gap-4">
+          <!-- Brand and Name -->
+          <div class="flex-1 min-w-0">
+            <a [routerLink]="['/', 'item', item.id, 'edit']" class="hover:underline block">
+              <p 
+                [title]="item.brand" 
+                class="text-sm text-secondary-content italic truncate">
+                {{ item.brand }}
+              </p>
+              <h2 
+                [title]="item.name" 
+                class="text-xl font-semibold truncate">
+                {{ item.name }}
+              </h2>
+            </a>
+          </div>
+
+          <!-- Out of Stock Button (won't shrink) -->
+          <div class="shrink-0">
             <app-out-of-stock-button [item]="item"></app-out-of-stock-button>
           </div>
+        </div>
 
-          <!-- Middle: Location and Date -->
-          <div class="flex justify-between items-center text-sm text-secondary-content mt-6">
-            <span class="truncate">{{ item.location?.name || 'No Location' }}</span>
-            <span>{{ item.dateAdded | displayDate }}</span>
-          </div>
+        <!-- Middle: Location + Date -->
+        <div class="flex justify-between items-center text-sm text-secondary-content mt-6">
+          <span class="truncate">{{ item.location?.name || 'No Location' }}</span>
+          <span>{{ item.dateAdded | displayDate }}</span>
+        </div>
 
-          <!-- Bottom: Count Manager -->
-          <div class="flex justify-end mt-6">
-            <app-count-manager [item]="item"></app-count-manager>
-          </div>
-          
+        <!-- Bottom: Count Manager -->
+        <div class="flex justify-end mt-6">
+          <app-count-manager [item]="item"></app-count-manager>
         </div>
       </div>
     </div>
