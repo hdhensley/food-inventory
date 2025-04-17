@@ -9,12 +9,17 @@ import {ToastViewerComponent} from "../components/layout/toast-viewer/toast-view
 @Component({
     selector: 'app-root',
     template: `
-    <div [attr.data-theme]="themeService.curTheme()" *ngIf="inventoryService.loaded">
+    <div 
+      class="h-screen" 
+      [attr.data-theme]="themeService.curTheme()" 
+      *ngIf="inventoryService.loaded">
+
       <app-navigation></app-navigation>
 
       <router-outlet></router-outlet>
 
       <app-toast-viewer></app-toast-viewer>
+      
     </div>
   `,
     imports: [NgIf, NavigationComponent, RouterOutlet, ToastViewerComponent]
