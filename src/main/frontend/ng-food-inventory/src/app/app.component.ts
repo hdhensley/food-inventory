@@ -10,7 +10,7 @@ import {ToastViewerComponent} from "../components/layout/toast-viewer/toast-view
     selector: 'app-root',
     template: `
     <div 
-      class="h-screen" 
+      class="min-h-screen" 
       [attr.data-theme]="themeService.curTheme()" 
       *ngIf="inventoryService.loaded">
 
