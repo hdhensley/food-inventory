@@ -9,7 +9,7 @@ import { TableContainerComponent } from '../../components/layout/table-container
 @Component({
     selector: 'app-inventory-page',
     template: `
-      <div class="xl:container xl:mx-auto h-max">
+      <div class="xl:container xl:mx-auto h-max mt-4 pb-4">
         <app-table-container [showTable]="inventoryService.hasActiveItems()">
           <app-inventory-location-selector></app-inventory-location-selector>
 
