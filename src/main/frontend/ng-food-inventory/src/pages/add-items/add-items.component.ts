@@ -9,7 +9,6 @@ import { FormWrapperComponent } from '../../components/layout';
       <app-add-item-form></app-add-item-form>
     </app-form-wrapper>
     `,
-    standalone: true,
-    imports: [FormWrapperComponent, AddItemFormComponent],
+    imports: [FormWrapperComponent, AddItemFormComponent]
 })
 export class AddItemsComponent {}

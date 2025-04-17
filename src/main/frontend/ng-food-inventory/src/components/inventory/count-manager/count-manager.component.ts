@@ -20,8 +20,7 @@ import { NgIf } from '@angular/common';
         </button>
       </div>
     `,
-    standalone: true,
-    imports: [NgIf],
+    imports: [NgIf]
 })
 export class CountManagerComponent {
   @Input() item: Item | undefined;

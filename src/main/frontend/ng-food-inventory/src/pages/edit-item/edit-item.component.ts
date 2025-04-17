@@ -12,8 +12,7 @@ import { FormWrapperComponent } from '../../components/layout/form-wrapper/form-
         <app-edit-item-form [item]="item"></app-edit-item-form>
       </app-form-wrapper>
     `,
-    standalone: true,
-    imports: [FormWrapperComponent, EditItemFormComponent],
+    imports: [FormWrapperComponent, EditItemFormComponent]
 })
 export class EditItemComponent implements OnInit {
   item: Item | undefined;

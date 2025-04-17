@@ -40,7 +40,6 @@ import { NgFor } from '@angular/common';
       </table>
     `,
     providers: [InactiveItemsPipe],
-    standalone: true,
     imports: [NgFor, DisplayDatePipe, InactiveItemsPipe]
 })
 export class OosTableComponent {

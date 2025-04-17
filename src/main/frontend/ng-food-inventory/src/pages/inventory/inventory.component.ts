@@ -27,14 +27,13 @@ import { TableContainerComponent } from '../../components/layout/table-container
         </app-table-container>
       </div>
     `,
-    standalone: true,
     imports: [
         TableContainerComponent,
         InventoryLocationSelectorComponent,
         FilterComponent,
         ItemCardsComponent,
         RouterLink,
-    ],
+    ]
 })
 export class InventoryComponent {
   inventoryService = inject(InventoryService);

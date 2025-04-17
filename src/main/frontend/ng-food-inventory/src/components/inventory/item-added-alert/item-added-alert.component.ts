@@ -9,8 +9,7 @@ import { NgIf } from '@angular/common';
         Item added successfully! {{ item.name }}
       </div>
     `,
-    standalone: true,
-    imports: [NgIf],
+    imports: [NgIf]
 })
 export class ItemAddedAlertComponent {
   @Input() item: Item | undefined;

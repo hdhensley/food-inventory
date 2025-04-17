@@ -5,10 +5,9 @@ import { Location } from "../../../models/location.model";
 import { NgClass, NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-add-location-modal',
-  templateUrl: './add-location-modal.component.html',
-  standalone: true,
-  imports: [NgClass, NgIf, ReactiveFormsModule, NgFor]
+    selector: 'app-add-location-modal',
+    templateUrl: './add-location-modal.component.html',
+    imports: [NgClass, NgIf, ReactiveFormsModule, NgFor]
 })
 export class AddLocationModalComponent implements OnInit {
   @Input() showModal = false;

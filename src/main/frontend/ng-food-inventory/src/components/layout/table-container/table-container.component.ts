@@ -18,8 +18,7 @@ import { CardComponent } from '../card/card.component';
         </div>
       </app-card>
     `,
-    standalone: true,
-    imports: [CardComponent, NgIf],
+    imports: [CardComponent, NgIf]
 })
 export class TableContainerComponent {
   @Input() showTable = false;

@@ -13,8 +13,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from "@angul
         />
       </div>
     `,
-    standalone: true,
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule]
 })
 export class FilterComponent implements OnInit {
   fb = inject(FormBuilder);
