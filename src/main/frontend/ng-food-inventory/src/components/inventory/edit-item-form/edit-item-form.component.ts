@@ -12,7 +12,6 @@ import { NgIf, NgFor } from '@angular/common';
     imports: [
         NgIf,
         ReactiveFormsModule,
-        ItemAddedAlertComponent,
         NgFor,
         AddLocationModalComponent,
     ]
