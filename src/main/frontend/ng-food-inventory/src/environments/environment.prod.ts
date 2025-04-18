@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: "https://inventory.lan.overzealouspelican.com/api",
+  apiUrl: "https://inventory.overzealouspelican.com/api",
   inventoryKey: "Default"
 };
