@@ -18,6 +18,7 @@ export class InventoryService {
   public loaded = signal(false);
   public inventory: WritableSignal<Inventory> = signal(new Inventory());
   public search: WritableSignal<string> = signal('');
+  public loading: WritableSignal<boolean> = signal(false);
 
   private http = inject(HttpClient);
   private itemService = inject(ItemService);
@@ -37,12 +38,14 @@ export class InventoryService {
   }
 
   private loadInventory() {
+    this.loading.set(true);
     console.log('Loading inventory ' + this.inventoryKeyService.key());
     this.http
       .get<Inventory>(`${environment.apiUrl}/inventory?key=${this.inventoryKeyService.key()}`)
       .pipe(
         tap((res) => this.inventory.set(res)),
         tap(() => this.loaded.set(true)),
+        tap(() => this.loading.set(false)),
         catchError(() => of(this.toastService.error('Inventory could not be loaded')))
       ).subscribe();
   }
