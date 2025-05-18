@@ -46,16 +46,23 @@ export class AddItemFormComponent implements OnInit {
 
     this.itemForm = this.fb.group({
       item: new FormControl('', {
-        validators: [Validators.required],
+        validators: [
+          Validators.required
+        ],
       }),
       brand: new FormControl('', {
         validators: [],
       }),
       quantity: new FormControl('', {
-        validators: [Validators.required, Validators.pattern(/^[0-9]+$/)],
+        validators: [
+          Validators.required, 
+          Validators.pattern(/^[0-9]+$/)
+        ],
       }),
       location: new FormControl(currentLocation, {
-        validators: [Validators.required],
+        validators: [
+          Validators.required
+        ],
       }),
     });
   }
@@ -79,7 +86,6 @@ export class AddItemFormComponent implements OnInit {
   }
 
   addLocation() {
-    console.log('show the add location modal');
     this.showModal = true;
   }
 }
