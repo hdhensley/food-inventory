@@ -161,4 +161,20 @@ export class InventoryService {
   private getDate(): string {
     return new Date().toJSON();
   }
+
+  locationDisplayFormatter = (location: Location): string => {
+    if (location.parent?.parent) {
+      return this.locationDisplayFormatter(location.parent) + ' > ' + location.name;
+    }
+
+    if(location.parent) {
+      return location.parent.name + ' > ' + location.name;
+    }
+    
+    if (location) {
+      return location.name ?? '';
+    }
+
+    return '';  
+  }
 }
