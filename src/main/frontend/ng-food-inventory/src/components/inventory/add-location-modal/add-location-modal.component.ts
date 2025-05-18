@@ -1,34 +1,65 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from "@angular/forms";
 import { InventoryService } from "../../../services";
 import { Location } from "../../../models/location.model";
 import { NgClass, NgIf, NgFor } from '@angular/common';
 
 @Component({
     selector: 'app-add-location-modal',
-    templateUrl: './add-location-modal.component.html',
+    template: `
+      <div class="modal" [ngClass]="{ 'modal-open': showModal }">
+        <form *ngIf="newLocationForm" [formGroup]="newLocationForm" (ngSubmit)="saveLocation(newLocationForm)">
+          <div class="modal-box bg-primary text-primary-content">
+            <label class="block text-sm font-bold mb-2" for="newLocation">
+              New Location
+            </label>
+            <input  id="newLocation" 
+                    name="newLocation" 
+                    formControlName="newLocation"
+                    class="input input-bordered w-full max-w-xs bg-neutral text-neutral-content" 
+                    type="text"
+                    placeholder="Location Name" />
+            <label class="block text-sm font-bold my-2" for="parent"> Parent </label>
+            <select id="parent" 
+                    name="parent" 
+                    formControlName="parent"
+                    class="form-control w-full select select-bordered bg-neutral text-neutral-content">
+              <option [value]="null">None</option>
+              <option *ngFor="let location of this.inventoryService.locations()" [value]="location.id">
+                {{ inventoryService.locationDisplayFormatter(location) }}
+              </option>
+            </select>
+            <div class="modal-action flex justify-between">
+              <button type="submit"
+                class="bg-neutral-content hover:bg-neutral text-neutral hover:text-neutral-content font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Accept
+              </button>
+              <button (click)="cancel()"
+                class="bg-error hover:bg-error-content text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Close
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    `,
     imports: [NgClass, NgIf, ReactiveFormsModule, NgFor]
 })
-export class AddLocationModalComponent implements OnInit {
+export class AddLocationModalComponent {
   @Input() showModal = false;
-
-  newLocationForm: FormGroup | undefined;
-
   @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  fb = inject(FormBuilder);
+  newLocationForm = inject(FormBuilder).group({
+    newLocation: new FormControl('', {
+      validators: [
+        Validators.required
+      ]
+    }),
+    parent: new FormControl(null)
+  });
+  
   inventoryService = inject(InventoryService);
-
-  ngOnInit(): void {
-    this.newLocationForm = this.fb.group({
-      newLocation: new FormControl('', {
-        validators: [
-          Validators.required
-        ]
-      }),
-      parent: new FormControl(null)
-    });
-  }
 
   saveLocation({ value, valid }: { value: any, valid: boolean }) {
     if (!valid) {
@@ -49,9 +80,5 @@ export class AddLocationModalComponent implements OnInit {
   cancel() {
     this.newLocationForm?.reset();
     this.closeModal.emit(true);
-  }
-
-  locations() {
-    return this.inventoryService.locations();
   }
 }
