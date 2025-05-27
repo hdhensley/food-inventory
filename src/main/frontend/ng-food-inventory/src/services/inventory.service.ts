@@ -5,7 +5,6 @@ import { Location } from '../models/location.model';
 import { HttpClient } from '@angular/common/http';
 import { ItemService } from './item.service';
 import {catchError, Observable, of, tap} from 'rxjs';
-import { LocationService } from './location.service';
 import { ActiveItemsPipe, InactiveItemsPipe } from '../pipes';
 import { InventoryKeyService } from './inventoryKey.service';
 import {ToastService} from "./toast.service";
@@ -22,7 +21,6 @@ export class InventoryService {
 
   private http = inject(HttpClient);
   private itemService = inject(ItemService);
-  private locationService = inject(LocationService);
   private activePipe = inject(ActiveItemsPipe);
   private inactivePipe = inject(InactiveItemsPipe);
   private inventoryKeyService = inject(InventoryKeyService);
@@ -59,11 +57,6 @@ export class InventoryService {
   hasItems = computed(() => this.items().length > 0);
 
   /**
-   * Gets the currently active location from the location service.
-   */
-  currentLocation = computed(() => this.getLocation(this.locationService.activeLocation()));
-
-  /**
    * All locations in the currently loaded inventory.
    */
   locations = computed(() => this.inventory().locations);
@@ -84,7 +77,7 @@ export class InventoryService {
   /**
    * Load the inventory from the server.
    */
-  private loadInventory() {
+  loadInventory() {
     this.loading.set(true);
     console.log('Loading inventory ' + this.inventoryKeyService.key());
     this.http
@@ -107,15 +100,6 @@ export class InventoryService {
   }
 
   /**
-   * Retrieves a location by its ID from the inventory. If the ID is undefined, it returns undefined.
-   * @param id ID of the location to retrieve.
-   * @returns Location with the specified ID, or undefined if not found.
-   */
-  getLocation(id: number | undefined): Location | undefined {
-    return this.inventory().locations.find((l) => l.id === id);
-  }
-
-  /**
    * Saves an item to the inventory and reloads the inventory after saving.
    * 
    * @param item Item to save in the inventory.
@@ -132,20 +116,6 @@ export class InventoryService {
           return of(item);
         })
       );
-  }
-
-  /**
-   * Adds a new location to the inventory and reloads the inventory after saving.
-   * 
-   * @param location Location to add to the inventory.
-   */
-  addLocation(location: Location): void {
-    this.locationService.saveLocation(location)
-      .pipe(
-        tap(() => this.toastService.success("Location added")),
-        tap(() => this.loadInventory()),
-        catchError(() => of(this.toastService.error("Error adding location")))
-      ).subscribe();
   }
 
   /**
