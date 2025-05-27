@@ -65,4 +65,26 @@ export class LocationService extends HttpClient {
         catchError(() => of(this.toastService.error("Error adding location")))
       ).subscribe();
   }
+
+  /**
+   * Formats the display name of a location, including its parent locations.
+   * 
+   * @param location Location to format.
+   * @returns Formatted string representing the location's hierarchy.
+   */
+  locationDisplayFormatter = (location: Location): string => {
+    if (location.parent?.parent) {
+      return this.locationDisplayFormatter(location.parent) + ' > ' + location.name;
+    }
+
+    if(location.parent) {
+      return location.parent.name + ' > ' + location.name;
+    }
+    
+    if (location) {
+      return location.name ?? '';
+    }
+
+    return '';  
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {InventoryService} from "../../services";
+import {ItemService} from "../../services";
 import {Item} from "../../models/item.model";
 import { EditItemFormComponent } from '../../components/inventory/edit-item-form/edit-item-form.component';
 import { FormWrapperComponent } from '../../components/layout/form-wrapper/form-wrapper.component';
@@ -18,10 +18,10 @@ export class EditItemComponent implements OnInit {
   item: Item | undefined;
 
   route = inject(ActivatedRoute);
-  inventoryService = inject(InventoryService);
+  itemService = inject(ItemService);
 
   ngOnInit(): void {
-    this.item = this.inventoryService.getItem(this.route.snapshot.paramMap.get('itemId'));
+    this.item = this.itemService.getItem(this.route.snapshot.paramMap.get('itemId'));
     if(!this.item){
       console.error("THE ITEM WAS NOT FOUND");
     }

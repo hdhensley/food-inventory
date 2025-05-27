@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import {InventoryService} from "../../../services";
+import {InventoryService, ItemService} from "../../../services";
 import {Item} from "../../../models/item.model";
 
 @Component({
@@ -14,10 +14,10 @@ import {Item} from "../../../models/item.model";
     standalone: true,
 })
 export class DownloadItemsComponent {
-  inventoryService = inject(InventoryService);
+  itemService = inject(ItemService);
 
   inventoryUrl = computed(() => {
-    const items = this.inventoryService.items();
+    const items = this.itemService.items();
 
     if(items.length === 0) {
       throw 'no items';

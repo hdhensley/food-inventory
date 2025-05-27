@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {InventoryService} from "../../../services";
+import {InventoryService, ItemService} from "../../../services";
 import {InactiveItemsPipe} from "../../../pipes";
 import { DisplayDatePipe } from '../../../pipes';
 import { NgFor } from '@angular/common';
@@ -22,14 +22,14 @@ import { NgFor } from '@angular/common';
         </tr>
         </thead>
         <tbody>
-        <tr class="hover" *ngFor="let item of inventoryService.items() | inactiveItems; let id = index;">
+        <tr class="hover" *ngFor="let item of itemService.items() | inactiveItems; let id = index;">
           <td>{{item.id}}</td>
           <td>{{item.brand ? item.brand : '-'}}</td>
           <td>{{item.name}}</td>
           <td>{{item.location?.name}}</td>
           <td>{{item.removedDate | displayDate}}</td>
           <td class="flex flex-col">
-            <button (click)="inventoryService.delete(item.id)" class="btn btn-outline btn-circle btn-sm">
+            <button (click)="itemService.delete(item.id)" class="btn btn-outline btn-circle btn-sm">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 stroke-current">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
@@ -45,10 +45,11 @@ import { NgFor } from '@angular/common';
 export class OosTableComponent {
   inventoryService = inject(InventoryService);
   inactiveItemsPipe = inject(InactiveItemsPipe);
+  itemService = inject(ItemService);
 
   clearAll() {
     this.inactiveItemsPipe
-      .transform(this.inventoryService.items())
-      .forEach(item => this.inventoryService.delete(item.id));
+      .transform(this.itemService.items())
+      .forEach(item => this.itemService.delete(item.id));
   }
 }

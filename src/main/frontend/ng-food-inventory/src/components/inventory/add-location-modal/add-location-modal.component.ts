@@ -26,7 +26,7 @@ import { NgClass, NgIf, NgFor } from '@angular/common';
                     class="form-control w-full select select-bordered bg-neutral text-neutral-content">
               <option [value]="null">None</option>
               <option *ngFor="let location of this.inventoryService.locations()" [value]="location.id">
-                {{ inventoryService.locationDisplayFormatter(location) }}
+                {{ locationService.locationDisplayFormatter(location) }}
               </option>
             </select>
             <div class="modal-action flex justify-between">

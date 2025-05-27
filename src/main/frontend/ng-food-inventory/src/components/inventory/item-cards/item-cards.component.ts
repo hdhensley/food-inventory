@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { InventoryService, LocationService } from '../../../services';
+import { InventoryService, ItemService, LocationService } from '../../../services';
 import { SearchFilterPipe } from '../../../pipes/filter/search-filter.pipe';
 import { DisplayDatePipe } from '../../../pipes/display-date.pipe';
 import { ActiveItemsPipe } from '../../../pipes/filter/active-items.pipe';
@@ -14,7 +14,7 @@ import { NgFor } from '@angular/common';
     <div style="z-index: 1" class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
       <div
         *ngFor="
-          let item of inventoryService.items()
+          let item of itemService.items()
             | activeItems : locationService.activeLocation()
             | searchFilter : inventoryService.search()
         "
@@ -69,6 +69,7 @@ import { NgFor } from '@angular/common';
   ]
 })
 export class ItemCardsComponent {
+  itemService = inject(ItemService);
   inventoryService = inject(InventoryService);
   locationService = inject(LocationService);
 }
