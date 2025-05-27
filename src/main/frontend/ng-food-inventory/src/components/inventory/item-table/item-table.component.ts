@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {InventoryService, LocationService} from "../../../services";
+import {InventoryService, ItemService, LocationService} from "../../../services";
 import { SearchFilterPipe } from '../../../pipes/filter/search-filter.pipe';
 import { DisplayDatePipe } from '../../../pipes/display-date.pipe';
 import { ActiveItemsPipe } from '../../../pipes/filter/active-items.pipe';
@@ -14,6 +14,7 @@ import { NgIf, NgFor } from '@angular/common';
     imports: [NgIf, NgFor, RouterLink, CountManagerComponent, OutOfStockButtonComponent, ActiveItemsPipe, DisplayDatePipe, SearchFilterPipe]
 })
 export class ItemTableComponent {
+  itemService = inject(ItemService);
   inventoryService = inject(InventoryService);
   locationService = inject(LocationService);
 }
