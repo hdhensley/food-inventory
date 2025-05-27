@@ -118,7 +118,7 @@ export class InventoryService {
       item = callback(item);
       this.itemService.saveItem(item)
         .pipe(
-          tap(() => this.loadInventory()),
+          // tap(() => this.loadInventory()),
           catchError(() => of(this.toastService.error("Error updating item")))
         )
         .subscribe();
