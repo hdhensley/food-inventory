@@ -28,6 +28,50 @@ export class InventoryService {
   private inventoryKeyService = inject(InventoryKeyService);
   private toastService = inject(ToastService);
 
+  /**
+   * All items in the inventory, including those in locations.
+   * This is a computed property that combines items from all locations.
+   */
+  items = computed(() => {
+    let items: Item[] = [];
+
+    this.inventory().locations.forEach((location: Location) => {
+      location.items.forEach((item) => (item.location = location));
+      items = items.concat(location.items);
+    });
+
+    return items;
+  });
+
+  /**
+   * Determines if there are any active items in the inventory.
+   */
+  hasActiveItems = computed(() => this.activePipe.transform(this.items()).length > 0);
+
+  /**
+   * Determines if there are any inactive items in the currently loaded inventory.
+   */
+  hasInactiveItems = computed(() => this.inactivePipe.transform(this.items()).length > 0);
+
+  /**
+   * Checks if there are any items in the currently loaded inventory.
+   */
+  hasItems = computed(() => this.items().length > 0);
+
+  /**
+   * Gets the currently active location from the location service.
+   */
+  currentLocation = computed(() => this.getLocation(this.locationService.activeLocation()));
+
+  /**
+   * All locations in the currently loaded inventory.
+   */
+  locations = computed(() => this.inventory().locations);
+
+  /**
+   * Initializes the InventoryService and sets up an effect to reload the inventory
+   * whenever the inventory key changes.
+   */
   constructor() {
     effect(() => {
       console.log('Key changed');
@@ -37,6 +81,9 @@ export class InventoryService {
     });
   }
 
+  /**
+   * Load the inventory from the server.
+   */
   private loadInventory() {
     this.loading.set(true);
     console.log('Loading inventory ' + this.inventoryKeyService.key());
@@ -50,45 +97,30 @@ export class InventoryService {
       ).subscribe();
   }
 
-  items = computed(() => {
-    let items: Item[] = [];
-
-    this.inventory().locations.forEach((location: Location) => {
-      location.items.forEach((item) => (item.location = location));
-      items = items.concat(location.items);
-    });
-
-    return items;
-  });
-
-  hasActiveItems = computed(() => {
-    return this.activePipe.transform(this.items()).length > 0;
-  });
-
-  hasInactiveItems = computed(() => {
-    return this.inactivePipe.transform(this.items()).length > 0;
-  });
-
-  hasItems = computed(() => {
-    return this.items().length > 0;
-  });
-
-  currentLocation = computed(() => {
-    return this.getLocation(this.locationService.activeLocation());
-  });
-
-  locations = computed(() => {
-    return this.inventory().locations;
-  });
-
+  /**
+   * Retrieves an item by its ID from the inventory. If the ID is null, it returns undefined.
+   * @param itemId ID of the item to retrieve.
+   * @returns Item with the specified ID, or undefined if not found.
+   */
   getItem(itemId: string | null): Item | undefined {
     return this.items().find((i) => i.id == itemId);
   }
 
+  /**
+   * Retrieves a location by its ID from the inventory. If the ID is undefined, it returns undefined.
+   * @param id ID of the location to retrieve.
+   * @returns Location with the specified ID, or undefined if not found.
+   */
   getLocation(id: number | undefined): Location | undefined {
     return this.inventory().locations.find((l) => l.id === id);
   }
 
+  /**
+   * Saves an item to the inventory and reloads the inventory after saving.
+   * 
+   * @param item Item to save in the inventory.
+   * @returns Observable of the saved item.
+   */
   saveItem(item: Item): Observable<Item> {
     return this.itemService.saveItem(item)
       .pipe(
@@ -102,6 +134,11 @@ export class InventoryService {
       );
   }
 
+  /**
+   * Adds a new location to the inventory and reloads the inventory after saving.
+   * 
+   * @param location Location to add to the inventory.
+   */
   addLocation(location: Location): void {
     this.locationService.saveLocation(location)
       .pipe(
@@ -111,6 +148,13 @@ export class InventoryService {
       ).subscribe();
   }
 
+  /**
+   * Updates an existing item in the inventory.
+   * 
+   * @param id ID of the item to update.
+   * @param callback Callback function to modify the item. This function receives the item as an argument and 
+   *                 should return the modified item.
+   */
   updateItem(id: string, callback: (i: Item) => Item): void {
     let item = this.items().find((i) => i.id === id);
 
@@ -125,6 +169,11 @@ export class InventoryService {
     }
   }
 
+  /**
+   * Increments the quantity of an item in the inventory.
+   * 
+   * @param id ID of the item whose quantity is to be incremented.
+   */
   incrementQuantity(id: string): void {
     this.updateItem(id, (i) => {
       i.quantity++;
@@ -132,36 +181,53 @@ export class InventoryService {
     });
   }
 
+  /**
+   * Decrements the quantity of an item in the inventory. If the quantity reaches zero, it sets the removed date.
+   * 
+   * @param id ID of the item whose quantity is to be decremented.
+   */
   decrementQuantity(id: string): void {
     this.updateItem(id, (i: Item) => {
       i.quantity > 0 ? i.quantity-- : 0;
 
       if (i.quantity === 0) {
-        i.removedDate = this.getDate();
+        i.removedDate = new Date().toJSON();
       }
 
       return i;
     });
   }
 
+  /**
+   * Sets an item as out of stock by updating its removed date.
+   * 
+   * @param id ID of the item to set as out of stock.
+   */
   setOutOfStock(id: string): void {
     this.updateItem(id, (i: Item) => {
-      i.removedDate = this.getDate();
+      i.removedDate = new Date().toJSON();
       return i;
     });
   }
 
+  /**
+   * Sets an item as deleted by updating its deleted date.
+   * 
+   * @param id ID of the item to delete.
+   */
   delete(id: string) {
     this.updateItem(id, (i: Item) => {
-      i.deletedDate = this.getDate();
+      i.deletedDate = new Date().toJSON();
       return i;
     });
   }
 
-  private getDate(): string {
-    return new Date().toJSON();
-  }
-
+  /**
+   * Formats the display name of a location, including its parent locations.
+   * 
+   * @param location Location to format.
+   * @returns Formatted string representing the location's hierarchy.
+   */
   locationDisplayFormatter = (location: Location): string => {
     if (location.parent?.parent) {
       return this.locationDisplayFormatter(location.parent) + ' > ' + location.name;
