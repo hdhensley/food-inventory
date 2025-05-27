@@ -59,7 +59,7 @@
       <select formControlName="location" class="select select-bordered w-full bg-secondary text:secondary-content focus:outline-secondary">
         <option [ngValue]="null" disabled>Choose Location</option>
         <option *ngFor="let location of inventoryService.inventory().locations" [ngValue]="location.id">
-          {{ inventoryService.locationDisplayFormatter(location) }}
+          {{ locationService.locationDisplayFormatter(location) }}
         </option>
       </select>
     </div>
