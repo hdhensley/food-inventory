@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {InventoryService} from "../../services";
+import { Component, inject } from '@angular/core';
+import {ItemService} from "../../services";
 import { OosTableComponent } from '../../components/inventory/oos-table/oos-table.component';
 import { TableContainerComponent } from '../../components/layout/table-container/table-container.component';
 
@@ -9,7 +9,7 @@ import { TableContainerComponent } from '../../components/layout/table-container
       <div class="xl:container xl:mx-auto">
         <app-table-container
           title="Out Of Stock Inventory"
-          [showTable]="inventoryService.hasInactiveItems()">
+          [showTable]="itemService.hasInactiveItems()">
 
           <app-oos-table></app-oos-table>
 
@@ -23,5 +23,5 @@ import { TableContainerComponent } from '../../components/layout/table-container
     imports: [TableContainerComponent, OosTableComponent]
 })
 export class OutOfStockComponent {
-  constructor(public inventoryService: InventoryService) {}
+  itemService = inject(ItemService);
 }

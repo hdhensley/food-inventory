@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { InventoryService, LocationService } from '../../../services';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { InventoryService, ItemService, LocationService } from '../../../services';
 import {
   FormBuilder,
   FormControl,
@@ -11,6 +11,8 @@ import { Item } from '../../../models/item.model';
 import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
 import { ItemAddedAlertComponent } from '../item-added-alert/item-added-alert.component';
 import { NgIf, NgFor } from '@angular/common';
+import { tap } from 'rxjs';
+import { ToastService } from 'src/services/toast.service';
 
 @Component({
     selector: 'app-add-item-form',
@@ -32,11 +34,11 @@ export class AddItemFormComponent implements OnInit {
 
   lastItem: Item | undefined; //Should always be an Item object
 
-  constructor(
-    public inventoryService: InventoryService,
-    public locationService: LocationService,
-    private fb: FormBuilder
-  ) { }
+  itemService = inject(ItemService);
+  inventoryService = inject(InventoryService);
+  locationService = inject(LocationService);
+  toastService = inject(ToastService);
+  fb = inject(FormBuilder);
 
   ngOnInit() {
     const currentLocation =
@@ -77,9 +79,14 @@ export class AddItemFormComponent implements OnInit {
     item.name = value.item;
     item.brand = value.brand;
     item.quantity = value.quantity;
-    item.location = this.inventoryService.getLocation(value.location);
+    item.location = this.locationService.getLocation(value.location);
 
-    this.inventoryService.saveItem(item).subscribe();
+    this.itemService.saveItem(item)
+    .pipe(
+      tap(() => this.inventoryService.loadInventory()),
+      tap(() => this.toastService.success("Item saved")),
+    )
+    .subscribe();
 
     this.itemForm?.reset();
     this.itemPrimaryRef?.nativeElement?.focus();

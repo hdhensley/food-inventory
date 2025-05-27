@@ -1,18 +1,17 @@
 import {Component, inject} from '@angular/core';
-import {InventoryService, LocationService} from "../../services";
+import {InventoryService, ItemService, LocationService} from "../../services";
 import { RouterLink } from '@angular/router';
 import { ItemCardsComponent } from '../../components/inventory/item-cards/item-cards.component';
 import { FilterComponent } from '../../components/inventory/filter/filter.component';
 import { InventoryLocationSelectorComponent } from '../../components/inventory/inventory-location-selector/inventory-location-selector.component';
 import { TableContainerComponent } from '../../components/layout/table-container/table-container.component';
-import { ItemTableComponent } from 'src/components/inventory';
 
 @Component({
     selector: 'app-inventory-page',
     template: `
       <div class="xl:container xl:mx-auto h-max mt-4 pb-4">
         <app-table-container 
-          [showTable]="inventoryService.hasActiveItems()"
+          [showTable]="itemService.hasActiveItems()"
           [loading]="inventoryService.loading()">
           <app-inventory-location-selector></app-inventory-location-selector>
 
@@ -39,6 +38,7 @@ import { ItemTableComponent } from 'src/components/inventory';
     ]
 })
 export class InventoryComponent {
+  itemService = inject(ItemService);
   inventoryService = inject(InventoryService);
   locationService = inject(LocationService);
 }

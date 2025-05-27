@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from "@angular/forms";
-import { InventoryService } from "../../../services";
+import { InventoryService, LocationService } from "../../../services";
 import { Location } from "../../../models/location.model";
 import { NgClass, NgIf, NgFor } from '@angular/common';
 
@@ -26,7 +26,7 @@ import { NgClass, NgIf, NgFor } from '@angular/common';
                     class="form-control w-full select select-bordered bg-neutral text-neutral-content">
               <option [value]="null">None</option>
               <option *ngFor="let location of this.inventoryService.locations()" [value]="location.id">
-                {{ inventoryService.locationDisplayFormatter(location) }}
+                {{ locationService.locationDisplayFormatter(location) }}
               </option>
             </select>
             <div class="modal-action flex justify-between">
@@ -60,6 +60,7 @@ export class AddLocationModalComponent {
   });
   
   inventoryService = inject(InventoryService);
+  locationService = inject(LocationService);
 
   saveLocation({ value, valid }: { value: any, valid: boolean }) {
     if (!valid) {
@@ -71,7 +72,7 @@ export class AddLocationModalComponent {
     location.inventory_id = this.inventoryService.inventory().id;
     location.parent = value.parent;
 
-    this.inventoryService.addLocation(location);
+    this.locationService.addLocation(location);
 
     this.newLocationForm?.reset();
     this.closeModal.emit(true);

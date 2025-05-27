@@ -37,7 +37,7 @@
     <div>
       <div class="dropdown dropdown-end">
         <span tabindex="0" class="nav-link rounded-btn active-nav-link">
-          {{ inventoryService.currentLocation()?.name || "All" }}
+          {{ locationService.currentLocation()?.name || "All" }}
         </span>
         <button
           *ngIf="!locationService.isActive(0)"

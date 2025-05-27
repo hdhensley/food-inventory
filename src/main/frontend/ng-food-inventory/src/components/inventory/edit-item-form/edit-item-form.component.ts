@@ -1,9 +1,8 @@
 import {Component, ElementRef, Input, OnInit, ViewChild, inject} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import {Item} from "../../../models/item.model";
-import {InventoryService, LocationService} from "../../../services";
+import {InventoryService, ItemService, LocationService} from "../../../services";
 import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
-import { ItemAddedAlertComponent } from '../item-added-alert/item-added-alert.component';
 import { NgIf, NgFor } from '@angular/common';
 
 @Component({
@@ -22,7 +21,8 @@ export class EditItemFormComponent implements OnInit {
 
   itemForm: FormGroup|undefined;
   showModal = false;
-
+  
+  itemService = inject(ItemService);
   inventoryService = inject(InventoryService);
   locationService = inject(LocationService);
   fb = inject(FormBuilder);
@@ -53,9 +53,9 @@ export class EditItemFormComponent implements OnInit {
     this.item.name = value.item;
     this.item.brand = value.brand;
     this.item.quantity = value.quantity;
-    this.item.location = this.inventoryService.getLocation(value.location);
+    this.item.location = this.locationService.getLocation(value.location);
 
-    this.inventoryService.saveItem(this.item).subscribe({
+    this.itemService.saveItem(this.item).subscribe({
       error: console.error
     });
   }
