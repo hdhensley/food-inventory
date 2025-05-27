@@ -8,7 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint && prettier",
+    "lint": "ng lint",
     "lint:fix": "ng lint --fix && prettier --write \"src/**/*.html\""
   },
   "private": true,
