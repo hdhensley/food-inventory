@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {ItemService} from "../../services";
+import { ItemService } from "../../services";
 import { OosTableComponent } from '../../components/inventory/oos-table/oos-table.component';
 import { TableContainerComponent } from '../../components/layout/table-container/table-container.component';
 

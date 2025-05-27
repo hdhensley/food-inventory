@@ -1,7 +1,7 @@
-import {Component, ElementRef, Input, OnInit, ViewChild, inject} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
-import {Item} from "../../../models/item.model";
-import {InventoryService, ItemService, LocationService} from "../../../services";
+import { Item } from "../../../models/item.model";
+import { InventoryService, ItemService, LocationService } from "../../../services";
 import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
 import { NgIf, NgFor } from '@angular/common';
 
@@ -44,16 +44,16 @@ export class EditItemFormComponent implements OnInit {
     });
   }
 
-  onFormSubmit({ value, valid }: { value: any, valid: boolean }): void {
-    if(!valid || !this.item) {
+  onFormSubmit(form: FormGroup): void {
+    if(!form.valid || !this.item) {
       return;
     }
 
     //save the item and quantity to the inventory
-    this.item.name = value.item;
-    this.item.brand = value.brand;
-    this.item.quantity = value.quantity;
-    this.item.location = this.locationService.getLocation(value.location);
+    this.item.name = form.value.item;
+    this.item.brand = form.value.brand;
+    this.item.quantity = form.value.quantity;
+    this.item.location = this.locationService.getLocation(form.value.location);
 
     this.itemService.saveItem(this.item).subscribe({
       error: console.error

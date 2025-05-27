@@ -1,9 +1,9 @@
 import { computed, effect, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Inventory } from '../models/Inventory.model';
 import { HttpClient } from '@angular/common/http';
-import {catchError, of, tap} from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 import { InventoryKeyService } from './inventoryKey.service';
-import {ToastService} from "./toast.service";
+import { ToastService } from "./toast.service";
 import { environment } from 'src/environments/environment';
 
 @Injectable({

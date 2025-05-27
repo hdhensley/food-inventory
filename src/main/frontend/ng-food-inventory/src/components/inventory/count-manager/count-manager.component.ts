@@ -1,6 +1,6 @@
-import {Component, Input, inject} from '@angular/core';
-import {Item} from "../../../models/item.model";
-import {ItemService} from "../../../services";
+import { Component, Input, inject } from '@angular/core';
+import { Item } from "../../../models/item.model";
+import { ItemService } from "../../../services";
 import { NgIf } from '@angular/common';
 
 @Component({

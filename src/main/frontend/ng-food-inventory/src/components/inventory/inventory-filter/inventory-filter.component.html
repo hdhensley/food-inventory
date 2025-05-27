@@ -1,23 +1,35 @@
 <div class="bg-neutral text-neutral-content mb-4 py-4 px-2 rounded hidden md:block">
   <div class="flex flex-grow flex-row">
     <div>
-      <button class="nav-link rounded-btn"
+      <button
+        class="nav-link rounded-btn"
         (click)="locationService.activeLocation.set(0)"
         (keydown)="locationService.activeLocation.set(0)"
-        [ngClass]="{ 'active-nav-link': locationService.isActive(0) }">
+        [ngClass]="{
+          'active-nav-link': locationService.isActive(0),
+        }"
+      >
         All
       </button>
-      <button class="nav-link rounded-btn ml-2" *ngFor="let location of inventoryService.inventory().locations"
+      <button
+        class="nav-link rounded-btn ml-2"
+        *ngFor="let location of inventoryService.inventory().locations"
         (click)="locationService.activeLocation.set(location.id)"
         (keydown)="locationService.activeLocation.set(location.id)"
-        [ngClass]="{ 'active-nav-link': locationService.isActive(location.id) }">
+        [ngClass]="{
+          'active-nav-link': locationService.isActive(location.id),
+        }"
+      >
         {{ location.name }}
       </button>
     </div>
     <div class="flex flex-1 justify-end">
       <div *ngIf="!locationService.isActive(0)">
-        <a [routerLink]="['/', 'item', 'create']" class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2">Add
-          Item</a>
+        <a
+          [routerLink]="['/', 'item', 'create']"
+          class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2"
+          >Add Item</a
+        >
       </div>
     </div>
   </div>
@@ -28,7 +40,10 @@
   <div class="w-full flex flex-row md:justify-between justify-end">
     <div class="flex flex-1">
       <div *ngIf="!locationService.isActive(0)">
-        <a [routerLink]="['/', 'item', 'create']" class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2">
+        <a
+          [routerLink]="['/', 'item', 'create']"
+          class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2"
+        >
           Add Item
         </a>
       </div>
@@ -37,29 +52,35 @@
     <div>
       <div class="dropdown dropdown-end">
         <span tabindex="0" class="nav-link rounded-btn active-nav-link">
-          {{ locationService.currentLocation()?.name || "All" }}
+          {{ locationService.currentLocation()?.name || 'All' }}
         </span>
         <button
           *ngIf="!locationService.isActive(0)"
           (click)="locationService.clearActive()"
           tabindex="0"
-          class="nav-link rounded-btn active-nav-link ml-1">
+          class="nav-link rounded-btn active-nav-link ml-1"
+        >
           X
         </button>
-        <ul tabindex="0"
-          class="dropdown-content menu p-2 shadow bg-neutral text-neutral-content rounded-box w-52 max-h-screen">
+        <ul
+          tabindex="0"
+          class="dropdown-content menu p-2 shadow bg-neutral text-neutral-content rounded-box w-52 max-h-screen"
+        >
           <li>
-            <a tabindex="0"
-               (keydown)="locationService.clearActive()"
-               (click)="locationService.clearActive()">All
+            <a
+              tabindex="0"
+              (keydown)="locationService.clearActive()"
+              (click)="locationService.clearActive()"
+              >All
             </a>
           </li>
           <li *ngFor="let location of inventoryService.locations()">
-            <a tabindex="0"
-               (click)="locationService.activeLocation.set(location.id)"
-               (keydown)="locationService.activeLocation.set(location.id)">{{
-              location.name
-              }}</a>
+            <a
+              tabindex="0"
+              (click)="locationService.activeLocation.set(location.id)"
+              (keydown)="locationService.activeLocation.set(location.id)"
+              >{{ location.name }}</a
+            >
           </li>
         </ul>
       </div>

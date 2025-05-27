@@ -23,7 +23,6 @@ export class InventorySelectorComponent {
     this.inventoryKeyService.key.set(key);
     this.locationService.clearActive();
 
-    // @ts-ignore
-    document.activeElement?.blur();
+    (document.activeElement as HTMLElement | null)?.blur();
   }
 }

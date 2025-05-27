@@ -1,7 +1,7 @@
-import {computed, inject, Injectable} from '@angular/core';
-import {Item} from "../models/item.model";
+import { computed, inject, Injectable } from '@angular/core';
+import { Item } from "../models/item.model";
 import { HttpClient } from "@angular/common/http";
-import {catchError, Observable, of, tap} from "rxjs";
+import { catchError, Observable, of, tap } from "rxjs";
 import { environment } from 'src/environments/environment';
 import { SaveItemRequest } from 'src/requests/save-item.request';
 import { InventoryService } from './inventory.service';
@@ -87,6 +87,7 @@ export class ItemService extends HttpClient {
       item = callback(item);
       this.saveItem(item)
         .pipe(
+          tap(() => this.inventoryService.loadInventory()), // Reload inventory after saving
           catchError(() => of(this.toastService.error("Error updating item")))
         )
         .subscribe();
@@ -112,7 +113,7 @@ export class ItemService extends HttpClient {
    */
   decrementQuantity(id: string): void {
     this.updateItem(id, (i: Item) => {
-      i.quantity > 0 ? i.quantity-- : 0;
+      i.quantity = Math.max(i.quantity - 1, 0); // Ensure quantity does not go below zero
 
       if (i.quantity === 0) {
         i.removedDate = new Date().toJSON();

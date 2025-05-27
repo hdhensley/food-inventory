@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import {InventoryService} from "../services";
-import {ThemeService} from "../services/theme.service";
+import { InventoryService } from "../services";
+import { ThemeService } from "../services/theme.service";
 import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from '../components/layout';
 import { NgIf } from '@angular/common';
-import {ToastViewerComponent} from "../components/layout/toast-viewer/toast-viewer.component";
+import { ToastViewerComponent } from "../components/layout/toast-viewer/toast-viewer.component";
 
 @Component({
     selector: 'app-root',

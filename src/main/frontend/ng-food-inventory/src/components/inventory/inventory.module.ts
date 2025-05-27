@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 
 import * as I from '.';
-import {CommonModule} from "@angular/common";
-import {ReactiveFormsModule} from "@angular/forms";
-import {RouterModule} from "@angular/router";
-import {PipeModule} from "../../pipes/pipe.module";
+import { CommonModule } from "@angular/common";
+import { ReactiveFormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
+import { PipeModule } from "../../pipes/pipe.module";
 
 const items = [
   I.AddInventoryModalComponent,

@@ -1,6 +1,6 @@
-import {Component, inject} from '@angular/core';
-import {InventoryService, ItemService} from "../../../services";
-import {InactiveItemsPipe} from "../../../pipes";
+import { Component, inject } from '@angular/core';
+import { InventoryService, ItemService } from "../../../services";
+import { InactiveItemsPipe } from "../../../pipes";
 import { DisplayDatePipe } from '../../../pipes';
 import { NgFor } from '@angular/common';
 

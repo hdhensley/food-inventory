@@ -1,5 +1,5 @@
-import {Component, computed, inject} from '@angular/core';
-import {InventoryService} from "../../../services";
+import { Component, computed, inject } from '@angular/core';
+import { InventoryService } from "../../../services";
 import { InventoryFilterComponent } from '../inventory-filter/inventory-filter.component';
 import { NgIf } from '@angular/common';
 

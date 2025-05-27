@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 
 import * as Pages from '.';
-import {CommonModule} from "@angular/common";
-import {RouterModule} from "@angular/router";
-import {ComponentModule} from "../components/component.module";
-import {PipeModule} from "../pipes/pipe.module";
-import {LayoutModule} from "../components/layout/layout.module";
-import {InventoryModule} from "../components/inventory/inventory.module";
+import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
+import { ComponentModule } from "../components/component.module";
+import { PipeModule } from "../pipes/pipe.module";
+import { LayoutModule } from "../components/layout/layout.module";
+import { InventoryModule } from "../components/inventory/inventory.module";
 
 @NgModule({
     imports: [

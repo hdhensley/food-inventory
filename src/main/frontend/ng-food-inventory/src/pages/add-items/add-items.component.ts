@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { AddItemFormComponent } from '../../components/inventory';
 import { FormWrapperComponent } from '../../components/layout';
 

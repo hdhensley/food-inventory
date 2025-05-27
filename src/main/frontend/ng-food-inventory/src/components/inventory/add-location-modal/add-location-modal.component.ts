@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, FormControl, Validators, ReactiveFormsModule, FormGroup } from "@angular/forms";
 import { InventoryService, LocationService } from "../../../services";
 import { Location } from "../../../models/location.model";
 import { NgClass, NgIf, NgFor } from '@angular/common';
@@ -62,15 +62,15 @@ export class AddLocationModalComponent {
   inventoryService = inject(InventoryService);
   locationService = inject(LocationService);
 
-  saveLocation({ value, valid }: { value: any, valid: boolean }) {
-    if (!valid) {
+  saveLocation(form: FormGroup): void {
+    if (!form.valid) {
       return;
     }
 
     const location = new Location();
-    location.name = value.newLocation;
+    location.name = form.value.newLocation;
     location.inventory_id = this.inventoryService.inventory().id;
-    location.parent = value.parent;
+    location.parent = form.value.parent;
 
     this.locationService.addLocation(location);
 

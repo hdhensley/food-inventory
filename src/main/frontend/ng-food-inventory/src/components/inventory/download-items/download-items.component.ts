@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
-import {InventoryService, ItemService} from "../../../services";
-import {Item} from "../../../models/item.model";
+import { ItemService } from "../../../services";
+import { Item } from "../../../models/item.model";
 
 @Component({
     selector: 'app-download-items',
@@ -25,7 +25,7 @@ export class DownloadItemsComponent {
 
     const data = this.generateCSV(items);
 
-    const blob = new Blob([data], {type:'text/csv'});
+    const blob = new Blob([data], { type:'text/csv' });
     return window.URL.createObjectURL(blob);
   })
 
@@ -34,6 +34,7 @@ export class DownloadItemsComponent {
       this.download(this.inventoryUrl());
     } catch(e) {
       console.error('There are no inventory items to download');
+      console.error(e);
     }
   }
 
@@ -46,10 +47,12 @@ export class DownloadItemsComponent {
   }
 
   private generateCSV(items: Item[]): string {
-    const _items = [...items];
-    // @ts-ignore
-    _items.forEach(i => i.location = i.location.name);
-    return Object.keys(_items[0]).join(', ') + '\r\n' + // header row
-           _items.map((i: Item) => Object.values(i).join(', ')).join('\r\n'); //csv body
+    const csvItems = items.map(i => ({
+      ...i,
+      location: i.location?.name ?? ''
+    }));
+
+    return Object.keys(csvItems[0]).join(', ') + '\r\n' + // header row
+           csvItems.map(i => Object.values(i).join(', ')).join('\r\n'); // csv body
   }
 }
