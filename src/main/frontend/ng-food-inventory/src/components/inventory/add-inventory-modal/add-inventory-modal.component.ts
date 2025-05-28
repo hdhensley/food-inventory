@@ -16,11 +16,10 @@ import { NgClass, NgIf } from '@angular/common';
 })
 export class AddInventoryModalComponent implements OnInit {
   @Input() showModal = false;
+  @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   newInventoryForm: FormGroup | undefined;
   error = '';
-
-  @Output() closeModal: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   fb = inject(FormBuilder);
   inventoryKeyService = inject(InventoryKeyService);
@@ -33,15 +32,15 @@ export class AddInventoryModalComponent implements OnInit {
     });
   }
 
-  saveInventoryKey({ value, valid }: { value: any; valid: boolean }) {
-    if (!valid) {
+  saveInventoryKey(form: FormGroup): void {
+    if (!form.valid) {
       this.error = 'Please enter an inventory name to create';
       return;
     }
 
     this.error = '';
 
-    this.inventoryKeyService.createInventory(value.newInventory);
+    this.inventoryKeyService.createInventory(form.value.newInventory);
 
     this.cancel();
   }

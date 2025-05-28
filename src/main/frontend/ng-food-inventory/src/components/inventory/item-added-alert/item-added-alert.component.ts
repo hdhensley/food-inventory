@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {Item} from "../../../models/item.model";
+import { Component, Input } from '@angular/core';
+import { Item } from "../../../models/item.model";
 import { NgIf } from '@angular/common';
 
 @Component({

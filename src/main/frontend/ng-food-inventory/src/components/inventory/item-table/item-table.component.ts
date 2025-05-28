@@ -1,5 +1,5 @@
-import {Component, inject} from '@angular/core';
-import {InventoryService, ItemService, LocationService} from "../../../services";
+import { Component, inject } from '@angular/core';
+import { InventoryService, ItemService, LocationService } from "../../../services";
 import { SearchFilterPipe } from '../../../pipes/filter/search-filter.pipe';
 import { DisplayDatePipe } from '../../../pipes/display-date.pipe';
 import { ActiveItemsPipe } from '../../../pipes/filter/active-items.pipe';

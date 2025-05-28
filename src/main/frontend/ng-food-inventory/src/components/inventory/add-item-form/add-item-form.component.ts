@@ -69,17 +69,17 @@ export class AddItemFormComponent implements OnInit {
     });
   }
 
-  onFormSubmit({ value, valid }: { value: any; valid: boolean }): void {
-    if (!valid) {
+  onFormSubmit(form: FormGroup): void {
+    if (!form.valid) {
       return;
     }
 
     //save the item and quantity to the inventory
     const item = new Item();
-    item.name = value.item;
-    item.brand = value.brand;
-    item.quantity = value.quantity;
-    item.location = this.locationService.getLocation(value.location);
+    item.name = form.value.item;
+    item.brand = form.value.brand;
+    item.quantity = form.value.quantity;
+    item.location = this.locationService.getLocation(form.value.location);
 
     this.itemService.saveItem(item)
     .pipe(

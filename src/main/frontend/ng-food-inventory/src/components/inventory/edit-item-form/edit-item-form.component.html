@@ -1,8 +1,6 @@
 <form *ngIf="itemForm" [formGroup]="itemForm" (ngSubmit)="onFormSubmit(itemForm)">
   <div class="mb-4">
-    <label class="block text-neutral text-sm font-bold mb-2" for="brand">
-      Brand
-    </label>
+    <label class="block text-neutral text-sm font-bold mb-2" for="brand"> Brand </label>
     <input
       id="brand"
       name="brand"
@@ -10,74 +8,105 @@
       #brandName
       class="input input-bordered w-full bg-neutral text-neutral-content"
       type="text"
-      placeholder="Brand">
-    <div class="input-error" *ngIf="itemForm.get('brand')?.invalid && (itemForm.get('brand')?.dirty || itemForm.get('brand')?.touched)">
+      placeholder="Brand"
+    />
+    <div
+      class="input-error"
+      *ngIf="
+        itemForm.get('brand')?.invalid &&
+        (itemForm.get('brand')?.dirty || itemForm.get('brand')?.touched)
+      "
+    >
       Please provide a brand.
     </div>
   </div>
   <div class="mb-4">
-    <label class="block text-neutral text-sm font-bold mb-2" for="item">
-      Item
-    </label>
+    <label class="block text-neutral text-sm font-bold mb-2" for="item"> Item </label>
     <input
       id="item"
       name="item"
       formControlName="item"
       class="input input-bordered w-full bg-neutral text-neutral-content"
       type="text"
-      placeholder="Item">
-    <div class="input-error" *ngIf="itemForm.get('item')?.invalid && (itemForm.get('item')?.dirty || itemForm.get('item')?.touched)">
+      placeholder="Item"
+    />
+    <div
+      class="input-error"
+      *ngIf="
+        itemForm.get('item')?.invalid &&
+        (itemForm.get('item')?.dirty || itemForm.get('item')?.touched)
+      "
+    >
       Please provide an item.
     </div>
   </div>
   <div class="mb-4">
-    <label class="block text-neutral text-sm font-bold mb-2" for="quantity">
-      Quantity
-    </label>
+    <label class="block text-neutral text-sm font-bold mb-2" for="quantity"> Quantity </label>
     <input
       id="quantity"
       name="quantity"
       formControlName="quantity"
       class="input input-bordered w-full bg-neutral text-neutral-content"
       type="text"
-      placeholder="Quantity">
-    <div class="input-error" *ngIf="!itemForm.get('quantity')?.valid && itemForm.get('quantity')?.touched">
+      placeholder="Quantity"
+    />
+    <div
+      class="input-error"
+      *ngIf="!itemForm.get('quantity')?.valid && itemForm.get('quantity')?.touched"
+    >
       Please provide a number quantity.
     </div>
   </div>
   <div class="mb-4">
     <label class="flex text-neutral text-sm font-bold mb-2" for="quantity">
-      <span style="margin-top:2px;">
-        Location
-      </span>
-      <a class="ml-3">
-        <svg (click)="addLocation()" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <span style="margin-top: 2px"> Location </span>
+      <button (click)="addLocation()" class="ml-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
         </svg>
-      </a>
+      </button>
     </label>
     <div class="flex flex-row">
-      <select formControlName="location" class="select select-bordered w-full bg-neutral text-neutral-content">
+      <select
+        formControlName="location"
+        class="select select-bordered w-full bg-neutral text-neutral-content"
+      >
         <option [ngValue]="null" disabled>Choose Location</option>
-        <option *ngFor="let location of inventoryService.inventory().locations" [ngValue]="location.id">
+        <option
+          *ngFor="let location of inventoryService.inventory().locations"
+          [ngValue]="location.id"
+        >
           {{ location.name }}
         </option>
       </select>
     </div>
-    <div class="input-error" *ngIf="!itemForm.get('location')?.valid && itemForm.get('location')?.touched">
+    <div
+      class="input-error"
+      *ngIf="!itemForm.get('location')?.valid && itemForm.get('location')?.touched"
+    >
       Please select a location.
     </div>
   </div>
   <div class="flex items-center justify-between">
     <button
       class="bg-neutral-content hover:bg-neutral text-neutral hover:text-neutral-content font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      type="submit">
+      type="submit"
+    >
       Save Item
     </button>
   </div>
 </form>
 
-<app-add-location-modal
-  [showModal]="showModal"
-  (closeModal)="showModal = false;">
+<app-add-location-modal [showModal]="showModal" (closeModal)="showModal = false">
 </app-add-location-modal>

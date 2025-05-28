@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, inject} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 
 @Component({
@@ -23,7 +23,7 @@ export class FilterComponent implements OnInit {
   @Output() searchChanged: EventEmitter<string> = new EventEmitter<string>();
 
   ngOnInit() {
-    this.form = this.fb.group({search: new FormControl('')});
+    this.form = this.fb.group({ search: new FormControl('') });
 
     this.form.get('search')?.valueChanges.subscribe((q: string) => this.searchChanged.emit(q));
   }

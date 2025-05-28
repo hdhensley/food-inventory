@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {ItemService} from "../../services";
-import {Item} from "../../models/item.model";
+import { ActivatedRoute } from "@angular/router";
+import { ItemService } from "../../services";
+import { Item } from "../../models/item.model";
 import { EditItemFormComponent } from '../../components/inventory/edit-item-form/edit-item-form.component';
 import { FormWrapperComponent } from '../../components/layout/form-wrapper/form-wrapper.component';
 

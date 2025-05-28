@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 import { ThemeChooserComponent, DownloadItemsComponent, InventorySelectorComponent } from "../../inventory";
 import { NavItemsComponent } from "./nav-items/nav-items.component";
 import { RouterLink } from "@angular/router";

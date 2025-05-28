@@ -1,5 +1,5 @@
-import {Component, inject} from '@angular/core';
-import {InventoryService, ItemService, LocationService} from "../../services";
+import { Component, inject } from '@angular/core';
+import { InventoryService, ItemService, LocationService } from "../../services";
 import { RouterLink } from '@angular/router';
 import { ItemCardsComponent } from '../../components/inventory/item-cards/item-cards.component';
 import { FilterComponent } from '../../components/inventory/filter/filter.component';
