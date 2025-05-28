@@ -60,9 +60,8 @@
   <div class="mb-4">
     <label class="flex text-neutral text-sm font-bold mb-2" for="quantity">
       <span style="margin-top: 2px"> Location </span>
-      <a class="ml-3">
+      <button (click)="addLocation()" class="ml-3">
         <svg
-          (click)="addLocation()"
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
           fill="none"
@@ -76,7 +75,7 @@
             d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-      </a>
+      </button>
     </label>
     <div class="flex flex-row">
       <select

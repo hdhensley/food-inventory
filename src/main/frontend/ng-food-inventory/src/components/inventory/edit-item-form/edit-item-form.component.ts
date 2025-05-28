@@ -1,51 +1,52 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
-import { Item } from "../../../models/item.model";
-import { InventoryService, ItemService, LocationService } from "../../../services";
+import { NgFor, NgIf } from '@angular/common';
+import { Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Item } from '../../../models/item.model';
+import { InventoryService, ItemService, LocationService } from '../../../services';
 import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
-import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-    selector: 'app-edit-item-form',
-    templateUrl: './edit-item-form.component.html',
-    imports: [
-        NgIf,
-        ReactiveFormsModule,
-        NgFor,
-        AddLocationModalComponent,
-    ]
+  selector: 'app-edit-item-form',
+  templateUrl: './edit-item-form.component.html',
+  imports: [NgIf, ReactiveFormsModule, NgFor, AddLocationModalComponent],
 })
-export class EditItemFormComponent implements OnInit {
+export class EditItemFormComponent {
   @Input() item: Item | undefined;
-  @ViewChild('brandName') itemPrimaryRef: ElementRef|undefined;
+  @ViewChild('brandName') itemPrimaryRef: ElementRef | undefined;
 
-  itemForm: FormGroup|undefined;
+  itemForm: FormGroup;
   showModal = false;
-  
+
   itemService = inject(ItemService);
   inventoryService = inject(InventoryService);
   locationService = inject(LocationService);
   fb = inject(FormBuilder);
 
-  ngOnInit() {
+  constructor() {
     this.itemForm = this.fb.group({
       item: new FormControl(this.item?.name, {
-        validators: [Validators.required]
+        validators: [Validators.required],
       }),
       brand: new FormControl(this.item?.brand, {
-        validators: []
+        validators: [],
       }),
       quantity: new FormControl(this.item?.quantity, {
-        validators: [Validators.required, Validators.pattern(/^[0-9]+$/)]
+        validators: [Validators.required, Validators.pattern(/^[0-9]+$/)],
       }),
       location: new FormControl(this.item?.location?.id, {
-        validators: [Validators.required]
-      })
+        validators: [Validators.required],
+      }),
     });
   }
 
   onFormSubmit(form: FormGroup): void {
-    if(!form.valid || !this.item) {
+    if (!form.valid || !this.item) {
       return;
     }
 
@@ -56,7 +57,7 @@ export class EditItemFormComponent implements OnInit {
     this.item.location = this.locationService.getLocation(form.value.location);
 
     this.itemService.saveItem(this.item).subscribe({
-      error: console.error
+      error: console.error,
     });
   }
 
