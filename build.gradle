@@ -1,19 +1,18 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.13-SNAPSHOT'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.springframework.boot' version '3.4.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.github.ben-manes.versions' version '0.52.0'
 	id 'java'
 }
 
 group = 'com.overzealouspelican'
-version = '2.2.0'
+version = '2.3.0'
 sourceCompatibility = JavaVersion.VERSION_21
 targetCompatibility = JavaVersion.VERSION_21
 
 repositories {
 	mavenLocal()
 	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://repo.spring.io/snapshot' }
 }
 
 configurations {
@@ -30,16 +29,14 @@ jar {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	implementation 'org.springframework.security:spring-security-test'
-	implementation 'org.springframework.boot:spring-boot-starter-validation:2.4.13'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	runtimeOnly 'com.mysql:mysql-connector-j:8.0.33'
+	runtimeOnly 'com.mysql:mysql-connector-j:8.4.0'
 	runtimeOnly 'com.h2database:h2'
 	// LOMBOK
-	compileOnly 'org.projectlombok:lombok:1.18.30'
-	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+	compileOnly 'org.projectlombok:lombok:1.18.44'
+	annotationProcessor 'org.projectlombok:lombok:1.18.44'
 
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
 
@@ -50,8 +47,8 @@ dependencies {
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
-	testCompileOnly 'org.projectlombok:lombok:1.18.30'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+	testCompileOnly 'org.projectlombok:lombok:1.18.44'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.44'
 }
 
 test {
@@ -78,30 +75,28 @@ tasks.register('dockerRun', Exec) {
 
 // Build the angular application and copy the dist contents into the spring boot static directory
 tasks.register('buildFrontend', Exec) {
-	commandLine 'sh', '-c', 'rm ./src/main/resources/static/*'
-	commandLine 'sh', '-c', 'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --aot && cp -r dist/ng-food-inventory/browser/* ../../resources/static/'
+	commandLine 'sh', '-c',
+		'rm -rf ./src/main/resources/static/* && ' +
+		'cd ./src/main/frontend/ng-food-inventory && npm i && npm run build --aot && ' +
+		'cp -r dist/ng-food-inventory/browser/* ../../resources/static/'
 }
 
 // bootJar.dependsOn buildFrontend
 
 // Build a docker image for the full application
 tasks.register('dockerBuild', Exec) {
-	clean
+	dependsOn bootJar
 	commandLine 'sh', '-c', 'docker build -t dhensley/food-inventory .'
 }
 
-dockerBuild.dependsOn bootJar
-
 // Tag the docker image with :latest
 tasks.register('dockerTag', Exec) {
+	dependsOn 'dockerBuild'
 	commandLine 'sh', '-c', 'docker tag dhensley/food-inventory:latest food-inventory:latest'
 }
 
-dockerTag.dependsOn dockerBuild
-
 // Deploy the docker image
 tasks.register('dockerDeploy', Exec) {
+	dependsOn 'dockerTag'
 	commandLine 'sh', '-c', 'docker push dhensley/food-inventory:latest'
 }
-
-dockerDeploy.dependsOn dockerTag
