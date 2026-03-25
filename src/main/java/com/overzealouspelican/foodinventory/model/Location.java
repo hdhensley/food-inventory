@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;

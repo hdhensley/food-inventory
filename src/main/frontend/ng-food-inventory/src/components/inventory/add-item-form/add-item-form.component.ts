@@ -10,7 +10,7 @@ import {
 import { Item } from '../../../models/item.model';
 import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
 import { ItemAddedAlertComponent } from '../item-added-alert/item-added-alert.component';
-import { NgIf, NgFor } from '@angular/common';
+
 import { tap } from 'rxjs';
 import { ToastService } from 'src/services/toast.service';
 
@@ -18,12 +18,10 @@ import { ToastService } from 'src/services/toast.service';
     selector: 'app-add-item-form',
     templateUrl: './add-item-form.component.html',
     imports: [
-        NgIf,
-        ReactiveFormsModule,
-        ItemAddedAlertComponent,
-        NgFor,
-        AddLocationModalComponent,
-    ]
+    ReactiveFormsModule,
+    ItemAddedAlertComponent,
+    AddLocationModalComponent
+]
 })
 export class AddItemFormComponent implements OnInit {
   itemForm: FormGroup | undefined;

@@ -7,12 +7,12 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { InventoryKeyService } from 'src/services/inventoryKey.service';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-add-inventory-modal',
     templateUrl: './add-inventory-modal.component.html',
-    imports: [NgClass, NgIf, ReactiveFormsModule]
+    imports: [NgClass, ReactiveFormsModule]
 })
 export class AddInventoryModalComponent implements OnInit {
   @Input() showModal = false;

@@ -24,11 +24,13 @@
         Add New Inventory
       </button>
     </li>
-    <li *ngFor="let key of sortedKeys()">
-      <button type="button" class="w-full text-left" (click)="setKey(key)">
-        {{ key }}
-      </button>
-    </li>
+    @for (key of sortedKeys(); track key) {
+      <li>
+        <button type="button" class="w-full text-left" (click)="setKey(key)">
+          {{ key }}
+        </button>
+      </li>
+    }
   </ul>
 </div>
 

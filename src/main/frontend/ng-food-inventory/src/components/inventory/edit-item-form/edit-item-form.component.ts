@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+
 import { Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
 import {
   FormBuilder,
@@ -14,7 +14,7 @@ import { AddLocationModalComponent } from '../add-location-modal/add-location-mo
 @Component({
   selector: 'app-edit-item-form',
   templateUrl: './edit-item-form.component.html',
-  imports: [NgIf, ReactiveFormsModule, NgFor, AddLocationModalComponent],
+  imports: [ReactiveFormsModule, AddLocationModalComponent],
 })
 export class EditItemFormComponent {
   @Input() item: Item | undefined;
