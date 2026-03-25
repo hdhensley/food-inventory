@@ -10,16 +10,12 @@
         class="input input-bordered w-full bg-neutral text-neutral-content"
         type="text"
         placeholder="Brand"
-        />
+      />
       @if (
         itemForm.get('brand')?.invalid &&
         (itemForm.get('brand')?.dirty || itemForm.get('brand')?.touched)
-        ) {
-        <div
-          class="input-error"
-          >
-          Please provide a brand.
-        </div>
+      ) {
+        <div class="input-error">Please provide a brand.</div>
       }
     </div>
     <div class="mb-4">
@@ -31,16 +27,12 @@
         class="input input-bordered w-full bg-neutral text-neutral-content"
         type="text"
         placeholder="Item"
-        />
+      />
       @if (
         itemForm.get('item')?.invalid &&
         (itemForm.get('item')?.dirty || itemForm.get('item')?.touched)
-        ) {
-        <div
-          class="input-error"
-          >
-          Please provide an item.
-        </div>
+      ) {
+        <div class="input-error">Please provide an item.</div>
       }
     </div>
     <div class="mb-4">
@@ -52,13 +44,9 @@
         class="input input-bordered w-full bg-neutral text-neutral-content"
         type="text"
         placeholder="Quantity"
-        />
+      />
       @if (!itemForm.get('quantity')?.valid && itemForm.get('quantity')?.touched) {
-        <div
-          class="input-error"
-          >
-          Please provide a number quantity.
-        </div>
+        <div class="input-error">Please provide a number quantity.</div>
       }
     </div>
     <div class="mb-4">
@@ -71,13 +59,13 @@
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            >
+          >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
               d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
+            />
           </svg>
         </button>
       </label>
@@ -85,30 +73,24 @@
         <select
           formControlName="location"
           class="select select-bordered w-full bg-neutral text-neutral-content"
-          >
+        >
           <option [ngValue]="null" disabled>Choose Location</option>
           @for (location of inventoryService.inventory().locations; track location) {
-            <option
-              [ngValue]="location.id"
-              >
+            <option [ngValue]="location.id">
               {{ location.name }}
             </option>
           }
         </select>
       </div>
       @if (!itemForm.get('location')?.valid && itemForm.get('location')?.touched) {
-        <div
-          class="input-error"
-          >
-          Please select a location.
-        </div>
+        <div class="input-error">Please select a location.</div>
       }
     </div>
     <div class="flex items-center justify-between">
       <button
         class="bg-neutral-content hover:bg-neutral text-neutral hover:text-neutral-content font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="submit"
-        >
+      >
         Save Item
       </button>
     </div>

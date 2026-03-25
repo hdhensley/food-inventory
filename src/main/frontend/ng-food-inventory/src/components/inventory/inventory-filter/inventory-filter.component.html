@@ -8,7 +8,7 @@
         [ngClass]="{
           'active-nav-link': locationService.isActive(0),
         }"
-        >
+      >
         All
       </button>
       @for (location of inventoryService.inventory().locations; track location) {
@@ -16,10 +16,10 @@
           class="nav-link rounded-btn ml-2"
           (click)="locationService.activeLocation.set(location.id)"
           (keydown)="locationService.activeLocation.set(location.id)"
-        [ngClass]="{
-          'active-nav-link': locationService.isActive(location.id),
-        }"
-          >
+          [ngClass]="{
+            'active-nav-link': locationService.isActive(location.id),
+          }"
+        >
           {{ location.name }}
         </button>
       }
@@ -31,67 +31,67 @@
             [routerLink]="['/', 'item', 'create']"
             class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2"
             >Add Item</a
-            >
-          </div>
-        }
-      </div>
+          >
+        </div>
+      }
     </div>
   </div>
+</div>
 
-  <!-- MOBILE COMPONENT -->
-  <div class="bg-neutral text-neutral-content mb-4 py-4 px-2 rounded w-full md:hidden">
-    <div class="w-full flex flex-row md:justify-between justify-end">
-      <div class="flex flex-1">
+<!-- MOBILE COMPONENT -->
+<div class="bg-neutral text-neutral-content mb-4 py-4 px-2 rounded w-full md:hidden">
+  <div class="w-full flex flex-row md:justify-between justify-end">
+    <div class="flex flex-1">
+      @if (!locationService.isActive(0)) {
+        <div>
+          <a
+            [routerLink]="['/', 'item', 'create']"
+            class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2"
+          >
+            Add Item
+          </a>
+        </div>
+      }
+    </div>
+
+    <div>
+      <div class="dropdown dropdown-end">
+        <span tabindex="0" class="nav-link rounded-btn active-nav-link">
+          {{ locationService.currentLocation()?.name || 'All' }}
+        </span>
         @if (!locationService.isActive(0)) {
-          <div>
-            <a
-              [routerLink]="['/', 'item', 'create']"
-              class="btn btn-accent btn-outline btn-sm bg-accent-content mr-2"
-              >
-              Add Item
-            </a>
-          </div>
-        }
-      </div>
-
-      <div>
-        <div class="dropdown dropdown-end">
-          <span tabindex="0" class="nav-link rounded-btn active-nav-link">
-            {{ locationService.currentLocation()?.name || 'All' }}
-          </span>
-          @if (!locationService.isActive(0)) {
-            <button
-              (click)="locationService.clearActive()"
-              tabindex="0"
-              class="nav-link rounded-btn active-nav-link ml-1"
-              >
-              X
-            </button>
-          }
-          <ul
+          <button
+            (click)="locationService.clearActive()"
             tabindex="0"
-            class="dropdown-content menu p-2 shadow bg-neutral text-neutral-content rounded-box w-52 max-h-screen"
-            >
+            class="nav-link rounded-btn active-nav-link ml-1"
+          >
+            X
+          </button>
+        }
+        <ul
+          tabindex="0"
+          class="dropdown-content menu p-2 shadow bg-neutral text-neutral-content rounded-box w-52 max-h-screen"
+        >
+          <li>
+            <a
+              tabindex="0"
+              (keydown)="locationService.clearActive()"
+              (click)="locationService.clearActive()"
+              >All
+            </a>
+          </li>
+          @for (location of inventoryService.locations(); track location) {
             <li>
               <a
                 tabindex="0"
-                (keydown)="locationService.clearActive()"
-                (click)="locationService.clearActive()"
-                >All
-              </a>
+                (click)="locationService.activeLocation.set(location.id)"
+                (keydown)="locationService.activeLocation.set(location.id)"
+                >{{ location.name }}</a
+              >
             </li>
-            @for (location of inventoryService.locations(); track location) {
-              <li>
-                <a
-                  tabindex="0"
-                  (click)="locationService.activeLocation.set(location.id)"
-                  (keydown)="locationService.activeLocation.set(location.id)"
-                  >{{ location.name }}</a
-                  >
-                </li>
-              }
-            </ul>
-          </div>
-        </div>
+          }
+        </ul>
       </div>
     </div>
+  </div>
+</div>

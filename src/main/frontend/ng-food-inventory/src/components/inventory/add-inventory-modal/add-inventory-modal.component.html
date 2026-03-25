@@ -3,12 +3,9 @@
   [ngClass]="{
     'modal-open': showModal,
   }"
-  >
+>
   @if (newInventoryForm) {
-    <form
-      [formGroup]="newInventoryForm"
-      (ngSubmit)="saveInventoryKey(newInventoryForm)"
-      >
+    <form [formGroup]="newInventoryForm" (ngSubmit)="saveInventoryKey(newInventoryForm)">
       <div class="modal-box bg-primary text-primary-content">
         @if (error !== '') {
           <div class="bg-error text-error-content rounded p-3 text-center">
@@ -22,18 +19,18 @@
           class="input input-bordered w-full max-w-xs bg-neutral text-neutral-content"
           type="text"
           placeholder="Inventory Name"
-          />
+        />
         <div class="modal-action flex justify-center">
           <button
             type="submit"
             class="bg-neutral-content text-success font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
+          >
             Save
           </button>
           <button
             (click)="cancel()"
             class="bg-neutral-content text-error font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
+          >
             Close
           </button>
         </div>
