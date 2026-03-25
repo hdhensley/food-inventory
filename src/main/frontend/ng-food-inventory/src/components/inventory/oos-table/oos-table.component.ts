@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { DisplayDatePipe, InactiveItemsPipe } from '../../../pipes';
 import { ItemService } from '../../../services';
@@ -21,39 +21,41 @@ import { ItemService } from '../../../services';
         </tr>
       </thead>
       <tbody>
-        <tr class="hover" *ngFor="let item of itemService.items() | inactiveItems; let id = index">
-          <td>{{ item.id }}</td>
-          <td>{{ item.brand ? item.brand : '-' }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.location?.name }}</td>
-          <td>{{ item.removedDate | displayDate }}</td>
-          <td class="flex flex-col">
-            <button
-              type="button"
-              (click)="deleteItem(item.id)"
-              class="btn btn-outline btn-circle btn-sm"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                class="inline-block w-4 h-4 stroke-current"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
-            </button>
-          </td>
-        </tr>
+        @for (item of itemService.items() | inactiveItems; track item; let id = $index) {
+          <tr class="hover">
+            <td>{{ item.id }}</td>
+            <td>{{ item.brand ? item.brand : '-' }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.location?.name }}</td>
+            <td>{{ item.removedDate | displayDate }}</td>
+            <td class="flex flex-col">
+              <button
+                type="button"
+                (click)="deleteItem(item.id)"
+                class="btn btn-outline btn-circle btn-sm"
+                >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-4 h-4 stroke-current"
+                  >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
-  `,
+    `,
   providers: [InactiveItemsPipe],
-  imports: [NgFor, DisplayDatePipe, InactiveItemsPipe],
+  imports: [DisplayDatePipe, InactiveItemsPipe],
 })
 export class OosTableComponent {
   inactiveItemsPipe = inject(InactiveItemsPipe);

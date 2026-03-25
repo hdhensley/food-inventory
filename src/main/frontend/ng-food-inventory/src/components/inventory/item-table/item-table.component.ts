@@ -6,12 +6,12 @@ import { ActiveItemsPipe } from '../../../pipes/filter/active-items.pipe';
 import { OutOfStockButtonComponent } from '../out-of-stock-button/out-of-stock-button.component';
 import { CountManagerComponent } from '../count-manager/count-manager.component';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor } from '@angular/common';
+
 
 @Component({
     selector: 'app-item-table',
     templateUrl: './item-table.component.html',
-    imports: [NgIf, NgFor, RouterLink, CountManagerComponent, OutOfStockButtonComponent, ActiveItemsPipe, DisplayDatePipe, SearchFilterPipe]
+    imports: [RouterLink, CountManagerComponent, OutOfStockButtonComponent, ActiveItemsPipe, DisplayDatePipe, SearchFilterPipe]
 })
 export class ItemTableComponent {
   itemService = inject(ItemService);

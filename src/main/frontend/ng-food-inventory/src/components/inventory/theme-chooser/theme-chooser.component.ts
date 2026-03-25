@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ThemeService } from '../../../services/theme.service';
-import { NgFor } from '@angular/common';
+
 
 @Component({
     selector: 'app-theme-chooser',
@@ -15,13 +15,15 @@ import { NgFor } from '@angular/common';
       </span>
       <ul tabindex="0"
         class="block dropdown-content menu p-2 shadow bg-neutral text-neutral-content rounded-box w-52 h-60 overflow-y-scroll">
-        <li *ngFor="let theme of themeService.themes">
-          <a (click)="themeService.curTheme.set(theme)" (keyup)="themeService.curTheme.set(theme)" tabindex="0">{{ theme }}</a>
-        </li>
+        @for (theme of themeService.themes; track theme) {
+          <li>
+            <a (click)="themeService.curTheme.set(theme)" (keyup)="themeService.curTheme.set(theme)" tabindex="0">{{ theme }}</a>
+          </li>
+        }
       </ul>
     </div>
-  `,
-    imports: [NgFor]
+    `,
+    imports: []
 })
 export class ThemeChooserComponent {
   constructor(public themeService: ThemeService) { }
