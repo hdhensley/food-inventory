@@ -13,8 +13,7 @@ WORKDIR /usr/app/
 COPY . .
 WORKDIR /usr/app/src/main/resources/static
 RUN ls
-COPY --from=frontend-build /usr/frontend/dist/* .
-# npm run build --aot && cp -r dist/ng-food-inventory/* ../../resources/static/
+COPY --from=frontend-build /usr/frontend/dist/ng-food-inventory/browser/. .
 RUN ls
 WORKDIR /usr/app
 RUN gradle build
