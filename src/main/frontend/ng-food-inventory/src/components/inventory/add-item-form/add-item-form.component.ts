@@ -1,13 +1,13 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
-import { InventoryService, ItemService, LocationService } from '../../../services';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { Item } from '../../../models/item.model';
+import { InventoryService, ItemService, LocationService } from '../../../services';
 import { AddLocationModalComponent } from '../add-location-modal/add-location-modal.component';
 import { ItemAddedAlertComponent } from '../item-added-alert/item-added-alert.component';
 
@@ -15,13 +15,9 @@ import { tap } from 'rxjs';
 import { ToastService } from 'src/services/toast.service';
 
 @Component({
-    selector: 'app-add-item-form',
-    templateUrl: './add-item-form.component.html',
-    imports: [
-    ReactiveFormsModule,
-    ItemAddedAlertComponent,
-    AddLocationModalComponent
-]
+  selector: 'app-add-item-form',
+  templateUrl: './add-item-form.component.html',
+  imports: [ReactiveFormsModule, ItemAddedAlertComponent, AddLocationModalComponent],
 })
 export class AddItemFormComponent implements OnInit {
   itemForm: FormGroup | undefined;
@@ -40,29 +36,20 @@ export class AddItemFormComponent implements OnInit {
 
   ngOnInit() {
     const currentLocation =
-      this.locationService.activeLocation() === 0
-        ? null
-        : this.locationService.activeLocation();
+      this.locationService.activeLocation() === 0 ? null : this.locationService.activeLocation();
 
     this.itemForm = this.fb.group({
       item: new FormControl('', {
-        validators: [
-          Validators.required
-        ],
+        validators: [Validators.required],
       }),
       brand: new FormControl('', {
         validators: [],
       }),
       quantity: new FormControl('', {
-        validators: [
-          Validators.required, 
-          Validators.pattern(/^[0-9]+$/)
-        ],
+        validators: [Validators.required, Validators.pattern(/^[0-9]+$/)],
       }),
       location: new FormControl(currentLocation, {
-        validators: [
-          Validators.required
-        ],
+        validators: [Validators.required],
       }),
     });
   }
@@ -79,14 +66,18 @@ export class AddItemFormComponent implements OnInit {
     item.quantity = form.value.quantity;
     item.location = this.locationService.getLocation(form.value.location);
 
-    this.itemService.saveItem(item)
-    .pipe(
-      tap(() => this.inventoryService.loadInventory()),
-      tap(() => this.toastService.success("Item saved")),
-    )
-    .subscribe();
+    this.itemService
+      .saveItem(item)
+      .pipe(
+        tap(() => this.inventoryService.loadInventory()),
+        tap(() => this.toastService.success('Item saved'))
+      )
+      .subscribe();
 
-    this.itemForm?.reset();
+    // Keep the selected location so it doesn't have to be re-chosen for the next item
+    const selectedLocation = form.value.location;
+    this.itemForm?.reset({ location: selectedLocation });
+
     this.itemPrimaryRef?.nativeElement?.focus();
   }
 
